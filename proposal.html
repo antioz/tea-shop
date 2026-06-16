@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Магазин китайского чая — техническое предложение</title>
+<style>
+  :root {
+    --paper: #F5EFE3;
+    --paper-2: #FBF7EE;
+    --ink: #1F2A22;
+    --ink-soft: #5A6760;
+    --ink-mute: #8A9189;
+    --clay: #A0522D;
+    --jade: #5B7C5A;
+    --line: #D8CFBC;
+    --line-soft: #E8E0CC;
+    --code-bg: #ECE3D0;
+    --highlight: #F4E9CC;
+  }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 0; padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-weight: 400;
+  }
+  .page {
+    page-break-after: always; position: relative;
+    width: 210mm; min-height: 297mm;
+    padding: 18mm 18mm 16mm 18mm;
+    margin: 0 auto 8mm;
+    background: var(--paper);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .page:last-child { page-break-after: auto; margin-bottom: 0; }
+  @media print {
+    .page {
+      width: 210mm; min-height: 297mm; height: auto;
+      margin: 0; box-shadow: none;
+    }
+  }
+
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  h1 { font-size: 26pt; line-height: 1.15; margin-bottom: 8mm; }
+  h2 {
+    font-size: 18pt; margin-bottom: 6mm; padding-bottom: 3mm;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    font-size: 12pt; margin: 6mm 0 2mm 0;
+    color: var(--ink); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    font-size: 9.5pt;
+    color: var(--clay);
+  }
+  h4 { font-size: 11pt; margin: 3mm 0 1mm 0; color: var(--ink); font-weight: 600; }
+
+  .meta { color: var(--ink-soft); font-size: 10pt; }
+  .small { font-size: 9pt; color: var(--ink-soft); }
+  .muted { color: var(--ink-soft); }
+  .accent { color: var(--clay); }
+  code, .mono {
+    font-family: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+    font-size: 9pt;
+    background: var(--code-bg);
+    padding: 0.5mm 1.5mm;
+    border-radius: 1mm;
+    color: var(--ink);
+  }
+
+  p { margin: 2mm 0 3mm; }
+  ul, ol { padding-left: 5mm; margin: 2mm 0 3mm; }
+  li { margin: 1mm 0; }
+  ul.tight li { margin: 0.4mm 0; }
+
+  .page-num {
+    position: absolute; top: 0; right: 0;
+    font-size: 9pt; color: var(--ink-mute);
+    letter-spacing: 0.15em;
+  }
+
+  /* Cover */
+  .cover {
+    padding-top: 45mm;
+    text-align: left;
+  }
+  .cover .eyebrow {
+    font-size: 9pt; color: var(--clay);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    margin-bottom: 8mm;
+  }
+  .cover h1 {
+    font-size: 24pt; line-height: 1.18; margin-bottom: 7mm;
+    letter-spacing: -0.02em;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+  .cover .lead {
+    font-size: 12pt; color: var(--ink-soft);
+    line-height: 1.55; max-width: 100%;
+    margin-bottom: 45mm;
+  }
+  .cover .addressing {
+    border-top: 1px solid var(--line);
+    padding-top: 6mm;
+    font-size: 11pt;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .cover .addressing .row {
+    display: flex; gap: 4mm; align-items: baseline;
+  }
+  .cover .addressing .label {
+    width: 22mm; color: var(--ink-mute);
+    font-size: 9pt; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .cover .addressing .val { color: var(--ink); }
+
+  /* Tier cards */
+  .tiers { display: flex; gap: 4mm; margin-top: 5mm; }
+  .tier {
+    flex: 1;
+    border: 1px solid var(--line);
+    padding: 5mm 4mm;
+    background: var(--paper-2);
+    display: flex; flex-direction: column;
+    border-radius: 2mm;
+  }
+  .tier.optimal {
+    border: 1.5px solid var(--clay);
+    background: #FBF3DC;
+    position: relative;
+  }
+  .tier.optimal::before {
+    content: "Рекомендуемый";
+    position: absolute; top: -3mm; left: 4mm;
+    background: var(--clay); color: #fff;
+    padding: 0.8mm 3mm;
+    font-size: 7.5pt; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 1mm;
+  }
+  .tier h3 {
+    font-size: 13pt; color: var(--ink);
+    margin: 0 0 1mm; text-align: left;
+    text-transform: none; letter-spacing: -0.01em;
+  }
+  .tier .tier-sub {
+    font-size: 9pt; color: var(--ink-soft);
+    min-height: 12mm; margin-bottom: 3mm;
+  }
+  .tier .stack-line {
+    font-size: 8pt; font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    color: var(--clay); margin-bottom: 3mm;
+    padding: 1.5mm 2mm; background: var(--code-bg);
+    border-radius: 1mm;
+  }
+  .tier .price {
+    font-size: 12.5pt; font-weight: 700;
+    color: var(--ink);
+    margin: 1mm 0 0.5mm;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .tier.optimal .price { color: var(--clay); }
+  .tier .term {
+    font-size: 9pt; color: var(--ink-soft);
+    margin-bottom: 4mm; padding-bottom: 3mm; border-bottom: 1px solid var(--line-soft);
+  }
+  .tier ul { font-size: 8.5pt; padding-left: 4mm; line-height: 1.45; }
+  .tier li { margin: 0.7mm 0; }
+  .tier .group-label {
+    font-size: 7.5pt; color: var(--clay);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 600;
+    margin: 3mm 0 1mm;
+    padding-bottom: 1mm;
+    border-bottom: 1px dotted var(--line);
+  }
+  .tier .group-label:first-of-type { margin-top: 0; }
+
+  /* CRM comparison table */
+  table.cmp {
+    width: 100%; border-collapse: collapse;
+    margin: 4mm 0; font-size: 9pt;
+    border-radius: 2mm; overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  table.cmp th, table.cmp td {
+    text-align: left; padding: 2.5mm 3mm;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+  table.cmp tr:last-child td { border-bottom: none; }
+  table.cmp th {
+    color: var(--ink); font-weight: 600;
+    font-size: 8.5pt;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
+  table.cmp th.hl, table.cmp td.hl {
+    background: var(--highlight);
+  }
+  table.cmp td:first-child { color: var(--ink-soft); width: 38%; font-size: 9pt; }
+  table.cmp .ok { color: var(--ink); font-weight: 500; }
+  table.cmp .ok::before { content: "✓ "; color: var(--jade); font-weight: 700; }
+  table.cmp .partial { color: var(--ink-soft); }
+  table.cmp .partial::before { content: "~ "; color: var(--ink-mute); font-weight: 700; }
+  table.cmp .no { color: var(--ink-soft); }
+  table.cmp .no::before { content: "× "; color: #B04A2C; font-weight: 700; }
+  table.cmp .num { font-variant-numeric: tabular-nums; }
+
+  /* Estimate */
+  table.estimate {
+    width: 100%; border-collapse: collapse;
+    margin-top: 3mm; font-size: 10pt;
+  }
+  table.estimate td {
+    text-align: left; padding: 2.2mm 3mm;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  table.estimate td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    width: 35mm;
+  }
+  table.estimate tr.total td {
+    border-top: 1.5px solid var(--ink); border-bottom: none;
+    padding-top: 3mm;
+    font-weight: 700; font-size: 11pt;
+    color: var(--ink);
+  }
+
+  /* Architecture list — technical, not selly */
+  .req {
+    border: 1px solid var(--line-soft);
+    padding: 4mm 5mm;
+    margin: 3mm 0;
+    border-radius: 2mm;
+    background: var(--paper-2);
+  }
+  .req .req-title {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1mm;
+    font-size: 10.5pt;
+  }
+  .req .req-tech {
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 8.5pt; color: var(--clay);
+    margin-bottom: 2mm;
+  }
+  .req .req-purpose {
+    font-size: 9.5pt; color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .req .req-purpose b { color: var(--ink); font-weight: 600; }
+
+  /* Timeline */
+  .timeline { display: flex; margin: 5mm 0 4mm; border-top: 1.5px solid var(--clay); position: relative; }
+  .stage { flex: 1; padding: 4mm 2mm 0; position: relative; text-align: center; }
+  .stage::before {
+    content: ""; position: absolute; top: -1.5mm; left: 50%;
+    transform: translateX(-50%);
+    width: 2.5mm; height: 2.5mm; border-radius: 50%;
+    background: var(--clay);
+  }
+  .stage .stage-name { font-weight: 600; font-size: 9.5pt; color: var(--ink); margin-bottom: 0.5mm; }
+  .stage .stage-dur { font-size: 8.5pt; color: var(--clay); margin-bottom: 1.5mm; font-variant-numeric: tabular-nums; }
+  .stage .stage-desc { font-size: 8.5pt; color: var(--ink-soft); }
+
+  /* Conclusion box */
+  .conclusion {
+    background: var(--paper-2);
+    border-left: 3px solid var(--clay);
+    padding: 5mm 6mm; margin: 4mm 0;
+    font-size: 10pt;
+    border-radius: 0 2mm 2mm 0;
+    line-height: 1.6;
+  }
+  .conclusion .label {
+    font-size: 8.5pt; color: var(--clay);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 2mm; font-weight: 600;
+  }
+  .conclusion p { margin: 0 0 2mm; }
+  .conclusion p:last-child { margin-bottom: 0; }
+
+  .cta-box {
+    margin-top: 8mm;
+    border: 1px solid var(--line);
+    background: var(--paper-2);
+    padding: 7mm; border-radius: 2mm;
+  }
+  .cta-box .cta-title { font-size: 14pt; color: var(--ink); margin-bottom: 2mm; font-weight: 600; letter-spacing: -0.01em; }
+  .cta-box .cta-sub { font-size: 10pt; color: var(--ink-soft); margin-bottom: 5mm; }
+  .cta-box .contacts {
+    display: flex; gap: 8mm;
+    border-top: 1px solid var(--line-soft); padding-top: 4mm; font-size: 10pt;
+  }
+  .cta-box .contacts > div { flex: 1; }
+  .cta-box .contacts .label-c {
+    font-size: 8pt; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 1mm;
+  }
+  .cta-box .contacts .val { color: var(--ink); }
+
+  .two-col { display: flex; gap: 8mm; margin-top: 3mm; }
+  .two-col > div { flex: 1; }
+
+  .legend {
+    font-size: 8.5pt; color: var(--ink-soft);
+    margin-top: -2mm; margin-bottom: 4mm;
+  }
+  .legend span { margin-right: 5mm; }
+</style>
+</head>
+<body>
+
+<!-- 1. COVER -->
+<section class="page cover">
+  <div class="eyebrow">Техническое предложение</div>
+  <h1>Интернет-магазин китайского чая</h1>
+  <p class="lead">Архитектура, технологический стек, выбор CRM и бюджет реализации под задачу: 150–200 SKU, квиз-сегментация на входе, полный контур e-commerce с нуля.</p>
+
+  <div class="addressing">
+    <div class="row"><div class="label">Для</div><div class="val">Сергея Сергеевича</div></div>
+    <div class="row"><div class="label">От</div><div class="val">Дмитрия Анатольевича</div></div>
+    <div class="row"><div class="label">Дата</div><div class="val">Май 2026</div></div>
+  </div>
+</section>
+
+
+<!-- 2. ЧТО ДЕЛАЕМ -->
+<section class="page">
+  <span class="page-num">01 / 04</span>
+  <h2>Что делаем</h2>
+  <p class="muted">Полноценный интернет-магазин на 150–200 SKU с квизом-сегментацией на входе и связкой с CRM и складом. Стек — <code>Битрикс + Аспро Next · RetailCRM · МойСклад</code>: зрелые российские решения, без кастомного движка и без 1С на старте.</p>
+
+  <div class="req">
+    <div class="req-title">Витрина и каталог</div>
+    <div class="req-tech">адаптив · SSR · фильтры по сорту/региону/году · WebP/AVIF</div>
+    <div class="req-purpose">Карточка товара с историей партии и вкусовым профилем, фильтры по сорту, региону и году сбора, оптимизированные изображения.</div>
+  </div>
+
+  <div class="req">
+    <div class="req-title">Квиз-сегментация</div>
+    <div class="req-tech">5–7 вопросов · ветвление · профиль → CRM</div>
+    <div class="req-purpose">Опрос на входе подбирает сорта под клиента и сразу пишет сегмент в CRM для последующих рассылок и персональных подборок.</div>
+  </div>
+
+  <div class="req">
+    <div class="req-title">CRM + склад</div>
+    <div class="req-tech">RetailCRM · МойСклад · партионный учёт · сроки годности</div>
+    <div class="req-purpose">Единая база клиентов, история заказов, триггерные рассылки, программа лояльности. Партионный учёт держит разные годы одного сорта как отдельные позиции.</div>
+  </div>
+
+  <div class="req">
+    <div class="req-title">Платежи и доставка</div>
+    <div class="req-tech">ЮKassa (карты + СБП) · АТОЛ Онлайн (54-ФЗ) · СДЭК / Boxberry / Почта / Яндекс.Доставка</div>
+    <div class="req-purpose">Приём оплаты, фискальные чеки в момент платежа, расчёт стоимости и сроков доставки прямо в чекауте.</div>
+  </div>
+
+  <div class="req">
+    <div class="req-title">Аналитика и SEO-основа</div>
+    <div class="req-tech">Яндекс.Метрика + GA4 · schema.org/Product · UTM-разметка</div>
+    <div class="req-purpose">E-commerce события, цели по чекауту, микроразметка для поиска, единая UTM-схема.</div>
+  </div>
+</section>
+
+<!-- 3. СРОКИ И ДЕНЬГИ -->
+<section class="page">
+  <span class="page-num">02 / 04</span>
+  <h2>Сроки и стоимость</h2>
+
+  <p>Разработка под ключ — <b>1 200 000 ₽</b> (диапазон 1.0–1.4 млн фиксируется по ТЗ). Срок от старта до боевого запуска — <b>3–3.5 месяца</b>.</p>
+
+  <table class="estimate">
+    <tbody>
+      <tr><td>Аналитика, ТЗ, прототип в Figma</td><td class="num">96 000 ₽</td></tr>
+      <tr><td>UX/UI-дизайн (10–12 экранов, дизайн-система)</td><td class="num">240 000 ₽</td></tr>
+      <tr><td>Frontend: вёрстка, адаптив, оптимизация скорости</td><td class="num">216 000 ₽</td></tr>
+      <tr><td>Backend: настройка Битрикс + Аспро, доработки, импорт SKU</td><td class="num">300 000 ₽</td></tr>
+      <tr><td>Квиз с логикой ветвления и интеграцией с CRM</td><td class="num">96 000 ₽</td></tr>
+      <tr><td>Интеграции: RetailCRM, МойСклад, ЮKassa, АТОЛ, доставки, рассылки</td><td class="num">180 000 ₽</td></tr>
+      <tr><td>QA, нагрузочное тестирование чекаута, деплой, обучение</td><td class="num">72 000 ₽</td></tr>
+      <tr class="total"><td>Итого разработка под ключ</td><td class="num">1 200 000 ₽</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Календарный план</h3>
+  <div class="timeline">
+    <div class="stage"><div class="stage-name">Аналитика</div><div class="stage-dur">2 недели</div><div class="stage-desc">ТЗ, прототип, фиксация цены</div></div>
+    <div class="stage"><div class="stage-name">Дизайн</div><div class="stage-dur">3 недели</div><div class="stage-desc">Все экраны в Figma</div></div>
+    <div class="stage"><div class="stage-name">Разработка</div><div class="stage-dur">5–6 недель</div><div class="stage-desc">Frontend, backend, квиз</div></div>
+    <div class="stage"><div class="stage-name">Интеграции</div><div class="stage-dur">2–3 недели</div><div class="stage-desc">CRM, склад, касса, доставка</div></div>
+    <div class="stage"><div class="stage-name">Запуск</div><div class="stage-dur">+30 дней</div><div class="stage-desc">Поддержка после релиза</div></div>
+  </div>
+
+  <div class="two-col" style="margin-top: 6mm;">
+    <div>
+      <h3>График платежей</h3>
+      <ul class="tight">
+        <li>30% — старт аналитики</li>
+        <li>30% — после согласования дизайна</li>
+        <li>30% — после сдачи на тестовом стенде</li>
+        <li>10% — после боевого запуска и месяца стабильной работы</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Что входит сверху</h3>
+      <ul class="tight">
+        <li>Передача всех исходников и доступов в день запуска</li>
+        <li>30 дней бесплатной поддержки после релиза</li>
+        <li>Обучение администратора работе с CMS и CRM</li>
+        <li>Фиксированная цена после согласования ТЗ</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4. ЧТО СВЕРХУ БЮДЖЕТА -->
+<section class="page">
+  <span class="page-num">03 / 04</span>
+  <h2>Расходы вне разработки</h2>
+
+  <h3>Регулярно, ежемесячно после запуска</h3>
+  <table class="estimate">
+    <tbody>
+      <tr><td>Хостинг (Beget / Timeweb, Битрикс-окружение)</td><td class="num">~1 500 ₽</td></tr>
+      <tr><td>RetailCRM, тариф «Профессиональный»</td><td class="num">4 000 – 5 000 ₽</td></tr>
+      <tr><td>МойСклад, базовый тариф</td><td class="num">2 500 – 5 000 ₽</td></tr>
+      <tr class="total"><td>Итого фиксированных</td><td class="num">8 000 – 11 500 ₽/мес</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Маркетинг (опционально, по мере готовности)</h3>
+  <ul class="tight">
+    <li>SEO-старт: 50 000 – 100 000 ₽ разово, далее ~30 000 ₽/мес</li>
+    <li>Контекст в Яндекс.Директ: от 30 000 ₽/мес ведение + рекламный бюджет</li>
+    <li>SMM и Telegram-канал: 30 000 – 80 000 ₽/мес</li>
+  </ul>
+</section>
+
+<!-- 5. НАСТРОЙКА СИСТЕМ -->
+<section class="page">
+  <span class="page-num">04 / 04</span>
+  <h2>Настройка систем под ключ</h2>
+  <p class="muted">Если внедрение CRM, склада и всех связок берёшь не сам, а отдаёшь мне — отдельный блок работ по рыночным ценам. Это сверх разработки сайта (1.2 млн).</p>
+
+  <table class="estimate">
+    <tbody>
+      <tr><td>RetailCRM: настройка воронок, статусов, сегментов, прав, триггерных сценариев</td><td class="num">50 000 – 80 000 ₽</td></tr>
+      <tr><td>МойСклад: справочники, единицы, партии, остатки, синк с сайтом и CRM</td><td class="num">40 000 – 60 000 ₽</td></tr>
+      <tr><td>Связка сайт ↔ RetailCRM ↔ МойСклад (двусторонний обмен)</td><td class="num">40 000 – 60 000 ₽</td></tr>
+      <tr><td>Эквайринг ЮKassa + АТОЛ Онлайн (54-ФЗ, фискализация)</td><td class="num">20 000 – 30 000 ₽</td></tr>
+      <tr><td>Интеграции 4 служб доставки (СДЭК, Boxberry, Почта, Яндекс.Доставка)</td><td class="num">40 000 – 80 000 ₽</td></tr>
+      <tr><td>Sendsay / Unisender: подключение, шаблоны, 3–5 триггерных цепочек</td><td class="num">40 000 – 70 000 ₽</td></tr>
+      <tr><td>Программа лояльности в RetailCRM (уровни, баллы, кешбэк)</td><td class="num">25 000 – 45 000 ₽</td></tr>
+      <tr><td>Яндекс.Метрика + GA4: e-com события, цели, дашборды</td><td class="num">20 000 – 35 000 ₽</td></tr>
+      <tr><td>Обучение администратора + видеоинструкции</td><td class="num">15 000 – 25 000 ₽</td></tr>
+      <tr class="total"><td>Итого настройка под ключ</td><td class="num">290 000 – 485 000 ₽</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small">Цены — среднерыночные по РФ на интеграторов RetailCRM и МойСклад. Срок настройки параллельно с разработкой сайта — 3–4 недели, без сдвига общего срока запуска. Часть базовых интеграций уже учтена в смете разработки (строка «Интеграции — 180 000 ₽»); сумма здесь — за полноценную бизнес-настройку всех контуров, не только за техническое подключение.</p>
+</section>
+
+</body>
+</html>
