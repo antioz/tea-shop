@@ -59,5 +59,21 @@
 
 **Поправка к регулярке:** опция «Маркировка» МойСклада (+700 ₽/мес) и реальный тариф RetailCRM (от 9 360 ₽/мес) — закладывать в расходы. Плюс подписка InSales. Это всё равно кратно дешевле разработки за 1.2 млн.
 
+## InSales — проверка реальной кодабельности (VERIFIED по докам + отзывам, 17.06.2026)
+
+Два РАЗНЫХ вопроса, их нельзя смешивать:
+
+**A. Кодить тему (вёрстка фронта) — ДА.** Темы = Liquid + сниппеты (HTML+Liquid). Редактор кода 4-го поколения правит HTML/SCSS/JS/JSON + Liquid, с функциями VS Code (подсветка, Emmet, автодополнение). Есть фронтовый JS/AJAX API (корзина, каталог, фильтры). Оговорки: официальный редактор — веб внутри админки; выгрузка темы/git/локальная разработка официально НЕ документированы (есть только «История изменений» для отката); локальный тулинг — community (uploader, GitHub VladimirIvanin/insales-theme); сборка CSS/JS — внутренними директивами платформы, не свой webpack.
+
+**B. Подключение по REST API — ДА, но это АДМИН-API, не storefront.** REST, Basic Auth (`password=MD5(token+secret_key)`). Назначение (дословно): «создавать, читать и удалять объекты панели администратора» + вебхуки. Лимит 500 запросов/5 мин на магазин, 503 при превышении. Библиотеки: insales/insales_api (Ruby), npm insales/node-insales, pyinsales.
+
+**Headless-вывод:** свой Next/React фронт на InSales технически возможен, но через админский data-API (Basic Auth с секретом — нельзя в браузер), с лимитом 500/5мин, без customer-facing storefront-API. Это самодельщина через свой бэкенд-прокси, НЕ родной headless. Если нужен первоклассный headless — Medusa/Saleor + свой фронт, либо CS-Cart (полный код на своём сервере).
+
+Цитаты-минусы (otzyvmarketing.ru/insales): «Нельзя выйти за пределы функционала» (Г. Верещагина); «Шаблонов катастрофически мало» (Е. Никипелов); «Низкая скорость сайтов, недоступны по 1-2 часа» (Р. Хисматуллин); поддержка — «за 12 месяцев ни один вопрос не решён» (Артем А).
+
+Развилка для финала: «вайбкодить дизайн» = (а) правка темы InSales → InSales подходит; (б) свой отдельный фронт на React/Next → InSales не та платформа, смотреть headless (Medusa/Saleor) или CS-Cart.
+
+Источники: insales.ru (редактор кода 4-го поколения, дока API/интеграции), github.com/liquid-hub/insales-common-js-v2-api, github.com/VladimirIvanin/insales-theme, github.com/insales/insales_api, otzyvmarketing.ru/insales.
+
 ## Источники (24, по слоям — см. ссылки выше)
 Платформы: directline.pro, a2is.ru, startpack.ru (CS-Cart), insales.ru, aspro.ru. CRM: help/docs.retailcrm.ru, retailcrm.ru/prices, intervolga.ru, vc.ru/187181. Склад/маркировка: moysklad.ru (subscription + markirovka-chaya), support.moysklad.ru, markirovka.ru, getmark.ru, foodsafety.ru, cleverence.ru.
