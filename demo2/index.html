@@ -101,7 +101,7 @@
           <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
             <div style="display:flex; align-items:center; gap:22px; padding:16px 20px; background:#ece4d1;">
               <div style="width:76px; height:76px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
-                <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="max-width:100%; max-height:100%; object-fit:contain; display:block;"/>
+                <img src="{{ tea.imgCutout }}" alt="{{ tea.ru }}" style="max-width:100%; max-height:100%; object-fit:contain; display:block;"/>
               </div>
               <div>
                 <div style="font-size:10px; letter-spacing:.14em; color:{{ accent }}; margin-bottom:6px;">N° {{ tea.num }}</div>
@@ -120,33 +120,24 @@
         <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">02 — КОЛЛЕКЦИЯ</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Четыре пуэра. Один путь.</h2>
       </div>
-      <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-        <div style="display:grid; grid-template-columns:0.9fr 1.1fr; gap:0; align-items:stretch; background:#ece4d1; margin-bottom:2px; {{ tea.style }}">
-          <div style="padding:70px 64px;">
-            <div style="font-size:13px; color:{{ accent }}; letter-spacing:.05em; margin-bottom:22px;">N° {{ tea.num }}</div>
-            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap;">
-              <span style="font-family:'Noto Serif SC',serif; font-size:23px; color:{{ accent }};">{{ tea.cn }}</span>
-              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:#2a2015;">{{ tea.ru }}</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
+        <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
+          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); overflow:hidden; {{ tea.style }}">
+            <div style="position:relative; aspect-ratio:1/1; overflow:hidden;">
+              <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12);">
-              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">РЕГИОН</span>
-              <span style="font-size:14px; color:#3a2f22;">{{ tea.region }}</span>
+            <div style="padding:22px 24px 26px;">
+              <div style="font-size:10px; letter-spacing:.14em; color:{{ accent }}; margin-bottom:10px;">N° {{ tea.num }} · {{ tea.cn }}</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#2a2015; margin-bottom:10px;">{{ tea.ru }}</div>
+              <p style="font-size:12.5px; line-height:1.6; color:#6b5c46; margin:0 0 16px;">{{ tea.note }}</p>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid rgba(28,23,18,0.12);">
+                <span style="font-size:11px; letter-spacing:.1em; color:#8a7a5f;">{{ tea.region }} · {{ tea.weight }}</span>
+                <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:17px; color:{{ accent }};">{{ tea.price }}</span>
+              </div>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12);">
-              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">ВЕС</span>
-              <span style="font-size:14px; color:#3a2f22;">{{ tea.weight }}</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12); border-bottom:1px solid rgba(28,23,18,0.12); margin-bottom:26px;">
-              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">ЦЕНА</span>
-              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:19px; color:{{ accent }};">{{ tea.price }}</span>
-            </div>
-            <p style="font-size:13.5px; line-height:1.85; color:#6b5c46; margin:0;">{{ tea.note }}</p>
           </div>
-          <div style="position:relative; aspect-ratio:3/4; overflow:hidden;">
-            <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
-          </div>
-        </div>
-      </sc-for>
+        </sc-for>
+      </div>
       <div style="text-align:center; margin-top:70px;">
         <a href="#" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:18px 42px; transition:all .35s ease; display:inline-block;" style-hover="background:#a85862; transform:translateY(-2px);">ВЕСЬ КАТАЛОГ →</a>
       </div>
@@ -233,10 +224,10 @@ class Component extends DCLogic {
   ];
 
   teas = [
-    { num: '01', slug: 'tea-gongting-puer', cn: '宫廷普洱', ru: 'Пуэр из Жопулао', region: 'Юньнань', weight: '357 г', note: 'Императорский шу пуэр. Земля, финик, бархатный настой.', price: '3 400 ₽', img: './images/tea-gongting-puer.png' },
-    { num: '02', slug: 'tea-mahei-guyun', cn: '麻黑古韵', ru: 'Шэн из Хуйчжоу', region: 'Биндао', weight: '357 г', note: 'Старые деревья. Древесный дым и чернослив.', price: '5 200 ₽', img: './images/tea-mahei-guyun.png' },
-    { num: '03', slug: 'tea-1601', cn: '宫廷饼', ru: 'Улун из Залупшаня', region: 'Юньчжэнь', weight: '357 г', note: 'Плотный шу пуэр с нотами какао и сухих фруктов.', price: '2 900 ₽', img: './images/tea-1601.png' },
-    { num: '04', slug: 'tea-chamagudao', cn: '茶马古道', ru: 'Пуэр из Пиздогоу', region: 'Чайно-конный путь', weight: '357 г', note: 'Молодой шэн пуэр. Травы и дикий мёд.', price: '2 100 ₽', img: './images/tea-chamagudao.png' },
+    { num: '01', slug: 'tea-gongting-puer', cn: '宫廷普洱', ru: 'Пуэр из Жопулао', region: 'Юньнань', weight: '357 г', note: 'Императорский шу пуэр. Земля, финик, бархатный настой.', price: '3 400 ₽', img: './images/tea-gongting-puer.png', imgCutout: './images/tea-gongting-puer-cutout.png' },
+    { num: '02', slug: 'tea-mahei-guyun', cn: '麻黑古韵', ru: 'Шэн из Хуйчжоу', region: 'Биндао', weight: '357 г', note: 'Старые деревья. Древесный дым и чернослив.', price: '5 200 ₽', img: './images/tea-mahei-guyun.png', imgCutout: './images/tea-mahei-guyun-cutout.png' },
+    { num: '03', slug: 'tea-1601', cn: '宫廷饼', ru: 'Улун из Залупшаня', region: 'Юньчжэнь', weight: '357 г', note: 'Плотный шу пуэр с нотами какао и сухих фруктов.', price: '2 900 ₽', img: './images/tea-1601.png', imgCutout: './images/tea-1601-cutout.png' },
+    { num: '04', slug: 'tea-chamagudao', cn: '茶马古道', ru: 'Пуэр из Пиздогоу', region: 'Чайно-конный путь', weight: '357 г', note: 'Молодой шэн пуэр. Травы и дикий мёд.', price: '2 100 ₽', img: './images/tea-chamagudao.png', imgCutout: './images/tea-chamagudao-cutout.png' },
   ];
 
   steps = [
