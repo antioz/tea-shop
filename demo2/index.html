@@ -110,46 +110,41 @@
   </section>
 
   <section data-screen-label="03 — Каталог" id="catalog" data-reveal-id="catalog" style="position:relative; padding:60px 40px 140px; background:#131110;">
-    <div style="max-width:1360px; margin:0 auto;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:70px; flex-wrap:wrap; gap:20px; border-bottom:1px solid rgba(240,233,218,0.1); padding-bottom:30px;">
-        <div>
-          <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">02 — КОЛЛЕКЦИЯ</div>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Четыре пуэра. Один путь.</h2>
-        </div>
-        <span style="font-size:11px; letter-spacing:.08em; color:#7a7166;">ПАРТИЯ 2026 · ОГРАНИЧЕНА</span>
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
+        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">02 — КОЛЛЕКЦИЯ</div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Четыре пуэра. Один путь.</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2px; background:rgba(240,233,218,0.1);">
-        <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-          <div style="background:#ece4d1; overflow:hidden; transition:all .4s ease; position:relative; {{ tea.style }}" style-hover="box-shadow:inset 0 0 0 1px {{ accent }};">
-            <div style="position:absolute; top:0; left:0; background:{{ accent }}; color:#f5efe1; font-size:10px; letter-spacing:.1em; padding:6px 10px; z-index:2;">N° {{ tea.num }}</div>
-            <div style="width:100%; aspect-ratio:4/5; overflow:hidden;">
-              <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
+      <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
+        <div style="display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:center; padding:80px 0; border-top:1px solid rgba(240,233,218,0.09); {{ tea.style }}">
+          <div>
+            <div style="font-size:13px; color:{{ accent }}; letter-spacing:.05em; margin-bottom:22px;">N° {{ tea.num }}</div>
+            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:32px;">
+              <span style="font-family:'Noto Serif SC',serif; font-size:23px; color:{{ accent }};">{{ tea.cn }}</span>
+              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:#f5efe1;">{{ tea.ru }}</span>
             </div>
-            <div style="padding:26px 26px 28px;">
-              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:10px;">
-                <span style="font-family:'Noto Serif SC',serif; font-size:21px; color:{{ accent }};">{{ tea.cn }}</span>
-                <span style="font-family:'Cormorant Garamond',serif; font-size:19px; color:#2a2015; text-align:right;">{{ tea.ru }}</span>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:0;">
-                <div style="display:flex; justify-content:space-between; padding:8px 0; border-top:1px solid rgba(28,23,18,0.12);">
-                  <span style="font-size:10px; letter-spacing:.08em; color:#8a7a5f;">РЕГИОН</span>
-                  <span style="font-size:11.5px; color:#3a2f22;">{{ tea.region }}</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; padding:8px 0; border-top:1px solid rgba(28,23,18,0.12);">
-                  <span style="font-size:10px; letter-spacing:.08em; color:#8a7a5f;">ВЕС</span>
-                  <span style="font-size:11.5px; color:#3a2f22;">{{ tea.weight }}</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; padding:8px 0 0; border-top:1px solid rgba(28,23,18,0.12);">
-                  <span style="font-size:10px; letter-spacing:.08em; color:#8a7a5f;">ЦЕНА</span>
-                  <span style="font-size:13px; color:#1c1712; font-weight:600;">{{ tea.price }}</span>
-                </div>
-              </div>
-              <p style="font-size:11.5px; line-height:1.75; color:#6b5c46; margin:16px 0 0; font-weight:400;">{{ tea.note }}</p>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09);">
+              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">РЕГИОН</span>
+              <span style="font-size:14px; color:#f0e9da;">{{ tea.region }}</span>
             </div>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09);">
+              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">ВЕС</span>
+              <span style="font-size:14px; color:#f0e9da;">{{ tea.weight }}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09); border-bottom:1px solid rgba(240,233,218,0.09); margin-bottom:26px;">
+              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">ЦЕНА</span>
+              <span style="font-family:'Cormorant Garamond',serif; font-size:19px; color:{{ accent }};">{{ tea.price }}</span>
+            </div>
+            <p style="font-size:13.5px; line-height:1.85; color:#8f8579; margin:0;">{{ tea.note }}</p>
           </div>
-        </sc-for>
-      </div>
-      <div style="text-align:center; margin-top:64px;">
+          <div style="position:relative; aspect-ratio:4/3;">
+            <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
+            <div style="position:absolute; top:-10px; left:-10px; width:22px; height:22px; border-top:1px solid {{ accent }}; border-left:1px solid {{ accent }};"></div>
+            <div style="position:absolute; bottom:-10px; right:-10px; width:22px; height:22px; border-bottom:1px solid {{ accent }}; border-right:1px solid {{ accent }};"></div>
+          </div>
+        </div>
+      </sc-for>
+      <div style="text-align:center; margin-top:70px;">
         <a href="#" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:18px 42px; transition:all .35s ease; display:inline-block;" style-hover="background:#a85862; transform:translateY(-2px);">ВЕСЬ КАТАЛОГ →</a>
       </div>
     </div>
