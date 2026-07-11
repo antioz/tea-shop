@@ -91,7 +91,7 @@
       </div>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
         <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); overflow:hidden; {{ tea.style }}">
+          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); border-top:3px solid {{ accent }}; overflow:hidden; {{ tea.style }}">
             <div style="position:relative; aspect-ratio:1/1; overflow:hidden;">
               <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
             </div>
@@ -99,7 +99,7 @@
               <div style="font-size:10px; letter-spacing:.14em; color:{{ accent }}; margin-bottom:10px;">N° {{ tea.num }} · {{ tea.cn }}</div>
               <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#2a2015; margin-bottom:10px;">{{ tea.ru }}</div>
               <p style="font-size:12.5px; line-height:1.6; color:#6b5c46; margin:0 0 16px;">{{ tea.note }}</p>
-              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid rgba(28,23,18,0.12);">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid {{ accent }}22;">
                 <span style="font-size:11px; letter-spacing:.1em; color:#8a7a5f;">{{ tea.region }} · {{ tea.weight }}</span>
                 <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:17px; color:{{ accent }};">{{ tea.price }}</span>
               </div>
