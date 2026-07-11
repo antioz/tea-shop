@@ -38,7 +38,7 @@
   /* HERO */
   .hero{position:relative;height:920px;overflow:hidden}
   @media (max-width:800px){.hero{height:760px}}
-  .hero img{position:absolute;top:-6%;left:0;width:100%;height:114%;object-fit:cover;object-position:center 42%}
+  .hero img{position:absolute;top:-10%;left:0;width:100%;height:122%;object-fit:cover;object-position:center 42%;will-change:transform}
   .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,11,9,.4) 0%,rgba(18,11,9,.1) 30%,rgba(18,11,9,.3) 62%,rgba(18,11,9,.95) 100%)}
   .hero-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 64px}
   .hero-kicker{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--cream);margin-bottom:30px}
@@ -51,9 +51,9 @@
   .story{background:var(--kraft);color:var(--kraft-ink)}
   .story-inner{display:grid;grid-template-columns:1.05fr 1fr;gap:0;align-items:stretch;min-height:640px}
   @media (max-width:900px){.story-inner{grid-template-columns:1fr;min-height:0}}
-  .story-photo{position:relative;overflow:hidden}
-  .story-photo img{width:100%;height:100%;min-height:480px;object-fit:cover;object-position:center 38%;display:block}
-  @media (max-width:900px){.story-photo img{min-height:320px}}
+  .story-photo{position:relative;overflow:hidden;min-height:480px}
+  .story-photo img{position:absolute;top:-12%;left:0;width:100%;height:124%;object-fit:cover;object-position:center 38%;display:block;will-change:transform}
+  @media (max-width:900px){.story-photo{min-height:320px}}
   .story-tag{position:absolute;left:40px;bottom:40px;background:var(--kraft);border:1px solid var(--line-kraft);padding:11px 20px;font-family:'PT Serif',serif;font-style:italic;font-size:12.5px;color:var(--accent-deep);box-shadow:0 18px 34px rgba(43,23,16,.22)}
   @media (max-width:900px){.story-tag{left:24px;bottom:24px;padding:9px 16px;font-size:11.5px}}
   .story-text{display:flex;flex-direction:column;justify-content:center;padding:80px 96px 80px 88px}
@@ -138,7 +138,7 @@
 
 <!-- HERO -->
 <div class="hero">
-  <img src="assets/hero-mountains.png" alt="Горные чайные сады на рассвете">
+  <img class="parallax" data-parallax="0.18" data-parallax-max="80" src="assets/hero-mountains.png" alt="Горные чайные сады на рассвете">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-kicker reveal">野馬茶</div>
@@ -213,7 +213,7 @@
 <div class="story">
   <div class="story-inner">
     <div class="story-photo reveal">
-      <img src="assets/story-village.png" alt="Деревня в горах Юньнани на закате">
+      <img class="parallax" data-parallax="0.15" data-parallax-max="55" src="assets/story-village.png" alt="Деревня в горах Юньнани на закате">
       <div class="story-tag">野馬茶 · деревня в горах Юньнани, закат</div>
     </div>
     <div class="story-text reveal reveal-d1">
@@ -252,8 +252,10 @@
 <div class="copyright">© 2026 Чай дикой лошади · 野馬茶</div>
 
 <script>
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   var reveals = document.querySelectorAll('.reveal');
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (reduceMotion) {
     reveals.forEach(function(el){ el.classList.add('is-visible'); });
   } else {
     var io = new IntersectionObserver(function(entries){
@@ -265,6 +267,29 @@
       });
     }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
     reveals.forEach(function(el){ io.observe(el); });
+  }
+
+  var parallaxEls = document.querySelectorAll('.parallax');
+  if (!reduceMotion && parallaxEls.length) {
+    var ticking = false;
+    var updateParallax = function(){
+      var vh = window.innerHeight;
+      parallaxEls.forEach(function(el){
+        var rect = el.parentElement.getBoundingClientRect();
+        var center = rect.top + rect.height / 2 - vh / 2;
+        var factor = parseFloat(el.dataset.parallax) || .15;
+        var max = parseFloat(el.dataset.parallaxMax) || 60;
+        var offset = Math.max(-max, Math.min(max, center * factor));
+        el.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
+      });
+      ticking = false;
+    };
+    var onScroll = function(){
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    updateParallax();
   }
 </script>
 
