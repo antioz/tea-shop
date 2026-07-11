@@ -106,6 +106,17 @@
   .subscribe input::placeholder{color:var(--cream-dim)}
   .subscribe button{background:none;border:none;font-family:'PT Sans',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 4px;white-space:nowrap;color:var(--cream);cursor:pointer}
 
+  /* REVEAL ANIMATIONS */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .reveal-d1{transition-delay:.12s}
+    .reveal-d2{transition-delay:.24s}
+    .reveal-d3{transition-delay:.36s}
+    .reveal-d4{transition-delay:.48s}
+    .reveal-d5{transition-delay:.6s}
+  }
+
   /* FOOTER */
   footer{padding:64px 64px 36px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;border-top:1px solid var(--line)}
   @media (max-width:800px){footer{padding:48px 24px 24px;grid-template-columns:1fr 1fr;row-gap:32px}}
@@ -130,15 +141,15 @@
   <img src="assets/hero-mountains.png" alt="Горные чайные сады на рассвете">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-kicker">野馬茶</div>
-    <h1>Тишина горных чайных садов</h1>
-    <a class="hero-btn" href="#catalog">Смотреть коллекцию</a>
+    <div class="hero-kicker reveal">野馬茶</div>
+    <h1 class="reveal reveal-d1">Тишина горных чайных садов</h1>
+    <a class="hero-btn reveal reveal-d2" href="#catalog">Смотреть коллекцию</a>
   </div>
 </div>
 
 <!-- CATALOG -->
 <div id="catalog" class="catalog-head">
-  <div class="catalog-head-inner">
+  <div class="catalog-head-inner reveal">
     <div class="catalog-kicker">Из собрания</div>
     <h2>Для вас</h2>
   </div>
@@ -149,7 +160,7 @@
       <div>Лот</div><div></div><div>Наименование</div><div>Заварка</div><div style="text-align:right">Цена</div>
     </div>
 
-    <div class="lot">
+    <div class="lot reveal reveal-d1">
       <div class="lot-num">01</div>
       <div class="lot-thumb"><img src="assets/tea-01-gongting.png" alt="«Гун Тин» Шу Пуэр"></div>
       <div>
@@ -160,7 +171,7 @@
       <div class="lot-price price">18 400 ₽</div>
     </div>
 
-    <div class="lot">
+    <div class="lot reveal reveal-d2">
       <div class="lot-num">02</div>
       <div class="lot-thumb"><img src="assets/tea-02-maheiguyun.png" alt="Ма Хэй Гу Юнь"></div>
       <div>
@@ -171,7 +182,7 @@
       <div class="lot-price price">32 900 ₽</div>
     </div>
 
-    <div class="lot">
+    <div class="lot reveal reveal-d3">
       <div class="lot-num">03</div>
       <div class="lot-thumb"><img src="assets/tea-03-qizibing.png" alt="Юн Чжэнь «Гунтин»"></div>
       <div>
@@ -182,7 +193,7 @@
       <div class="lot-price price">21 600 ₽</div>
     </div>
 
-    <div class="lot">
+    <div class="lot reveal reveal-d4">
       <div class="lot-num">04</div>
       <div class="lot-thumb"><img src="assets/tea-04-chamaguDao.png" alt="Ча Ма Гу Дао"></div>
       <div>
@@ -195,17 +206,17 @@
   </div>
 </div>
 <div class="catalog-cta-wrap">
-  <a class="catalog-cta" href="#">Весь каталог →</a>
+  <a class="catalog-cta reveal reveal-d5" href="#">Весь каталог →</a>
 </div>
 
 <!-- STORY: происхождение, семейная фабрика, личная проверка партий -->
 <div class="story">
   <div class="story-inner">
-    <div class="story-photo">
+    <div class="story-photo reveal">
       <img src="assets/story-village.png" alt="Деревня в горах Юньнани на закате">
       <div class="story-tag">野馬茶 · деревня в горах Юньнани, закат</div>
     </div>
-    <div class="story-text">
+    <div class="story-text reveal reveal-d1">
       <div class="story-kicker">Происхождение</div>
       <h2>Мы поднимаемся туда сами</h2>
       <p>Деревня в горах Юньнани, куда не ведёт навигатор. Семейная фабрика — та же, что и три поколения назад. Мы не покупаем чай по каталогу поставщика: каждую весну поднимаемся в горы и лично пробуем партию до того, как она станет нашей. Если чай не достоин имени 野馬茶 — мы уезжаем без него.</p>
@@ -215,8 +226,8 @@
 
 <!-- CLOSING -->
 <div class="closing">
-  <p>96 деревень остались за порогом. Мы выбрали четыре — те, за которые готовы ручаться именем.</p>
-  <div class="subscribe">
+  <p class="reveal">96 деревень остались за порогом. Мы выбрали четыре — те, за которые готовы ручаться именем.</p>
+  <div class="subscribe reveal reveal-d1">
     <input placeholder="эл. почта">
     <button type="button">Подписаться</button>
   </div>
@@ -239,6 +250,23 @@
   </div>
 </footer>
 <div class="copyright">© 2026 Чай дикой лошади · 野馬茶</div>
+
+<script>
+  var reveals = document.querySelectorAll('.reveal');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.15, rootMargin:'0px 0px -60px 0px'});
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+</script>
 
 </body>
 </html>
