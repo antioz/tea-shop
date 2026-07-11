@@ -44,17 +44,14 @@
   .hero-kicker{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--cream);margin-bottom:30px}
   .hero h1{font-family:'PT Serif',serif;font-weight:400;font-size:66px;line-height:1.18;margin:0 0 34px;max-width:680px;text-shadow:0 6px 30px rgba(0,0,0,.35)}
   @media (max-width:800px){.hero h1{font-size:38px}}
-  .hero-btn{border:1px solid rgba(236,224,200,.5);color:var(--cream);padding:15px 38px;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;transition:background .2s,color .2s}
-  .hero-btn:hover{background:var(--cream);color:var(--bg)}
-
   /* STORY (kraft paper section) */
   .story{background:var(--kraft);color:var(--kraft-ink)}
   .story-inner{display:grid;grid-template-columns:1.05fr 1fr;gap:0;align-items:stretch;min-height:640px}
   @media (max-width:900px){.story-inner{grid-template-columns:1fr;min-height:0}}
-  .story-photo{position:relative;overflow:hidden;min-height:480px}
+  .story-photo{position:relative;overflow:hidden;min-height:480px;border-radius:0 28px 28px 0}
+  @media (max-width:900px){.story-photo{min-height:320px;border-radius:0 0 28px 28px}}
   .story-photo img{position:absolute;top:-12%;left:0;width:100%;height:124%;object-fit:cover;object-position:center 38%;display:block;will-change:transform}
-  @media (max-width:900px){.story-photo{min-height:320px}}
-  .story-tag{position:absolute;left:40px;bottom:40px;background:var(--kraft);border:1px solid var(--line-kraft);padding:11px 20px;font-family:'PT Serif',serif;font-style:italic;font-size:12.5px;color:var(--accent-deep);box-shadow:0 18px 34px rgba(43,23,16,.22)}
+  .story-tag{position:absolute;left:40px;bottom:40px;background:var(--kraft);border:1px solid var(--line-kraft);border-radius:8px;padding:11px 20px;font-family:'PT Serif',serif;font-style:italic;font-size:12.5px;color:var(--accent-deep);box-shadow:0 18px 34px rgba(43,23,16,.22)}
   @media (max-width:900px){.story-tag{left:24px;bottom:24px;padding:9px 16px;font-size:11.5px}}
   .story-text{display:flex;flex-direction:column;justify-content:center;padding:80px 96px 80px 88px}
   @media (max-width:900px){.story-text{padding:64px 24px}}
@@ -145,7 +142,6 @@
   <div class="hero-content">
     <div class="hero-kicker reveal">野馬茶</div>
     <h1 class="reveal reveal-d1">ЧАЙ ДИКОЙ ЛОШАДИ</h1>
-    <a class="hero-btn reveal reveal-d2" href="#catalog">Смотреть коллекцию</a>
   </div>
 </div>
 
@@ -153,7 +149,7 @@
 <div id="catalog" class="catalog-head">
   <div class="catalog-head-inner reveal">
     <div class="catalog-kicker">Из собрания</div>
-    <h2>Для вас</h2>
+    <h2>Отобрали для вас</h2>
   </div>
 </div>
 <div class="catalog-list">
@@ -220,15 +216,15 @@
     </div>
     <div class="story-text reveal reveal-d1">
       <div class="story-kicker">Происхождение</div>
-      <h2>Мы поднимаемся туда сами</h2>
-      <p>Деревня в горах Юньнани, куда не ведёт навигатор. Семейная фабрика — та же, что и три поколения назад. Мы не покупаем чай по каталогу поставщика: каждую весну поднимаемся в горы и лично пробуем партию до того, как она станет нашей. Если чай не достоин имени 野馬茶 — мы уезжаем без него.</p>
+      <h2>ГОВНА МНОГО ПИЗДАТЫЙ ВОЗИМ МЫ</h2>
+      <p>Мы доебываемся до каждой мелочи, ездим лично и контролируем процесс, чтобы хитрожопый китаец не подсунул говно. Отвечаем собственным именем за то, что наш товар — топ товар.</p>
     </div>
   </div>
 </div>
 
 <!-- CLOSING -->
 <div class="closing">
-  <p class="reveal">96 деревень остались за порогом. Мы выбрали четыре — те, за которые готовы ручаться именем.</p>
+  <p class="reveal">ПУЭР ДЛЯ ПАЦАНОВ ЕРЛ ГРЕЙ ДЛЯ ЛОХОВ</p>
   <div class="subscribe reveal reveal-d1">
     <input placeholder="эл. почта">
     <button type="button">Подписаться</button>
