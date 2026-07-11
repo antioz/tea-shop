@@ -116,31 +116,29 @@
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Четыре пуэра. Один путь.</h2>
       </div>
       <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-        <div style="display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:center; padding:80px 0; border-top:1px solid rgba(240,233,218,0.09); {{ tea.style }}">
-          <div>
+        <div style="display:grid; grid-template-columns:0.9fr 1.1fr; gap:0; align-items:stretch; background:#ece4d1; margin-bottom:2px; {{ tea.style }}">
+          <div style="padding:70px 64px;">
             <div style="font-size:13px; color:{{ accent }}; letter-spacing:.05em; margin-bottom:22px;">N° {{ tea.num }}</div>
-            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:32px;">
+            <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap;">
               <span style="font-family:'Noto Serif SC',serif; font-size:23px; color:{{ accent }};">{{ tea.cn }}</span>
-              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:#f5efe1;">{{ tea.ru }}</span>
+              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:#2a2015;">{{ tea.ru }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09);">
-              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">РЕГИОН</span>
-              <span style="font-size:14px; color:#f0e9da;">{{ tea.region }}</span>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12);">
+              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">РЕГИОН</span>
+              <span style="font-size:14px; color:#3a2f22;">{{ tea.region }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09);">
-              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">ВЕС</span>
-              <span style="font-size:14px; color:#f0e9da;">{{ tea.weight }}</span>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12);">
+              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">ВЕС</span>
+              <span style="font-size:14px; color:#3a2f22;">{{ tea.weight }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(240,233,218,0.09); border-bottom:1px solid rgba(240,233,218,0.09); margin-bottom:26px;">
-              <span style="font-size:11px; letter-spacing:.14em; color:#7a7166;">ЦЕНА</span>
-              <span style="font-family:'Cormorant Garamond',serif; font-size:19px; color:{{ accent }};">{{ tea.price }}</span>
+            <div style="display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(28,23,18,0.12); border-bottom:1px solid rgba(28,23,18,0.12); margin-bottom:26px;">
+              <span style="font-size:11px; letter-spacing:.14em; color:#8a7a5f;">ЦЕНА</span>
+              <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:19px; color:{{ accent }};">{{ tea.price }}</span>
             </div>
-            <p style="font-size:13.5px; line-height:1.85; color:#8f8579; margin:0;">{{ tea.note }}</p>
+            <p style="font-size:13.5px; line-height:1.85; color:#6b5c46; margin:0;">{{ tea.note }}</p>
           </div>
-          <div style="position:relative; aspect-ratio:4/3;">
+          <div style="position:relative; aspect-ratio:3/4; overflow:hidden;">
             <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
-            <div style="position:absolute; top:-10px; left:-10px; width:22px; height:22px; border-top:1px solid {{ accent }}; border-left:1px solid {{ accent }};"></div>
-            <div style="position:absolute; bottom:-10px; right:-10px; width:22px; height:22px; border-bottom:1px solid {{ accent }}; border-right:1px solid {{ accent }};"></div>
           </div>
         </div>
       </sc-for>
