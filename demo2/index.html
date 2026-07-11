@@ -97,11 +97,16 @@
             </div>
           </sc-for>
         </div>
-        <div style="display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; flex-direction:column; gap:2px;">
           <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-            <div style="position:relative; width:200px; aspect-ratio:1/1; overflow:hidden; border:1px solid rgba(240,233,218,0.16);">
-              <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.88) saturate(.92) contrast(1.05);"/>
-              <span style="position:absolute; top:10px; left:10px; font-size:9.5px; letter-spacing:.14em; color:{{ accent }}; background:rgba(11,10,9,.6); padding:3px 8px; backdrop-filter:blur(4px);">N° {{ tea.num }}</span>
+            <div style="display:flex; align-items:center; gap:22px; padding:16px 20px; background:#ece4d1;">
+              <div style="width:76px; height:76px; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="max-width:100%; max-height:100%; object-fit:contain; display:block;"/>
+              </div>
+              <div>
+                <div style="font-size:10px; letter-spacing:.14em; color:{{ accent }}; margin-bottom:6px;">N° {{ tea.num }}</div>
+                <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; color:#2a2015;">{{ tea.ru }}</div>
+              </div>
             </div>
           </sc-for>
         </div>
