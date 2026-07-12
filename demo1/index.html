@@ -85,18 +85,20 @@
   @media (max-width:800px){.lot{grid-template-columns:88px 1fr;column-gap:18px;row-gap:2px;padding:18px 0}
     .lot .steep{display:none}
     .lot-num{display:none}
-    .lot-price{grid-column:2;text-align:left;font-size:15px}
-    .lot-origin{font-size:9px;margin-bottom:4px}
-    .lot-name{font-size:17px}
   }
   .lot-num{font-family:'PT Serif',serif;font-size:15px;color:var(--muted)}
   .lot-thumb{width:80px;height:80px;border-radius:50%;overflow:hidden;background:var(--bg-soft)}
-  @media (max-width:800px){.lot-thumb{width:88px;height:88px;grid-row:span 3}}
+  @media (max-width:800px){.lot-thumb{width:88px;height:88px;align-self:start}}
   .lot-thumb img{width:114%;height:114%;object-fit:cover;object-position:center 42%;margin:-7% 0 0 -7%}
   .lot-origin{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
   .lot-name{font-family:'PT Serif',serif;font-size:23px;color:var(--cream)}
   .lot-steep{font-size:12.5px;color:var(--cream-dim);white-space:nowrap}
   .lot-price{font-family:'PT Serif',serif;font-size:21px;color:var(--cream);text-align:right;white-space:nowrap}
+  @media (max-width:800px){
+    .lot-price{grid-column:2;text-align:left;font-size:15px}
+    .lot-origin{font-size:9px;letter-spacing:1px;margin-bottom:4px}
+    .lot-name{font-size:17px}
+  }
 
   /* CLOSING */
   .closing{padding:160px 64px;text-align:center;border-top:1px solid var(--line)}
@@ -167,7 +169,7 @@
       <div class="lot-num">01</div>
       <div class="lot-thumb"><img src="assets/tea-01-gongting.png" alt="«Гун Тин» Шу Пуэр"></div>
       <div>
-        <div class="lot-origin">Мэнхай · Императорский сбор · 357 г</div>
+        <div class="lot-origin">Мэнхай · Императорский сбор · 357&nbsp;г</div>
         <div class="lot-name">«Гун Тин» Шу Пуэр</div>
       </div>
       <div class="lot-steep steep">95° · 8 сек</div>
@@ -178,7 +180,7 @@
       <div class="lot-num">02</div>
       <div class="lot-thumb"><img src="assets/tea-02-maheiguyun.png" alt="Ма Хэй Гу Юнь"></div>
       <div>
-        <div class="lot-origin">Бинг Дао · Старые деревья · выдержка 15 лет</div>
+        <div class="lot-origin">Бинг Дао · Старые деревья · выдержка 15&nbsp;лет</div>
         <div class="lot-name">Ма Хэй Гу Юнь</div>
       </div>
       <div class="lot-steep steep">90° · 12 сек</div>
@@ -189,7 +191,7 @@
       <div class="lot-num">03</div>
       <div class="lot-thumb"><img src="assets/tea-03-qizibing.png" alt="Юн Чжэнь «Гунтин»"></div>
       <div>
-        <div class="lot-origin">Сягуань · Семь коржей · партия 1601</div>
+        <div class="lot-origin">Сягуань · Семь коржей · партия&nbsp;1601</div>
         <div class="lot-name">Юн Чжэнь «Гунтин»</div>
       </div>
       <div class="lot-steep steep">95° · 10 сек</div>
