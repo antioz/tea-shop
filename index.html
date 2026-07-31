@@ -75,7 +75,7 @@
   <section data-screen-label="02 — Фаундер" id="founder" data-reveal-id="founder" style="position:relative; padding:110px 40px; background:#131110; {{ founderRevealStyle }}">
     <div class="founder-grid" style="max-width:980px; margin:0 auto; display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:center;">
       <div style="border-radius:4px; overflow:hidden; border:1px solid rgba(240,233,218,0.12);">
-        <img src="./images/founder-sergey.png" alt="Сергей Ермаков, основатель 野馬茶" style="width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(.15) contrast(1.05);"/>
+        <img src="./images/founder-sergey.png" alt="Сергей Ермаков, основатель 野馬茶" style="width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(.55) sepia(.2) brightness(.82) contrast(1.15) saturate(1.1);"/>
       </div>
       <div>
         <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">ОСНОВАТЕЛЬ</div>
@@ -94,9 +94,13 @@
       </div>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
         <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
-          <a href="{{ v.href }}" style="display:block; text-decoration:none; background:linear-gradient(160deg, {{ v.colorA }} 0%, {{ v.colorB }} 100%); border-top:3px solid {{ accent }}; padding:48px 26px; min-height:220px; position:relative; overflow:hidden; {{ v.style }}">
-            <div style="font-size:10px; letter-spacing:.14em; color:rgba(240,233,218,.6); margin-bottom:14px;">{{ v.cn }}</div>
-            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f5efe1;">{{ v.ru }}</div>
+          <a href="{{ v.href }}" style="display:block; text-decoration:none; border-top:3px solid {{ accent }}; min-height:260px; position:relative; overflow:hidden; {{ v.style }}">
+            <img src="{{ v.img }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.55) saturate(.9) contrast(1.05);"/>
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.1) 0%, rgba(11,10,9,.5) 55%, rgba(11,10,9,.92) 100%);"></div>
+            <div style="position:relative; z-index:1; min-height:260px; display:flex; flex-direction:column; justify-content:flex-end; padding:48px 26px;">
+              <div style="font-size:10px; letter-spacing:.14em; color:rgba(240,233,218,.7); margin-bottom:14px;">{{ v.cn }}</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f5efe1;">{{ v.ru }}</div>
+            </div>
           </a>
         </sc-for>
       </div>
@@ -173,12 +177,12 @@ class Component extends DCLogic {
   state = { scrolled: false, scrollY: 0, visible: {} };
 
   varieties = [
-    { slug: 'shu-puer', ru: 'Шу пуэр', cn: '熟普洱', href: './shu-puer/', colorA: '#2a1c18', colorB: '#1c1310' },
-    { slug: 'sheng-puer', ru: 'Шэн пуэр', cn: '生普洱', href: './sheng-puer/', colorA: '#23241a', colorB: '#171810' },
-    { slug: 'white', ru: 'Белый чай', cn: '白茶', href: './white/', colorA: '#2a2620', colorB: '#1d1a16' },
-    { slug: 'red', ru: 'Красный чай', cn: '红茶', href: './red/', colorA: '#2c1a1a', colorB: '#1c1112' },
-    { slug: 'mandarin-shu', ru: 'Шу в мандаринах', cn: '小青柑', href: './mandarin-shu/', colorA: '#24261c', colorB: '#181910' },
-    { slug: 'chenpi', ru: 'Мандариновая кожура', cn: '陈皮', href: './chenpi/', colorA: '#291f16', colorB: '#1b150e' },
+    { slug: 'shu-puer', ru: 'Шу пуэр', cn: '熟普洱', href: './shu-puer/', img: './images/variety-shu-puer.jpeg' },
+    { slug: 'sheng-puer', ru: 'Шэн пуэр', cn: '生普洱', href: './sheng-puer/', img: './images/variety-sheng-puer.jpeg' },
+    { slug: 'white', ru: 'Белый чай', cn: '白茶', href: './white/', img: './images/variety-white.jpeg' },
+    { slug: 'red', ru: 'Красный чай', cn: '红茶', href: './red/', img: './images/variety-red.jpg' },
+    { slug: 'mandarin-shu', ru: 'Шу в мандаринах', cn: '小青柑', href: './mandarin-shu/', img: './images/variety-mandarin-shu.jpeg' },
+    { slug: 'chenpi', ru: 'Мандариновая кожура', cn: '陈皮', href: './chenpi/', img: './images/variety-chenpi.jpeg' },
   ];
 
   steps = [
