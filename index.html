@@ -36,11 +36,11 @@
       <span style="font-size:8.5px; letter-spacing:.24em; color:#7a7166;">WILD HORSE TEA CO.</span>
     </div>
     <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
-      <a href="#catalog" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">01 · КОЛЛЕКЦИЯ</a>
+      <a href="#varieties" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">01 · СОРТА</a>
       <a href="#ritual" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">02 · ПРИНЦИПЫ</a>
       <a href="#footer" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">03 · КОНТАКТЫ</a>
     </div>
-    <a href="#catalog" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px; transition:all .35s ease;" style-hover="border-color:{{ accent }}; background:{{ accent }};">КАТАЛОГ →</a>
+    <a href="#varieties" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px; transition:all .35s ease;" style-hover="border-color:{{ accent }}; background:{{ accent }};">СОРТА →</a>
   </nav>
 
   <section data-screen-label="01 — Главная" style="position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:120px 40px 80px; overflow:hidden;">
@@ -84,32 +84,19 @@
     </div>
   </section>
 
-  <section data-screen-label="02 — Каталог" id="catalog" data-reveal-id="catalog" style="position:relative; padding:60px 40px 140px; background:#131110;">
+  <section data-screen-label="03 — Сорта" id="varieties" data-reveal-id="varieties" style="position:relative; padding:60px 40px 140px; background:#131110;">
     <div style="max-width:1180px; margin:0 auto;">
       <div style="margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
-        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">01 — КОЛЛЕКЦИЯ</div>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Подобрали для вас</h2>
+        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">01 — СОРТА</div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Шесть сортов</h2>
       </div>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
-        <sc-for list="{{ teas }}" as="tea" hint-placeholder-count="4">
-          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); border-top:3px solid {{ accent }}; overflow:hidden; {{ tea.style }}">
-            <div style="position:relative; aspect-ratio:1/1; overflow:hidden;">
-              <img src="{{ tea.img }}" alt="{{ tea.ru }}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
-            </div>
-            <div style="padding:22px 24px 26px;">
-              <div style="font-size:10px; letter-spacing:.14em; color:{{ accent }}; margin-bottom:10px;">N° {{ tea.num }} · {{ tea.cn }}</div>
-              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#2a2015; margin-bottom:10px;">{{ tea.ru }}</div>
-              <p style="font-size:12.5px; line-height:1.6; color:#6b5c46; margin:0 0 16px;">{{ tea.note }}</p>
-              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid {{ accent }}22;">
-                <span style="font-size:11px; letter-spacing:.1em; color:#8a7a5f;">{{ tea.region }} · {{ tea.weight }}</span>
-                <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:17px; color:{{ accent }};">{{ tea.price }}</span>
-              </div>
-            </div>
-          </div>
+        <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
+          <a href="{{ v.href }}" style="display:block; text-decoration:none; background:linear-gradient(160deg, {{ v.colorA }} 0%, {{ v.colorB }} 100%); border-top:3px solid {{ accent }}; padding:48px 26px; min-height:220px; position:relative; overflow:hidden; {{ v.style }}">
+            <div style="font-size:10px; letter-spacing:.14em; color:rgba(240,233,218,.6); margin-bottom:14px;">{{ v.cn }}</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f5efe1;">{{ v.ru }}</div>
+          </a>
         </sc-for>
-      </div>
-      <div style="text-align:center; margin-top:70px;">
-        <a href="#" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:18px 42px; transition:all .35s ease; display:inline-block;" style-hover="background:#a85862; transform:translateY(-2px);">СМОТРЕТЬ КОЛЛЕКЦИЮ →</a>
       </div>
     </div>
   </section>
@@ -150,7 +137,7 @@
       <div>
         <div style="font-size:10.5px; letter-spacing:.14em; color:#7a7166; margin-bottom:22px;">НАВИГАЦИЯ</div>
         <div style="display:flex; flex-direction:column; gap:13px;">
-          <a href="#catalog" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Коллекция</a>
+          <a href="#varieties" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Сорта</a>
           <a href="#ritual" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Принципы</a>
         </div>
       </div>
@@ -174,11 +161,13 @@
 class Component extends DCLogic {
   state = { scrolled: false, scrollY: 0, visible: {} };
 
-  teas = [
-    { num: '01', slug: 'tea-gongting-puer', cn: '宫廷普洱', ru: 'Пуэр из Жопулао', region: 'Юньнань', weight: '357 г', note: 'Императорский шу пуэр. Земля, финик, бархатный настой.', price: '3 400 ₽', img: './images/tea-gongting-puer.png', imgCutout: './images/tea-gongting-puer-cutout.png' },
-    { num: '02', slug: 'tea-mahei-guyun', cn: '麻黑古韵', ru: 'Шэн из Хуйчжоу', region: 'Биндао', weight: '357 г', note: 'Старые деревья. Древесный дым и чернослив.', price: '5 200 ₽', img: './images/tea-mahei-guyun.png', imgCutout: './images/tea-mahei-guyun-cutout.png' },
-    { num: '03', slug: 'tea-1601', cn: '宫廷饼', ru: 'Улун из Залупшаня', region: 'Юньчжэнь', weight: '357 г', note: 'Плотный шу пуэр с нотами какао и сухих фруктов.', price: '2 900 ₽', img: './images/tea-1601.png', imgCutout: './images/tea-1601-cutout.png' },
-    { num: '04', slug: 'tea-chamagudao', cn: '茶马古道', ru: 'Пуэр из Пиздогоу', region: 'Чайно-конный путь', weight: '357 г', note: 'Молодой шэн пуэр. Травы и дикий мёд.', price: '2 100 ₽', img: './images/tea-chamagudao.png', imgCutout: './images/tea-chamagudao-cutout.png' },
+  varieties = [
+    { slug: 'shu-puer', ru: 'Шу пуэр', cn: '熟普洱', href: './shu-puer/', colorA: '#2a1c18', colorB: '#1c1310' },
+    { slug: 'sheng-puer', ru: 'Шэн пуэр', cn: '生普洱', href: './sheng-puer/', colorA: '#23241a', colorB: '#171810' },
+    { slug: 'white', ru: 'Белый чай', cn: '白茶', href: './white/', colorA: '#2a2620', colorB: '#1d1a16' },
+    { slug: 'red', ru: 'Красный чай', cn: '红茶', href: './red/', colorA: '#2c1a1a', colorB: '#1c1112' },
+    { slug: 'mandarin-shu', ru: 'Шу в мандаринах', cn: '小青柑', href: './mandarin-shu/', colorA: '#24261c', colorB: '#181910' },
+    { slug: 'chenpi', ru: 'Мандариновая кожура', cn: '陈皮', href: './chenpi/', colorA: '#291f16', colorB: '#1b150e' },
   ];
 
   steps = [
@@ -239,14 +228,14 @@ class Component extends DCLogic {
     const heroParallax = `translateY(${scrollY * 0.15}px)`;
     const heroImgParallax = `translateY(${Math.min(70, scrollY * 0.25)}px)`;
 
-    const teasStyled = this.teas.map((t, i) => ({ ...t, style: this.revealStyle('catalog', 0.04 * i) }));
+    const varietiesStyled = this.varieties.map((v, i) => ({ ...v, style: this.revealStyle('varieties', 0.04 * i) }));
 
     return {
       accent,
       navStyle,
       heroParallax,
       heroImgParallax,
-      teas: teasStyled,
+      varieties: varietiesStyled,
       steps: this.steps,
       founderRevealStyle: this.revealStyle('founder', 0),
       ritualRevealStyle: this.revealStyle('ritual', 0),
