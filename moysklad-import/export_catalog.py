@@ -18,13 +18,19 @@ BASE_MAP = {
 
 OVERRIDES = {
     3: "chenpi",
-    9: "shu-puer",
     10: "chenpi",
     26: "mandarin-shu",
     27: "mandarin-shu",
 }
 
 SITE_CATEGORIES = ["shu-puer", "sheng-puer", "white", "red", "mandarin-shu", "chenpi"]
+
+PHOTO_ROW_OVERRIDES = {
+    2: None,
+    3: 3,
+    10: None,
+    11: 11,
+}
 
 
 def classify_site_category(item):
@@ -34,7 +40,13 @@ def classify_site_category(item):
 
 
 def find_photo(num):
-    matches = sorted(PHOTOS_DIR.glob(f"row{num + 1}.*"))
+    if num in PHOTO_ROW_OVERRIDES:
+        row = PHOTO_ROW_OVERRIDES[num]
+        if row is None:
+            return None
+        matches = sorted(PHOTOS_DIR.glob(f"row{row}.*"))
+    else:
+        matches = sorted(PHOTOS_DIR.glob(f"row{num + 1}.*"))
     return matches[0] if matches else None
 
 

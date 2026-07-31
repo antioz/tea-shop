@@ -6,7 +6,7 @@
       "price_rub": 114.4,
       "spec": "6 г",
       "unit": "уп.",
-      "img": "catalog-photos/2.jpeg"
+      "img": null
     },
     {
       "num": 4,
@@ -39,14 +39,6 @@
       "spec": "500 г × 12 коробок/ящик",
       "unit": "ящик",
       "img": "catalog-photos/8.jpeg"
-    },
-    {
-      "num": 9,
-      "name": "Малый квадратный кирпич «Ранняя весна» 2024 г.",
-      "price_rub": 97344,
-      "spec": "90 г/коробка, 72 коробки/ящик",
-      "unit": "ящик",
-      "img": "catalog-photos/9.jpeg"
     },
     {
       "num": 19,
@@ -97,6 +89,14 @@
       "spec": "500 г × 12 коробок/ящик",
       "unit": "ящик",
       "img": "catalog-photos/7.jpeg"
+    },
+    {
+      "num": 9,
+      "name": "Малый квадратный кирпич «Ранняя весна» 2024 г.",
+      "price_rub": 97344,
+      "spec": "90 г/коробка, 72 коробки/ящик",
+      "unit": "ящик",
+      "img": "catalog-photos/9.jpeg"
     },
     {
       "num": 12,
@@ -330,7 +330,7 @@
       "price_rub": 2860,
       "spec": "357 г/блин × 28 блинов/ящик",
       "unit": "блин",
-      "img": null
+      "img": "catalog-photos/11.jpeg"
     },
     {
       "num": 23,
@@ -432,7 +432,7 @@
       "price_rub": 483.6,
       "spec": "10 г",
       "unit": "уп.",
-      "img": null
+      "img": "catalog-photos/3.jpeg"
     },
     {
       "num": 10,
@@ -440,7 +440,7 @@
       "price_rub": 86112,
       "spec": "180 г/коробка × 12 коробок/ящик",
       "unit": "ящик",
-      "img": "catalog-photos/10.jpeg"
+      "img": null
     }
   ]
 }

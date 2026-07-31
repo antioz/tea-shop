@@ -1,5 +1,7 @@
 import unittest
-from export_catalog import classify_site_category
+from pathlib import Path
+
+from export_catalog import classify_site_category, find_photo
 
 
 class TestClassifySiteCategory(unittest.TestCase):
@@ -25,8 +27,26 @@ class TestClassifySiteCategory(unittest.TestCase):
         self.assertEqual(classify_site_category({'num': 26, 'category': 'Шу пуэр'}), 'mandarin-shu')
         self.assertEqual(classify_site_category({'num': 27, 'category': 'Шу пуэр'}), 'mandarin-shu')
 
-    def test_brick_stays_shu_puer(self):
-        self.assertEqual(classify_site_category({'num': 9, 'category': 'Шу пуэр'}), 'shu-puer')
+    def test_sheng_puer_no_override_via_base_map(self):
+        self.assertEqual(classify_site_category({'num': 9, 'category': 'Шэн пуэр'}), 'sheng-puer')
+
+
+class TestFindPhoto(unittest.TestCase):
+    def test_item_2_has_no_photo(self):
+        self.assertIsNone(find_photo(2))
+
+    def test_item_3_maps_to_row3(self):
+        photo = find_photo(3)
+        self.assertIsNotNone(photo)
+        self.assertEqual(Path(photo).name, 'row3.jpeg')
+
+    def test_item_10_has_no_photo(self):
+        self.assertIsNone(find_photo(10))
+
+    def test_item_11_maps_to_row11(self):
+        photo = find_photo(11)
+        self.assertIsNotNone(photo)
+        self.assertEqual(Path(photo).name, 'row11.jpeg')
 
 
 if __name__ == '__main__':
