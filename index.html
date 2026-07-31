@@ -27,7 +27,24 @@
     .nav-links{ display:none !important; }
     .footer-grid{ grid-template-columns:1fr !important; gap:36px !important; }
     .founder-grid{ grid-template-columns:1fr !important; gap:28px !important; }
+    .variety-row{ flex-direction:column !important; min-height:auto !important; }
+    .variety-row .variety-media{ min-height:260px; }
+    .variety-row .variety-text{ padding:36px 28px !important; }
   }
+  .hover-underline{ transition:color .3s ease, border-color .3s ease; }
+  .hover-underline:hover{ color:#f0e9da; border-color:#8a3b42; }
+  .hover-outline-fill{ transition:all .35s ease; }
+  .hover-outline-fill:hover{ border-color:#8a3b42; background:#8a3b42; }
+  .hover-btn-accent{ transition:all .35s ease; }
+  .hover-btn-accent:hover{ background:#a85862; transform:translateY(-2px); }
+  .hover-accent-text{ transition:color .3s ease; }
+  .hover-accent-text:hover{ color:#8a3b42; }
+  .variety-row{ transition:background .35s ease; }
+  .variety-row:hover{ background:#1a1613; }
+  .variety-row .variety-img{ transition:transform .6s ease, filter .4s ease; }
+  .variety-row:hover .variety-img{ transform:scale(1.04); filter:brightness(.8) saturate(1) contrast(1.05) !important; }
+  .variety-row .variety-arrow{ transition:color .3s ease, transform .3s ease; }
+  .variety-row:hover .variety-arrow{ color:#f0e9da; transform:translateX(5px); }
 </style>
 </helmet>
 <div id="wht-root" style="position:relative; background:#0b0a09; color:#f0e9da; font-family:'PT Sans',sans-serif; font-weight:400; overflow-x:hidden;">
@@ -38,17 +55,17 @@
       <span style="font-size:8.5px; letter-spacing:.24em; color:#7a7166;">WILD HORSE TEA CO.</span>
     </div>
     <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
-      <a href="#varieties" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">01 · СОРТА</a>
-      <a href="#ritual" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">02 · ПРИНЦИПЫ</a>
-      <a href="#footer" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;" style-hover="color:#f0e9da; border-color:{{ accent }};">03 · КОНТАКТЫ</a>
+      <a href="#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">01 · СОРТА</a>
+      <a href="#ritual" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">02 · ПРИНЦИПЫ</a>
+      <a href="#footer" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">03 · КОНТАКТЫ</a>
     </div>
-    <a href="#varieties" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px; transition:all .35s ease;" style-hover="border-color:{{ accent }}; background:{{ accent }};">СОРТА →</a>
+    <a href="#varieties" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px;">СОРТА →</a>
   </nav>
 
   <section data-screen-label="01 — Главная" style="position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:120px 40px 80px; overflow:hidden;">
 
     <div style="position:absolute; inset:0; z-index:0; overflow:hidden; background:#0b0a09; transform:{{ heroImgParallax }};">
-      <video autoplay muted loop playsinline poster="./images/plantation.jpg" aria-label="Горы Юньнани в тумане" style="width:100%; height:100%; object-fit:cover; filter:brightness(.45) saturate(.75) contrast(1.08);">
+      <video autoplay muted loop playsinline poster="./images/plantation.jpg" aria-label="Горы Юньнани в тумане" style="width:100%; height:100%; object-fit:cover; filter:brightness(1.15) saturate(.9) contrast(1.05);">
         <source src="./images/hero.mp4" type="video/mp4">
       </video>
       <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.7) 0%, rgba(11,10,9,.35) 30%, rgba(11,10,9,.55) 65%, rgba(11,10,9,.95) 100%);"></div>
@@ -72,7 +89,7 @@
     </div>
   </section>
 
-  <section data-screen-label="02 — Фаундер" id="founder" data-reveal-id="founder" style="position:relative; padding:110px 40px; background:#131110; {{ founderRevealStyle }}">
+  <section data-screen-label="02 — Фаундер" id="founder" data-reveal-id="founder" style="position:relative; padding:90px 40px; background:#131110; {{ founderRevealStyle }}">
     <div class="founder-grid" style="max-width:980px; margin:0 auto; display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:center;">
       <div style="border-radius:4px; overflow:hidden; border:1px solid rgba(240,233,218,0.12);">
         <img src="./images/founder-sergey.png" alt="Сергей Ермаков, основатель 野馬茶" style="width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(.55) sepia(.2) brightness(.82) contrast(1.15) saturate(1.1);"/>
@@ -81,30 +98,35 @@
         <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">ОСНОВАТЕЛЬ</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3vw,36px); color:#f5efe1; margin:0 0 20px;">Привет, я Сергей Ермаков</h2>
         <p style="font-size:14.5px; line-height:1.85; color:#c9c0b3; margin:0 0 32px; max-width:440px;">Я пью то же, что продаю. Если не знаете, с чего начать — подберём вместе.</p>
-        <a href="#varieties" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; transition:all .35s ease; display:inline-block;" style-hover="background:#a85862; transform:translateY(-2px);">ПОДОБРАТЬ ЧАЙ →</a>
+        <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; display:inline-block;">ПОДОБРАТЬ ЧАЙ →</a>
       </div>
     </div>
   </section>
 
-  <section data-screen-label="03 — Сорта" id="varieties" data-reveal-id="varieties" style="position:relative; padding:60px 40px 140px; background:#131110;">
-    <div style="max-width:1180px; margin:0 auto;">
-      <div style="margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
+  <section data-screen-label="03 — Сорта" id="varieties" data-reveal-id="varieties" style="position:relative; padding:60px 0 0; background:#131110;">
+    <div style="max-width:1180px; margin:0 auto; padding:0 40px 50px;">
+      <div style="padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
         <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">01 — СОРТА</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.6vw,46px); color:#f5efe1; margin:0;">Шесть сортов</h2>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
-        <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
-          <a href="{{ v.href }}" style="display:block; text-decoration:none; border-top:3px solid {{ accent }}; min-height:260px; position:relative; overflow:hidden; {{ v.style }}">
-            <img src="{{ v.img }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.55) saturate(.9) contrast(1.05);"/>
-            <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.1) 0%, rgba(11,10,9,.5) 55%, rgba(11,10,9,.92) 100%);"></div>
-            <div style="position:relative; z-index:1; min-height:260px; display:flex; flex-direction:column; justify-content:flex-end; padding:48px 26px;">
-              <div style="font-size:10px; letter-spacing:.14em; color:rgba(240,233,218,.7); margin-bottom:14px;">{{ v.cn }}</div>
-              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; color:#f5efe1;">{{ v.ru }}</div>
-            </div>
-          </a>
-        </sc-for>
-      </div>
     </div>
+    <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
+      <a href="{{ v.href }}" class="variety-row" style="display:flex; flex-direction:{{ v.flexDirection }}; text-decoration:none; border-top:1px solid rgba(240,233,218,0.1); min-height:400px; {{ v.style }}">
+        <div class="variety-media" style="flex:1 1 55%; position:relative; overflow:hidden;">
+          <img src="{{ v.img }}" alt="" class="variety-img" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.72) saturate(.95) contrast(1.05);"/>
+        </div>
+        <div class="variety-text" style="flex:1 1 45%; display:flex; flex-direction:column; justify-content:center; padding:56px 64px;">
+          <div style="font-family:'Noto Serif SC',serif; font-size:40px; color:{{ accent }}; margin-bottom:22px; line-height:1;">{{ v.cn }}</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:32px; color:#f5efe1; margin-bottom:16px;">{{ v.ru }}</div>
+          <p style="font-size:14px; line-height:1.75; color:#c9c0b3; margin:0 0 30px; max-width:380px;">{{ v.note }}</p>
+          <div style="height:1px; background:rgba(240,233,218,0.14); margin-bottom:24px; max-width:380px;"></div>
+          <div style="display:flex; align-items:center; justify-content:space-between; max-width:380px;">
+            <span style="font-size:11px; letter-spacing:.08em; color:#8a7a5f;">{{ v.temp }} · {{ v.time }}</span>
+            <span class="variety-arrow" style="font-size:11.5px; letter-spacing:.1em; color:#c7bfaf;">СМОТРЕТЬ →</span>
+          </div>
+        </div>
+      </a>
+    </sc-for>
   </section>
 
   <section data-screen-label="04 — Принципы" id="ritual" data-reveal-id="ritual" style="position:relative; padding:90px 40px; overflow:hidden; {{ ritualRevealStyle }}">
@@ -133,7 +155,7 @@
     <div style="max-width:640px; margin:0 auto;">
       <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:20px;">ПОДПИСКА</div>
       <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(24px,2.8vw,34px); color:#f5efe1; margin:0 0 26px;">Разборы чая и партий — в канале</h2>
-      <a href="https://t.me/wildhorsetea" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; transition:all .35s ease; display:inline-block;" style-hover="background:#a85862; transform:translateY(-2px);">ПОДПИСАТЬСЯ В TELEGRAM →</a>
+      <a href="https://t.me/wildhorsetea" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; display:inline-block;">ПОДПИСАТЬСЯ В TELEGRAM →</a>
     </div>
   </section>
 
@@ -151,16 +173,16 @@
       <div>
         <div style="font-size:10.5px; letter-spacing:.14em; color:#7a7166; margin-bottom:22px;">НАВИГАЦИЯ</div>
         <div style="display:flex; flex-direction:column; gap:13px;">
-          <a href="#varieties" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Сорта</a>
-          <a href="#ritual" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Принципы</a>
-          <a href="#subscribe" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Подписка</a>
+          <a href="#varieties" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Сорта</a>
+          <a href="#ritual" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Принципы</a>
+          <a href="#subscribe" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Подписка</a>
         </div>
       </div>
       <div>
         <div style="font-size:10.5px; letter-spacing:.14em; color:#7a7166; margin-bottom:22px;">КОНТАКТЫ</div>
         <div style="display:flex; flex-direction:column; gap:13px;">
-          <a href="mailto:hello@wildhorsetea.ru" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">hello@wildhorsetea.ru</a>
-          <a href="https://t.me/wildhorsetea" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;" style-hover="color:{{ accent }};">Telegram</a>
+          <a href="mailto:hello@wildhorsetea.ru" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">hello@wildhorsetea.ru</a>
+          <a href="https://t.me/wildhorsetea" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Telegram</a>
           <span style="color:#c7bfaf; font-size:12.5px;">Москва · 55.75°N 37.6°E</span>
         </div>
       </div>
@@ -177,12 +199,12 @@ class Component extends DCLogic {
   state = { scrolled: false, scrollY: 0, visible: {} };
 
   varieties = [
-    { slug: 'shu-puer', ru: 'Шу пуэр', cn: '熟普洱', href: './shu-puer/', img: './images/variety-shu-puer.jpeg' },
-    { slug: 'sheng-puer', ru: 'Шэн пуэр', cn: '生普洱', href: './sheng-puer/', img: './images/variety-sheng-puer.jpeg' },
-    { slug: 'white', ru: 'Белый чай', cn: '白茶', href: './white/', img: './images/variety-white.jpeg' },
-    { slug: 'red', ru: 'Красный чай', cn: '红茶', href: './red/', img: './images/variety-red.jpg' },
-    { slug: 'mandarin-shu', ru: 'Шу в мандаринах', cn: '小青柑', href: './mandarin-shu/', img: './images/variety-mandarin-shu.jpeg' },
-    { slug: 'chenpi', ru: 'Мандариновая кожура', cn: '陈皮', href: './chenpi/', img: './images/variety-chenpi.jpeg' },
+    { slug: 'shu-puer', ru: 'Шу пуэр', cn: '熟普洱', href: './shu-puer/', img: './images/variety-shu-puer.jpeg', note: 'Тёмный чай ускоренной ферментации. Земля, финик и спокойная глубина.', temp: '95–100°C', time: '5–10 сек' },
+    { slug: 'sheng-puer', ru: 'Шэн пуэр', cn: '生普洱', href: './sheng-puer/', img: './images/variety-sheng-puer.jpeg', note: 'Живой чай, который меняется годами. Терпкость молодости или мягкость выдержки.', temp: '90–95°C', time: 'от 5 сек' },
+    { slug: 'white', ru: 'Белый чай', cn: '白茶', href: './white/', img: './images/variety-white.jpeg', note: 'Минимум обработки, максимум тишины. Цветы, мёд, лёгкая сладость.', temp: '80–85°C', time: 'по вкусу' },
+    { slug: 'red', ru: 'Красный чай', cn: '红茶', href: './red/', img: './images/variety-red.jpg', note: 'Плотный, чуть сладковатый вкус с нотами мёда и сухофруктов.', temp: '90–95°C', time: '3–4 мин' },
+    { slug: 'mandarin-shu', ru: 'Шу в мандаринах', cn: '小青柑', href: './mandarin-shu/', img: './images/variety-mandarin-shu.jpeg', note: 'Шу пуэр внутри целого мандарина — цитрус пропитывает чай изнутри.', temp: 'кипяток', time: 'короткие проливы' },
+    { slug: 'chenpi', ru: 'Мандариновая кожура', cn: '陈皮', href: './chenpi/', img: './images/variety-chenpi.jpeg', note: 'Сушёная корка, которая с возрастом становится лучше. Пьют саму или с пуэром.', temp: 'кипяток', time: '3–5 мин' },
   ];
 
   steps = [
@@ -252,7 +274,11 @@ class Component extends DCLogic {
     const heroParallax = `translateY(${scrollY * 0.15}px)`;
     const heroImgParallax = `translateY(${Math.min(70, scrollY * 0.25)}px)`;
 
-    const varietiesStyled = this.varieties.map((v, i) => ({ ...v, style: this.revealStyle('varieties', 0.04 * i) }));
+    const varietiesStyled = this.varieties.map((v, i) => ({
+      ...v,
+      style: this.revealStyle('varieties', 0.04 * i),
+      flexDirection: i % 2 === 0 ? 'row' : 'row-reverse',
+    }));
 
     return {
       accent,
