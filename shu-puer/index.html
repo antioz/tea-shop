@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+SC:wght@400;600&family=PT+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="../image-slot.js"></script>
+<style>
+  body { margin:0; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  * { box-sizing:border-box; }
+  @media (max-width:760px){
+    .nav-links{ display:none !important; }
+  }
+</style>
+</helmet>
+<div id="wht-root" style="position:relative; background:#0b0a09; color:#f0e9da; font-family:'PT Sans',sans-serif; font-weight:400; overflow-x:hidden;">
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 40px; background:rgba(11,10,9,0.88); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,233,218,0.08);">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="../"><img src="../images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:40px; width:auto; display:block; flex-shrink:0;"></a>
+      <span style="font-size:8.5px; letter-spacing:.24em; color:#7a7166;">WILD HORSE TEA CO.</span>
+    </div>
+    <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
+      <a href="../#varieties" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">СОРТА</a>
+      <a href="../#ritual" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">ПРИНЦИПЫ</a>
+      <a href="../#footer" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">КОНТАКТЫ</a>
+    </div>
+    <a href="#catalog" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px;">КАТАЛОГ →</a>
+  </nav>
+
+  <section style="position:relative; min-height:56vh; display:flex; align-items:flex-end; padding:120px 40px 60px; overflow:hidden;">
+    <div style="position:absolute; inset:0; z-index:0; overflow:hidden; background:#0b0a09;">
+      <img src="../images/plantation.jpg" alt="Шу пуэр" style="width:100%; height:100%; object-fit:cover; filter:brightness(.4) saturate(.75) contrast(1.08);"/>
+      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.5) 0%, rgba(11,10,9,.9) 100%);"></div>
+    </div>
+    <div style="position:relative; z-index:1; max-width:920px;">
+      <div style="font-size:11px; letter-spacing:.5em; color:{{ accent }}; margin-bottom:20px;">熟普洱</div>
+      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(38px,6vw,72px); line-height:1.05; margin:0; color:#f5efe1;">Шу пуэр</h1>
+    </div>
+  </section>
+
+  <section style="max-width:760px; margin:0 auto; padding:70px 40px;">
+    <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">О СОРТЕ</div>
+    <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0 0 50px;">Текст об этом сорте пришлёт владелец — здесь временная заглушка.</p>
+    <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">КАК ЗАВАРИВАТЬ</div>
+    <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0;">Инструкция по завариванию пришлёт владелец — здесь временная заглушка.</p>
+  </section>
+
+  <section id="catalog" style="position:relative; padding:20px 40px 140px; background:#131110;">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,36px); color:#f5efe1; margin:0;">Каталог</h2>
+      </div>
+      <div style="display:{{ items.length ? 'grid' : 'block' }}; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
+        <sc-for list="{{ items }}" as="tea" hint-placeholder-count="4">
+          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); border-top:3px solid {{ accent }}; overflow:hidden;">
+            <div style="position:relative; aspect-ratio:1/1; overflow:hidden; background:#d8cdb4;">
+              <img src="{{ tea.img }}" alt="{{ tea.name }}" style="width:100%; height:100%; object-fit:cover; display:{{ tea.img ? 'block' : 'none' }};"/>
+            </div>
+            <div style="padding:22px 24px 26px;">
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; color:#2a2015; margin-bottom:10px;">{{ tea.name }}</div>
+              <div style="font-size:12px; color:#6b5c46; margin-bottom:16px;">{{ tea.spec }}</div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid {{ accent }}22;">
+                <span style="font-size:11px; letter-spacing:.1em; color:#8a7a5f;">{{ tea.unit }}</span>
+                <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:17px; color:{{ accent }};">{{ tea.price_rub }} ₽</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="{{ error ? '' : 'display:none;' }} color:#c9c0b3; font-size:14px; text-align:center; padding:40px 0;">Каталог временно недоступен.</p>
+    </div>
+  </section>
+
+  <footer style="position:relative; padding:60px 40px 34px; border-top:1px solid rgba(240,233,218,0.1); text-align:center;">
+    <a href="../" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">← Вернуться на главную</a>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;: {&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8a3b42&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { items: [], error: false };
+
+  categorySlug = 'shu-puer';
+
+  componentDidMount() {
+    fetch('../catalog.json')
+      .then((r) => {
+        if (!r.ok) throw new Error('bad status');
+        return r.json();
+      })
+      .then((data) => {
+        const items = (data[this.categorySlug] || []).map((it) => ({
+          ...it,
+          img: it.img ? `../${it.img}` : null,
+        }));
+        this.setState({ items });
+      })
+      .catch(() => this.setState({ error: true }));
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#8a3b42';
+    return {
+      accent,
+      items: this.state.items,
+      error: this.state.error,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
