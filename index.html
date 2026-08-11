@@ -10,7 +10,6 @@
 <body>
 <x-dc>
 <helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+SC:wght@400;600&family=PT+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -18,10 +17,10 @@
 <style>
   body { margin:0; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
   * { box-sizing:border-box; }
-  @keyframes scanCue {
-    0%   { transform: translateY(0); opacity:0; }
-    30%  { opacity:1; }
-    100% { transform: translateY(20px); opacity:0; }
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal-id]{ transition:none !important; transform:none !important; }
+    #wht-root [style*="transform:translateY"]{ transform:none !important; }
+    .hover-btn-accent:hover, .variety-row .variety-img{ transition:none !important; transform:none !important; }
   }
   @media (max-width:760px){
     .nav-links{ display:none !important; }
@@ -36,7 +35,7 @@
   .hover-outline-fill{ transition:all .35s ease; }
   .hover-outline-fill:hover{ border-color:#8a3b42; background:#8a3b42; }
   .hover-btn-accent{ transition:all .35s ease; }
-  .hover-btn-accent:hover{ background:#a85862; transform:translateY(-2px); }
+  .hover-btn-accent:hover{ background:#a0545d; transform:translateY(-2px); }
   .hover-accent-text{ transition:color .3s ease; }
   .hover-accent-text:hover{ color:#8a3b42; }
   .variety-row{ transition:background .35s ease; }
@@ -71,7 +70,7 @@
     </div>
 
     <div style="position:relative; z-index:1; max-width:920px; text-align:center; transform:{{ heroParallax }};">
-      <div style="font-size:11px; letter-spacing:.5em; color:{{ accent }}; margin-bottom:26px; padding-left:.5em;">野馬茶</div>
+      <div style="font-size:11px; letter-spacing:.5em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:26px; padding-left:.5em;">野馬茶</div>
       <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(48px,7.4vw,100px); line-height:1.02; margin:0 0 30px; color:#f5efe1; letter-spacing:.01em;">
         ЧАЙ ДИКОЙ<br/>ЛОШАДИ
       </h1>
@@ -98,11 +97,11 @@
     <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
       <a href="{{ v.href }}" class="variety-row" style="display:flex; flex-direction:{{ v.flexDirection }}; text-decoration:none; border-top:1px solid rgba(240,233,218,0.1); min-height:400px; {{ v.style }}">
         <div class="variety-media" style="flex:1 1 55%; position:relative; overflow:hidden;">
-          <img src="{{ v.img }}" alt="" class="variety-img" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.72) saturate(.95) contrast(1.05);"/>
+          <img src="{{ v.img }}" alt="{{ v.ru }} — рассыпной чай" loading="lazy" class="variety-img" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.72) saturate(.95) contrast(1.05);"/>
         </div>
         <div class="variety-text" style="flex:1 1 45%; display:flex; flex-direction:column; justify-content:center; padding:56px 64px;">
-          <div style="font-family:'Noto Serif SC',serif; font-size:40px; color:{{ accent }}; margin-bottom:22px; line-height:1;">{{ v.cn }}</div>
-          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:32px; color:#f5efe1; margin-bottom:16px;">{{ v.ru }}</div>
+          <div aria-hidden="true" style="font-family:'Noto Serif SC',serif; font-size:40px; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:22px; line-height:1;">{{ v.cn }}</div>
+          <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:32px; color:#f5efe1; margin:0 0 16px;">{{ v.ru }}</h3>
           <p style="font-size:14px; line-height:1.75; color:#c9c0b3; margin:0 0 30px; max-width:380px;">{{ v.note }}</p>
           <div style="height:1px; background:rgba(240,233,218,0.14); margin-bottom:24px; max-width:380px;"></div>
           <div style="display:flex; align-items:center; justify-content:space-between; max-width:380px;">
@@ -116,11 +115,11 @@
 
   <section data-screen-label="04 — Принципы" id="ritual" data-reveal-id="ritual" style="position:relative; padding:90px 40px; overflow:hidden; {{ ritualRevealStyle }}">
     <div style="position:absolute; inset:0; z-index:0;">
-      <img src="./images/ritual.jpg" alt="" style="width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(.85) contrast(1.05);"/>
+      <img src="./images/ritual.jpg" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(.85) contrast(1.05);"/>
       <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,.4) 35%, rgba(11,10,9,.85) 100%);"></div>
     </div>
     <div style="position:relative; z-index:1; max-width:760px; margin:0 auto;">
-      <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:22px;">02 — ГАРАНТИИ</div>
+      <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:22px;">02 — ГАРАНТИИ</div>
       <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,40px); color:#f5efe1; margin:0 0 28px; line-height:1.2;">Не знаете, какой чай выбрать?<br/>Давайте поможем с подбором.</h2>
       <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; display:inline-block;">ПОДОБРАТЬ ЧАЙ →</a>
     </div>
@@ -129,7 +128,7 @@
   <section data-screen-label="05 — Основатель" id="subscribe" data-reveal-id="subscribe" style="position:relative; padding:90px 40px 0; border-top:1px solid rgba(240,233,218,0.1); overflow:hidden;">
     <div class="founder-grid" style="max-width:980px; margin:0 auto; display:grid; grid-template-columns:1fr 340px; gap:56px; align-items:end;">
       <div style="padding-bottom:70px;">
-        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:20px;">ОСНОВАТЕЛЬ</div>
+        <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:20px;">ОСНОВАТЕЛЬ</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3vw,36px); color:#f5efe1; margin:0 0 16px;">Привет, я Сергей Ермаков</h2>
         <p style="font-size:14.5px; line-height:1.85; color:#c9c0b3; margin:0 0 32px; max-width:400px;">основатель бренда «ЧАЙ ДИКОЙ ЛОШАДИ»</p>
         <div style="display:flex; gap:16px; flex-wrap:wrap;">
@@ -138,7 +137,7 @@
         </div>
       </div>
       <div style="align-self:end; line-height:0;">
-        <img src="./images/founder-sergey-cutout.png" alt="Сергей Ермаков, основатель 野馬茶" style="width:100%; height:auto; max-height:560px; object-fit:contain; object-position:bottom; display:block; filter:grayscale(.35) sepia(.12) brightness(.92) contrast(1.08);"/>
+        <img src="./images/founder-sergey-cutout.png" alt="Сергей Ермаков, основатель 野馬茶" loading="lazy" style="width:100%; height:auto; max-height:560px; object-fit:contain; object-position:bottom; display:block; filter:grayscale(.35) sepia(.12) brightness(.92) contrast(1.08);"/>
       </div>
     </div>
   </section>
@@ -152,27 +151,27 @@
         <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
           <img src="./images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:32px; width:auto; display:block;">
         </div>
-        <p style="font-size:12px; line-height:1.85; color:#7a7166; max-width:280px;">Китайский чай для тех, кто никуда не спешит. Дистрибуция ограниченными партиями.</p>
+        <p style="font-size:12px; line-height:1.85; color:#8a8175; max-width:280px;">Китайский чай для тех, кто никуда не спешит. Дистрибуция ограниченными партиями.</p>
       </div>
       <div>
-        <div style="font-size:10.5px; letter-spacing:.14em; color:#7a7166; margin-bottom:22px;">НАВИГАЦИЯ</div>
-        <div style="display:flex; flex-direction:column; gap:13px;">
-          <a href="#varieties" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Сорта</a>
-          <a href="#ritual" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Гарантии</a>
-          <a href="#subscribe" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Основатель</a>
+        <div style="font-size:10.5px; letter-spacing:.14em; color:#8a8175; margin-bottom:22px;">НАВИГАЦИЯ</div>
+        <div style="display:flex; flex-direction:column; gap:1px; margin:-10px 0;">
+          <a href="#varieties" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:inline-block;">Сорта</a>
+          <a href="#ritual" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:inline-block;">Гарантии</a>
+          <a href="#subscribe" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:inline-block;">Основатель</a>
         </div>
       </div>
       <div>
-        <div style="font-size:10.5px; letter-spacing:.14em; color:#7a7166; margin-bottom:22px;">КОНТАКТЫ</div>
-        <div style="display:flex; flex-direction:column; gap:13px;">
-          <a href="mailto:hello@wildhorsetea.ru" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">hello@wildhorsetea.ru</a>
-          <a href="https://t.me/wildhorsetea" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">Telegram</a>
-          <span style="color:#c7bfaf; font-size:12.5px;">Москва · 55.75°N 37.6°E</span>
+        <div style="font-size:10.5px; letter-spacing:.14em; color:#8a8175; margin-bottom:22px;">КОНТАКТЫ</div>
+        <div style="display:flex; flex-direction:column; gap:1px; margin:-10px 0;">
+          <a href="mailto:hello@wildhorsetea.ru" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:inline-block;">hello@wildhorsetea.ru</a>
+          <a href="https://t.me/wildhorsetea" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:inline-block;">Telegram</a>
+          <span style="color:#c7bfaf; font-size:12.5px; padding:10px 0; display:inline-block;">Москва · 55.75°N 37.6°E</span>
         </div>
       </div>
     </div>
     <div style="max-width:1240px; margin:0 auto; padding-top:26px; border-top:1px solid rgba(240,233,218,0.08);">
-      <span style="font-size:10.5px; letter-spacing:.04em; color:#5c5249;">© 2026 ЧАЙ ДИКОЙ ЛОШАДИ. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</span>
+      <span style="font-size:10.5px; letter-spacing:.04em; color:#8a8175;">© 2026 ЧАЙ ДИКОЙ ЛОШАДИ. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</span>
     </div>
   </footer>
 </div>
@@ -239,7 +238,7 @@ class Component extends DCLogic {
     const reduced = (this.props.motion === 'Сдержанная');
     const v = reduced ? true : !!this.state.visible[id];
     const d = delay || 0;
-    return `opacity:${v ? 1 : 0}; transform:translateY(${v ? 0 : 22}px); transition:opacity .9s cubic-bezier(.16,.8,.24,1) ${d}s, transform .9s cubic-bezier(.16,.8,.24,1) ${d}s;`;
+    return `opacity:${v ? 1 : 0}; transform:translateY(${v ? 0 : 22}px); transition:opacity .4s cubic-bezier(.16,.8,.24,1) ${d}s, transform .4s cubic-bezier(.16,.8,.24,1) ${d}s;`;
   }
 
   renderVals() {
