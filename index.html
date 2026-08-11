@@ -95,10 +95,28 @@
         <img src="./images/founder-sergey.png" alt="Сергей Ермаков, основатель 野馬茶" style="width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(.55) sepia(.2) brightness(.82) contrast(1.15) saturate(1.1);"/>
       </div>
       <div>
-        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">ОСНОВАТЕЛЬ</div>
+        <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">ОСНОВАТЕЛЬ · ОФИЦИАЛЬНЫЙ ПРЕДСТАВИТЕЛЬ 八方茶园</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3vw,36px); color:#f5efe1; margin:0 0 20px;">Привет, я Сергей Ермаков</h2>
-        <p style="font-size:14.5px; line-height:1.85; color:#c9c0b3; margin:0 0 32px; max-width:440px;">Я пью то же, что продаю. Если не знаете, с чего начать — подберём вместе.</p>
+        <p style="font-size:14.5px; line-height:1.85; color:#c9c0b3; margin:0 0 32px; max-width:440px;">Мы — единственные в России, кто официально представляет 八方茶园: бренд с 40-летней историей, без посредников и серых схем. Каждая партия проходит таможню и сертификацию — документы показываем по любому запросу.</p>
         <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; display:inline-block;">ПОДОБРАТЬ ЧАЙ →</a>
+      </div>
+    </div>
+    <div class="footer-grid" style="max-width:980px; margin:64px auto 0; display:grid; grid-template-columns:repeat(4,1fr); gap:32px; padding-top:40px; border-top:1px solid rgba(240,233,218,0.1);">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:{{ accent }};">40+</div>
+        <div style="font-size:11px; letter-spacing:.06em; color:#8a7a5f; margin-top:6px;">лет истории бренда</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:{{ accent }};">500+</div>
+        <div style="font-size:11px; letter-spacing:.06em; color:#8a7a5f; margin-top:6px;">точек в 100+ городах Китая</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:{{ accent }};">3</div>
+        <div style="font-size:11px; letter-spacing:.06em; color:#8a7a5f; margin-top:6px;">провинции своих плантаций</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,2.6vw,34px); color:{{ accent }};">Disney</div>
+        <div style="font-size:11px; letter-spacing:.06em; color:#8a7a5f; margin-top:6px;">коллаборации · амбассадор Го Дань</div>
       </div>
     </div>
   </section>
@@ -135,8 +153,8 @@
       <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,.4) 35%, rgba(11,10,9,.85) 100%);"></div>
     </div>
     <div style="position:relative; z-index:1; max-width:760px; margin:0 auto;">
-      <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:22px;">02 — ПРИНЦИПЫ</div>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,40px); color:#f5efe1; margin:0 0 28px; line-height:1.2;">Три правила,<br/>на которых всё держится.</h2>
+      <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:22px;">02 — ГАРАНТИИ</div>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,40px); color:#f5efe1; margin:0 0 28px; line-height:1.2;">Три факта,<br/>на которых держится доверие.</h2>
       <div style="display:flex; flex-direction:column;">
         <sc-for list="{{ steps }}" as="step" hint-placeholder-count="3">
           <div style="display:flex; gap:24px; align-items:flex-start; padding:14px 0; border-top:1px solid rgba(240,233,218,0.14);">
@@ -208,9 +226,9 @@ class Component extends DCLogic {
   ];
 
   steps = [
-    { n: '01 /', title: 'Свой чай', desc: 'Продаём только то, что пьём сами. Не понравилась партия — её просто не будет в каталоге.' },
-    { n: '02 /', title: 'Живой контакт', desc: 'С покупателями общаемся сами, без ботов и шаблонных ответов. Есть вопрос — просто напишите.' },
-    { n: '03 /', title: 'Уважение к пути', desc: 'Экспертиза заваривания и ритуала — часть уважения к тому, как чай сюда попал.' },
+    { n: '01 /', title: 'Легальность', desc: 'Полный пакет документов на каждую партию: таможня, декларирование, сертификация. Показываем по первому запросу.' },
+    { n: '02 /', title: 'Эксклюзив', desc: 'Единственный официальный представитель 八方茶园 в России — бренда с 500+ точками в 100+ городах Китая.' },
+    { n: '03 /', title: 'Производство', desc: 'Полный цикл от листа до упаковки: свои плантации в Юньнани, Фуцзяни и Гуандуне, без чужих рук на пути к вам.' },
   ];
 
   componentDidMount() {
