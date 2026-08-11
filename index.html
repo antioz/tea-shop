@@ -202,10 +202,6 @@ class Component extends DCLogic {
         // freezes on its last frame instead of looping. Set them explicitly.
         video.muted = true;
         video.loop = true;
-        video.addEventListener('ended', () => {
-          video.currentTime = 0;
-          video.play().catch(() => {});
-        });
         video.play().catch(() => {});
       }
       this._io = new IntersectionObserver((entries) => {
