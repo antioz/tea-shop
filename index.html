@@ -240,11 +240,16 @@ class Component extends DCLogic {
     if (root) {
       const video = root.querySelector('video');
       if (video) {
-        // The `muted` HTML attribute only sets defaultMuted for elements
-        // rendered client-side; the live `muted` property still ends up
-        // false, so Chrome's autoplay policy blocks playback. Set it
-        // explicitly and kick off playback.
+        // The `muted`/`loop` HTML attributes only set defaultMuted/defaultLoop
+        // for elements rendered client-side; the live properties still end up
+        // false, so Chrome's autoplay policy blocks playback and the video
+        // freezes on its last frame instead of looping. Set them explicitly.
         video.muted = true;
+        video.loop = true;
+        video.addEventListener('ended', () => {
+          video.currentTime = 0;
+          video.play().catch(() => {});
+        });
         video.play().catch(() => {});
       }
       this._io = new IntersectionObserver((entries) => {
