@@ -57,9 +57,9 @@
       <img src="./images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:40px; width:auto; display:block; flex-shrink:0;">
     </div>
     <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
+      <a href="#brand" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">八方茶园 Ба Фан Ча Юань</a>
       <a href="#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">01 · СОРТА</a>
-      <a href="#ritual" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">02 · ГАРАНТИИ</a>
-      <a href="#footer" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">03 · КОНТАКТЫ</a>
+      <a href="#footer" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">02 · КОНТАКТЫ</a>
     </div>
     <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px;">СВЯЗАТЬСЯ →</a>
   </nav>
@@ -87,6 +87,17 @@
     </div>
   </section>
 
+  <section data-screen-label="02 — Бренд" id="brand" data-reveal-id="brand" style="position:relative; padding:110px 40px; overflow:hidden; {{ brandRevealStyle }}">
+    <div style="position:absolute; inset:0; z-index:0;">
+      <img src="./images/ritual.jpg" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(.85) contrast(1.05);"/>
+      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,.4) 35%, rgba(11,10,9,.85) 100%);"></div>
+    </div>
+    <div style="position:relative; z-index:1; max-width:760px; margin:0 auto;">
+      <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:22px;">八方茶园 · БА ФАН ЧА ЮАНЬ</div>
+      <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0;">八方茶园 Ба Фан Ча Юань — это не молодой семейный нишевый бренд, а один из зрелых крупных игроков китайского чайного рынка с более чем 40-летней историей. Компания выстроена по модели полного производственного цикла: собственные плантации в Юньнани, Фуцзяни и Гуандуне, собственный отдел разработки продукции, своя переработка — от листа до готовой упаковки, без чужих рук на промежуточных этапах. Такой контроль всей цепочки — то, что в чайном бизнесе напрямую определяет стабильность качества и терруарную чистоту, и именно за это бренд отмечают в отраслевых рейтингах Китая. Статус подтверждается и репутационными коллаборациями — совместные лимитированные выпуски пуэра с Disney, амбассадор бренда — олимпийская чемпионка Го Дань. Мы привозим в Россию не безымянный товар с рынка, а бренд с проверяемой историей и понятной репутацией на родине.</p>
+    </div>
+  </section>
+
   <section data-screen-label="03 — Сорта" id="varieties" style="position:relative; background:#0b0a09;">
     <sc-for list="{{ varieties }}" as="v" hint-placeholder-count="6">
       <a href="{{ v.href }}" class="variety-hero" data-reveal-id="{{ v.revealId }}" style="position:relative; display:flex; align-items:center; justify-content:center; min-height:100vh; text-decoration:none; overflow:hidden; {{ v.style }}">
@@ -106,17 +117,6 @@
         <div style="position:absolute; bottom:28px; left:50%; transform:translateX(-50%); font-size:10px; letter-spacing:.2em; color:#5c5249; z-index:1;">{{ v.index }} / 06</div>
       </a>
     </sc-for>
-  </section>
-
-  <section data-screen-label="04 — Принципы" id="ritual" data-reveal-id="ritual" style="position:relative; padding:90px 40px; overflow:hidden; {{ ritualRevealStyle }}">
-    <div style="position:absolute; inset:0; z-index:0;">
-      <img src="./images/ritual.jpg" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; filter:brightness(.42) saturate(.85) contrast(1.05);"/>
-      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,.4) 35%, rgba(11,10,9,.85) 100%);"></div>
-    </div>
-    <div style="position:relative; z-index:1; max-width:760px; margin:0 auto;">
-      <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,40px); color:#f5efe1; margin:0 0 28px; line-height:1.2;">Не знаете, какой чай выбрать?<br/>Давайте поможем с подбором.</h2>
-      <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 36px; display:inline-block;">ПОДОБРАТЬ ЧАЙ →</a>
-    </div>
   </section>
 
   <footer data-screen-label="06 — Футер" id="footer" data-reveal-id="footer" style="position:relative; padding:100px 40px 34px; border-top:1px solid rgba(240,233,218,0.1); overflow:hidden;">
@@ -252,7 +252,7 @@ class Component extends DCLogic {
       heroParallax,
       heroImgParallax,
       varieties: varietiesStyled,
-      ritualRevealStyle: this.revealStyle('ritual', 0),
+      brandRevealStyle: this.revealStyle('brand', 0),
     };
   }
 }
