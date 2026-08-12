@@ -26,6 +26,7 @@
     .nav-links{ display:none !important; }
     .footer-grid{ grid-template-columns:1fr !important; gap:36px !important; }
     .founder-grid{ grid-template-columns:1fr !important; gap:28px !important; }
+    .stat-grid{ grid-template-columns:1fr 1fr !important; }
     .variety-row{ flex-direction:column !important; min-height:auto !important; }
     .variety-row .variety-media{ min-height:260px; }
     .variety-row .variety-text{ padding:36px 28px !important; }
@@ -53,7 +54,7 @@
       <img src="./images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:40px; width:auto; display:block; flex-shrink:0;">
     </div>
     <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
-      <a href="#brand" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">01 · Ба Фан Ча Юань</a>
+      <a href="#brand" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">01 · БА ФАН ЧА ЮАНЬ</a>
       <a href="#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">02 · ЧАЙ</a>
       <a href="#footer" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em; border-bottom:1px solid transparent; padding-bottom:3px;">03 · КОНТАКТЫ</a>
     </div>
@@ -89,20 +90,24 @@
       <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.55) 0%, rgba(11,10,9,.4) 35%, rgba(11,10,9,.85) 100%);"></div>
     </div>
     <div style="position:relative; z-index:1; max-width:760px; margin:0 auto;">
-      <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:22px;">八方茶园 · БА ФАН ЧА ЮАНЬ</div>
+      <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:22px;">О ЧАЕ</div>
       <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0;">八方茶园 Ба Фан Ча Юань — это не молодой семейный нишевый бренд, а один из зрелых крупных игроков китайского чайного рынка с более чем 40-летней историей. Компания выстроена по модели полного производственного цикла: собственные плантации в Юньнани, Фуцзяни и Гуандуне, собственный отдел разработки продукции, своя переработка — от листа до готовой упаковки, без чужих рук на промежуточных этапах. Такой контроль всей цепочки — то, что в чайном бизнесе напрямую определяет стабильность качества и терруарную чистоту, и именно за это бренд отмечают в отраслевых рейтингах Китая. Статус подтверждается и репутационными коллаборациями — совместные лимитированные выпуски пуэра с Disney, амбассадор бренда — олимпийская чемпионка Го Дань. Мы привозим в Россию не безымянный товар с рынка, а бренд с проверяемой историей и понятной репутацией на родине.</p>
-      <div style="margin-top:44px; display:flex; flex-direction:column;">
-        <div style="display:flex; gap:22px; align-items:flex-start; padding:18px 0; border-top:1px solid rgba(240,233,218,0.14);">
-          <span style="font-size:12px; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); letter-spacing:.05em; padding-top:2px; flex-shrink:0;">01 /</span>
-          <p style="font-size:14px; line-height:1.7; color:#c9c0b3; margin:0;">Бренду более 40 лет, свыше 500 точек в 100+ городах Китая</p>
+      <div class="stat-grid" style="margin-top:48px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(240,233,218,0.14); border-top:1px solid rgba(240,233,218,0.14); border-bottom:1px solid rgba(240,233,218,0.14);">
+        <div style="background:#131110; padding:26px 20px 22px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.4vw,44px); line-height:1; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%);">40+</div>
+          <p style="margin:12px 0 0; font-size:12px; line-height:1.55; color:#c9c0b3;">лет истории бренда</p>
         </div>
-        <div style="display:flex; gap:22px; align-items:flex-start; padding:18px 0; border-top:1px solid rgba(240,233,218,0.14);">
-          <span style="font-size:12px; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); letter-spacing:.05em; padding-top:2px; flex-shrink:0;">02 /</span>
-          <p style="font-size:14px; line-height:1.7; color:#c9c0b3; margin:0;">Полный производственный цикл: свои плантации в Юньнани, Фуцзяни и Гуандуне</p>
+        <div style="background:#131110; padding:26px 20px 22px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.4vw,44px); line-height:1; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%);">500+</div>
+          <p style="margin:12px 0 0; font-size:12px; line-height:1.55; color:#c9c0b3;">точек в 100+ городах Китая</p>
         </div>
-        <div style="display:flex; gap:22px; align-items:flex-start; padding:18px 0; border-top:1px solid rgba(240,233,218,0.14); border-bottom:1px solid rgba(240,233,218,0.14);">
-          <span style="font-size:12px; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); letter-spacing:.05em; padding-top:2px; flex-shrink:0;">03 /</span>
-          <p style="font-size:14px; line-height:1.7; color:#c9c0b3; margin:0;">Коллаборации с Disney</p>
+        <div style="background:#131110; padding:26px 20px 22px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,3.4vw,44px); line-height:1; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%);">3</div>
+          <p style="margin:12px 0 0; font-size:12px; line-height:1.55; color:#c9c0b3;">провинции своих плантаций: Юньнань, Фуцзянь, Гуандун</p>
+        </div>
+        <div style="background:#131110; padding:26px 20px 22px;">
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(24px,2.6vw,34px); line-height:1; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%);">Disney</div>
+          <p style="margin:12px 0 0; font-size:12px; line-height:1.55; color:#c9c0b3;">лимитированные коллаборации пуэра</p>
         </div>
       </div>
     </div>
@@ -129,14 +134,14 @@
   </section>
 
   <footer data-screen-label="06 — Футер" id="footer" data-reveal-id="footer" style="position:relative; padding:100px 40px 34px; border-top:1px solid rgba(240,233,218,0.1); overflow:hidden;">
-    <div class="founder-grid" style="margin:0 -40px 90px; width:calc(100% + 80px); display:grid; grid-template-columns:minmax(300px,32%) 1fr; gap:0; align-items:end;">
+    <div class="founder-grid" style="margin:0 -40px 90px; width:calc(100% + 80px); display:grid; grid-template-columns:minmax(220px,21%) 1fr; gap:0; align-items:end;">
       <div style="align-self:end; line-height:0;">
         <img src="./images/founder-sergey-cutout.png" alt="Сергей Ермаков, основатель 野馬茶" loading="lazy" style="width:100%; height:auto; max-height:460px; object-fit:contain; object-position:bottom; display:block; filter:grayscale(.35) sepia(.12) brightness(.92) contrast(1.08);"/>
       </div>
-      <div style="padding:0 40px 44px; max-width:640px;">
+      <div style="padding:0 40px 44px;">
         <div style="font-size:10.5px; letter-spacing:.18em; color:color-mix(in srgb, {{ accent }} 55%, #f5efe1 45%); margin-bottom:14px;">ОСНОВАТЕЛЬ</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(24px,2.6vw,32px); color:#f5efe1; margin:0 0 22px;">Сергей Ермаков</h2>
-        <blockquote style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:clamp(16px,1.6vw,19px); line-height:1.7; color:#c9c0b3; margin:0 0 30px; padding-left:24px; border-left:2px solid {{ accent }}; max-width:540px;">Каждая партия чая проходит таможенное оформление, декларирование и сертификацию в РФ. Это принципиальная позиция — мы строим бизнес так, чтобы с нами можно было работать без рисков, будь вы дистрибьютор, чайный магазин или конечный покупатель.</blockquote>
+        <blockquote style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:clamp(22px,2.6vw,30px); line-height:1.45; color:#c9c0b3; margin:0 0 30px; padding-left:24px; border-left:2px solid {{ accent }};">Каждая партия чая проходит таможенное оформление, декларирование и сертификацию в РФ. Это принципиальная позиция — мы строим бизнес так, чтобы с нами можно было работать без рисков, будь вы дистрибьютор, чайный магазин или конечный покупатель.</blockquote>
         <div style="display:flex; gap:16px; flex-wrap:wrap;">
           <a href="https://t.me/wildhorsetea" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 32px; display:inline-block;">ТГ-КАНАЛ →</a>
           <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:12px; letter-spacing:.14em; padding:16px 32px; display:inline-block;">НАПИСАТЬ МНЕ →</a>
