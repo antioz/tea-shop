@@ -7,21 +7,77 @@
 <title>Публичная оферта · 野馬茶</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body{ margin:0; background:#0b0a09; color:#c9c0b3; font-family:'PT Sans',sans-serif; font-size:15px; line-height:1.8; -webkit-font-smoothing:antialiased; }
-  .wrap{ max-width:760px; margin:0 auto; padding:90px 40px 120px; }
+  body{ margin:0; background:#0b0a09; color:#c8c0b2; font-family:'PT Sans',sans-serif; font-size:15.5px; line-height:1.9; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  *{ box-sizing:border-box; }
+
+  /* Плёночное зерно — как на остальных страницах */
+  body::after{
+    content:''; position:fixed; inset:0; z-index:9998; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  nav{ position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 40px; background:rgba(11,10,9,0.9); backdrop-filter:blur(16px); border-bottom:1px solid rgba(240,233,218,0.08); }
+  .nav-links{ display:flex; align-items:center; gap:34px; }
+  .nav-links a{ color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px; transition:color .3s ease, border-color .3s ease; }
+  .nav-links a:hover{ color:#f5efe1; border-color:#8a3b42; }
+  .nav-cta{ border:1px solid rgba(240,233,218,0.28); color:#f0e9da; text-decoration:none; font-size:10.5px; letter-spacing:.16em; padding:12px 26px; transition:all .35s cubic-bezier(.16,.8,.24,1); }
+  .nav-cta:hover{ border-color:#8a3b42; background:#8a3b42; color:#f5efe1; }
+
+  .wrap{ max-width:820px; margin:0 auto; padding:170px 40px 120px; }
+  .eyebrow{ display:flex; align-items:center; gap:18px; margin-bottom:30px; }
+  .eyebrow span:first-child{ font-size:10px; letter-spacing:.24em; color:color-mix(in srgb, #8a3b42 55%, #f5efe1 45%); }
+  .eyebrow .rule{ display:block; width:44px; height:1px; background:rgba(240,233,218,0.26); }
+  .eyebrow span:last-child{ font-size:10px; letter-spacing:.24em; color:#8a8175; }
+
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(32px,4.6vw,58px); line-height:1.1; color:#f5efe1; margin:0 0 46px; letter-spacing:.005em; }
+  h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:23px; color:#f5efe1; margin:52px 0 14px; }
+  p{ margin:0 0 18px; }
   a{ color:#c7bfaf; }
-  h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(28px,4vw,42px); color:#f5efe1; margin:0 0 40px; }
-  h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; color:#f5efe1; margin:44px 0 12px; }
   .placeholder{ color:#a0545d; }
-  .back{ display:inline-block; margin-bottom:50px; font-size:12px; letter-spacing:.1em; color:#8a8175; text-decoration:none; }
+  .back{ display:inline-block; margin-bottom:34px; font-size:10px; letter-spacing:.24em; color:#8a8175; text-decoration:none; transition:color .3s ease; }
+  .back:hover{ color:#a0545d; }
+
+  footer{ background:#0b0a09; padding:90px 40px 34px; border-top:1px solid rgba(240,233,218,0.1); }
+  .footer-grid{ max-width:1240px; margin:0 auto 70px; display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:60px; }
+  .footer-grid a{ color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0; display:block; transition:color .3s ease; }
+  .footer-grid a:hover{ color:#a0545d; }
+  .f-head{ font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:24px; }
+  .f-note{ display:flex; flex-direction:column; gap:10px; max-width:300px; font-size:12.5px; line-height:1.6; color:#8a8175; }
+  .f-bottom{ max-width:1240px; margin:0 auto; padding-top:26px; border-top:1px solid rgba(240,233,218,0.08); display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+    .wrap{ padding:130px 24px 90px; }
+    footer{ padding:70px 24px 30px; }
+    .footer-grid{ grid-template-columns:1fr; gap:36px; }
+  }
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="./index.html" style="display:flex; align-items:center; gap:14px; text-decoration:none;">
+    <img src="./images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:32px; width:auto; display:block;">
+  </a>
+  <div class="nav-links">
+    <a href="./index.html#heritage">01 · БРЕНД</a>
+    <a href="./index.html#varieties">02 · СОРТА</a>
+    <a href="./index.html#legal">03 · ГАРАНТИИ</a>
+    <a href="./index.html#footer">04 · КОНТАКТЫ</a>
+  </div>
+  <a class="nav-cta" href="https://t.me/ssermakovss">СВЯЗАТЬСЯ →</a>
+</nav>
+
 <div class="wrap">
   <a class="back" href="./index.html">← НА ГЛАВНУЮ</a>
-  <h1>Публичная оферта</h1>
+  <div class="eyebrow">
+    <span>01</span>
+    <span class="rule"></span>
+    <span>ДОКУМЕНТЫ</span>
+  </div>
+<h1>Публичная оферта</h1>
 
   <p><span class="placeholder">[Заполнить: полное наименование продавца — ИП/ООО, ИНН, ОГРН(ИП), юридический адрес]</span> (далее — «Продавец») публикует настоящий документ, являющийся публичной офертой (предложением) в адрес любого физического или юридического лица (далее — «Покупатель») заключить договор розничной купли-продажи чая и сопутствующих товаров на условиях, изложенных ниже.</p>
 
@@ -45,5 +101,38 @@
 
   <p style="margin-top:60px; font-size:12px; color:#5c5249;">Документ опубликован в демонстрационных целях и требует юридической проверки перед использованием в реальной коммерческой деятельности.</p>
 </div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <a href="./index.html" style="display:inline-block; margin-bottom:22px; padding:0;"><img src="./images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:34px; width:auto; display:block;"></a>
+      <div class="f-note">
+        <span>Официальный представитель Ба Фан Ча Юань в России</span>
+        <span>Прямые поставки</span>
+        <span>B2B и B2C</span>
+      </div>
+    </div>
+    <div>
+      <div class="f-head">КОНТАКТЫ</div>
+      <div style="margin:-10px 0;">
+        <a href="mailto:hello@wildhorsetea.ru">hello@wildhorsetea.ru</a>
+        <a href="https://t.me/wildhorsetea">Telegram</a>
+        <span style="color:#c7bfaf; font-size:12.5px; padding:10px 0; display:block;">Москва · 55.75°N 37.6°E</span>
+      </div>
+    </div>
+    <div>
+      <div class="f-head">ДОКУМЕНТЫ</div>
+      <div style="margin:-10px 0;">
+        <a href="./oferta.html">Публичная оферта</a>
+        <a href="./privacy.html">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span style="font-size:10px; letter-spacing:.06em; color:#8a8175;">© 2026 ЧАЙ ДИКОЙ ЛОШАДИ. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</span>
+    <span style="font-family:'Noto Serif SC',serif; font-size:12px; letter-spacing:.3em; color:#5f5952;">野馬茶</span>
+  </div>
+</footer>
+
 </body>
 </html>

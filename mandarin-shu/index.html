@@ -10,88 +10,206 @@
 <body>
 <x-dc>
 <helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+SC:wght@400;600&family=PT+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+SC:wght@300;400;600&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
 <script src="../image-slot.js"></script>
 <style>
   body { margin:0; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
   * { box-sizing:border-box; }
+
+  /* Плёночное зерно — тот же приём, что на главной */
+  #wht-root::after{
+    content:''; position:fixed; inset:0; z-index:9998; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal-id]{ transition:none !important; transform:none !important; opacity:1 !important; }
+    .cat-card{ transition:none !important; transform:none !important; }
+  }
+
+  .hover-underline{ transition:color .3s ease, border-color .3s ease; }
+  .hover-underline:hover{ color:#f5efe1; border-color:#8a3b42; }
+  .hover-outline-fill{ transition:all .35s cubic-bezier(.16,.8,.24,1); }
+  .hover-outline-fill:hover{ border-color:#8a3b42; background:#8a3b42; color:#f5efe1; }
+  .hover-accent-text{ transition:color .3s ease; }
+  .hover-accent-text:hover{ color:#a0545d; }
+
+  .cat-card{ transition:border-color .35s ease, transform .35s cubic-bezier(.16,.8,.24,1); }
+  .cat-card:hover{ border-color:rgba(240,233,218,0.2); transform:translateY(-3px); }
+
+  .copy-grid{ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:26px; }
+
+  @media (max-width:900px){
+    .copy-grid{ grid-template-columns:1fr !important; gap:48px !important; }
+  }
   @media (max-width:760px){
     .nav-links{ display:none !important; }
+    .footer-grid{ grid-template-columns:1fr !important; gap:36px !important; }
+    .sec-pad{ padding-left:24px !important; padding-right:24px !important; }
+    .card-grid{ grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)) !important; gap:16px !important; }
+    #hero{ min-height:62vh !important; padding-top:120px !important; padding-bottom:44px !important; }
+    #about{ padding-top:70px !important; padding-bottom:60px !important; }
+    #catalog{ padding-top:70px !important; padding-bottom:80px !important; }
+    .footer-wrap{ padding-top:64px !important; }
   }
 </style>
 </helmet>
 <div id="wht-root" style="position:relative; background:#0b0a09; color:#f0e9da; font-family:'PT Sans',sans-serif; font-weight:400; overflow-x:hidden;">
 
-  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 40px; background:rgba(11,10,9,0.88); backdrop-filter:blur(14px); border-bottom:1px solid rgba(240,233,218,0.08);">
-    <div style="display:flex; align-items:center; gap:14px;">
-      <a href="../"><img src="../images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:40px; width:auto; display:block; flex-shrink:0;"></a>
-      <span style="font-size:8.5px; letter-spacing:.24em; color:#7a7166;">WILD HORSE TEA CO.</span>
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:60; background:transparent; pointer-events:none;">
+    <div style="height:100%; width:{{ progressWidth }}; background:{{ accent }}; transition:width .12s linear;"></div>
+  </div>
+
+  <nav style="{{ navStyle }}">
+    <a href="../" style="display:flex; align-items:center; gap:14px; text-decoration:none;">
+      <img src="../images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:{{ navLogoH }}; width:auto; display:block; flex-shrink:0; transition:height .45s cubic-bezier(.16,.8,.24,1);">
+    </a>
+    <div class="nav-links" style="display:flex; align-items:center; gap:34px;">
+      <a href="../#heritage" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">01 · БРЕНД</a>
+      <a href="../#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">02 · СОРТА</a>
+      <a href="../#legal" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">03 · ГАРАНТИИ</a>
+      <a href="../#footer" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">04 · КОНТАКТЫ</a>
     </div>
-    <div class="nav-links" style="display:flex; align-items:center; gap:36px;">
-      <a href="../#varieties" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">СОРТА</a>
-      <a href="../#ritual" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">ПРИНЦИПЫ</a>
-      <a href="../#footer" style="color:#c7bfaf; text-decoration:none; font-size:11.5px; letter-spacing:.1em;">КОНТАКТЫ</a>
-    </div>
-    <a href="#catalog" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11px; letter-spacing:.14em; padding:11px 24px;">КАТАЛОГ →</a>
+    <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.28); color:#f0e9da; text-decoration:none; font-size:10.5px; letter-spacing:.16em; padding:12px 26px;">СВЯЗАТЬСЯ →</a>
   </nav>
 
-  <section style="position:relative; min-height:56vh; display:flex; align-items:flex-end; padding:120px 40px 60px; overflow:hidden;">
+  <!-- ═══ ШАПКА СОРТА ════════════════════════════════════════════ -->
+  <section id="hero" class="sec-pad" style="position:relative; min-height:72vh; display:flex; flex-direction:column; justify-content:flex-end; padding:170px 40px 64px; overflow:hidden;">
     <div style="position:absolute; inset:0; z-index:0; overflow:hidden; background:#0b0a09;">
-      <img src="../images/plantation.jpg" alt="" style="width:100%; height:100%; object-fit:cover; filter:brightness(.4) saturate(.75) contrast(1.08);"/>
-      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.5) 0%, rgba(11,10,9,.9) 100%);"></div>
+      <img src="../images/variety-mandarin-shu.jpg" alt="" style="width:100%; height:100%; object-fit:cover; filter:sepia(.32) saturate(1.1) brightness(.58) contrast(1.06);"/>
+      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.72) 0%, rgba(20,12,10,.42) 34%, rgba(11,10,9,.82) 78%, #0b0a09 100%);"></div>
     </div>
-    <div style="position:relative; z-index:1; max-width:920px;">
-      <div style="font-size:11px; letter-spacing:.5em; color:{{ accent }}; margin-bottom:20px;">小青柑</div>
-      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(38px,6vw,72px); line-height:1.05; margin:0; color:#f5efe1;">Шу в мандаринах</h1>
-    </div>
-  </section>
 
-  <section style="max-width:760px; margin:0 auto; padding:70px 40px;">
-    <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">О СОРТЕ</div>
-    <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0 0 50px;">Молодой зелёный мандарин, из которого через технологическое отверстие вынули мякоть и набили шу пуэром — и высушили целиком. Цитрусовая цедра сама пропитывает чай своим маслом изнутри. На выходе — знакомый вкус шу пуэра с яркой мандариновой нотой поверх.</p>
-    <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accent }}; margin-bottom:18px;">КАК ЗАВАРИВАТЬ</div>
-    <p style="font-size:15px; line-height:1.9; color:#c9c0b3; margin:0;">Разломите мандарин на 2–3 части вместе с чаем внутри — высыпать чай отдельно не нужно. Дальше как обычный шу пуэр: кипяток, первый пролив слить, короткие проливы. Хорошо переносит и заваривание в чайничке, и варку на плите.</p>
-  </section>
-
-  <section id="catalog" style="position:relative; padding:20px 40px 140px; background:#131110;">
-    <div style="max-width:1180px; margin:0 auto;">
-      <div style="margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid rgba(240,233,218,0.1);">
-        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(26px,3.2vw,36px); color:#f5efe1; margin:0;">Каталог</h2>
+    <div style="position:relative; z-index:1; max-width:1240px; margin:0 auto; width:100%;">
+      <a href="../#varieties" class="hover-accent-text" style="display:inline-block; font-size:10px; letter-spacing:.24em; color:#8a8175; text-decoration:none; margin-bottom:34px;">← СОРТА</a>
+      <div aria-hidden="true" style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:clamp(26px,3vw,38px); line-height:1; color:#e3cf9a; margin-bottom:18px; text-shadow:0 1px 12px rgba(11,10,9,.75);">小青柑</div>
+      <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(42px,6.4vw,92px); line-height:1.02; margin:0 0 34px; color:#f5efe1; letter-spacing:.01em;">Шу в мандаринах</h1>
+      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding-top:26px; border-top:1px solid rgba(240,233,218,0.16);">
+        <span style="font-size:11px; letter-spacing:.18em; color:#c7bfaf;">кипяток</span>
+        <span style="color:#e3cf9a;">·</span>
+        <span style="font-size:11px; letter-spacing:.18em; color:#c7bfaf;">короткие проливы</span>
       </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:20px;">
-        <sc-for list="{{ items }}" as="tea" hint-placeholder-count="4">
-          <div style="background:#ece4d1; border:1px solid rgba(28,23,18,0.08); border-top:3px solid {{ accent }}; overflow:hidden;">
-            <div style="position:relative; aspect-ratio:1/1; overflow:hidden; background:#d8cdb4;">
-              <img src="{{ tea.img }}" alt="{{ tea.name }}" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:{{ tea.imgDisplay }};"/>
+    </div>
+  </section>
+
+  <!-- ═══ О СОРТЕ ════════════════════════════════════════════════ -->
+  <section id="about" data-reveal-id="about" class="sec-pad" style="position:relative; background:#0b0a09; padding:110px 40px 100px; {{ aboutRevealStyle }}">
+    <div style="max-width:1240px; margin:0 auto;">
+      <div class="copy-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:18px; margin-bottom:30px;">
+            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">01</span>
+            <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
+            <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">О СОРТЕ</span>
+          </div>
+          <p style="font-size:15.5px; line-height:1.95; color:#c8c0b2; margin:0;">Молодой зелёный мандарин, из которого через технологическое отверстие вынули мякоть и набили шу пуэром — и высушили целиком. Цитрусовая цедра сама пропитывает чай своим маслом изнутри. На выходе — знакомый вкус шу пуэра с яркой мандариновой нотой поверх.</p>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:18px; margin-bottom:30px;">
+            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">02</span>
+            <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
+            <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">КАК ЗАВАРИВАТЬ</span>
+          </div>
+          <p style="font-size:15.5px; line-height:1.95; color:#c8c0b2; margin:0;">Разломите мандарин на 2–3 части вместе с чаем внутри — высыпать чай отдельно не нужно. Дальше как обычный шу пуэр: кипяток, первый пролив слить, короткие проливы. Хорошо переносит и заваривание в чайничке, и варку на плите.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ КАТАЛОГ ════════════════════════════════════════════════ -->
+  <section id="catalog" data-reveal-id="catalog" class="sec-pad" style="position:relative; background:#0e0c0b; padding:100px 40px 130px; overflow:hidden; {{ catalogRevealStyle }}">
+    <div aria-hidden="true" style="position:absolute; top:-30px; right:-20px; font-family:'Noto Serif SC',serif; font-weight:300; font-size:clamp(140px,20vw,300px); line-height:1; color:rgba(240,233,218,0.026); pointer-events:none; user-select:none;">小青柑</div>
+
+    <div style="position:relative; z-index:1; max-width:1240px; margin:0 auto;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:30px; flex-wrap:wrap; margin-bottom:58px;">
+        <div>
+          <div style="display:flex; align-items:center; gap:18px; margin-bottom:26px;">
+            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">03</span>
+            <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
+            <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">КАТАЛОГ</span>
+          </div>
+          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(28px,3.4vw,46px); line-height:1.12; color:#f5efe1; margin:0;">Шу в мандаринах в наличии</h2>
+        </div>
+        <span style="font-size:10.5px; letter-spacing:.18em; color:#8a8175; padding-bottom:8px;">{{ countLabel }}</span>
+      </div>
+
+      <div class="card-grid">
+        <sc-for list="{{ items }}" as="tea" hint-placeholder-count="6">
+          <div class="cat-card" style="background:#131110; border:1px solid rgba(240,233,218,0.09); border-top:2px solid {{ accent }}; overflow:hidden; display:flex; flex-direction:column;">
+            <!-- Без фото остаётся иероглиф сорта, а не пустой прямоугольник -->
+            <div style="position:relative; aspect-ratio:1/1; overflow:hidden; background:#0f0d0c; display:flex; align-items:center; justify-content:center;">
+              <span aria-hidden="true" style="font-family:'Noto Serif SC',serif; font-weight:300; font-size:56px; line-height:1; color:rgba(240,233,218,0.08);">小青柑</span>
+              <img src="{{ tea.img }}" alt="{{ tea.name }}" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:{{ tea.imgDisplay }};"/>
             </div>
-            <div style="padding:22px 24px 26px;">
-              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; color:#2a2015; margin-bottom:10px;">{{ tea.name }}</div>
-              <div style="font-size:12px; color:#6b5c46; margin-bottom:16px;">{{ tea.spec }}</div>
-              <div style="display:flex; justify-content:space-between; align-items:baseline; padding-top:14px; border-top:1px solid {{ accent }}22;">
-                <span style="font-size:11px; letter-spacing:.1em; color:#8a7a5f;">{{ tea.unit }}</span>
+            <div style="padding:20px 22px 22px; flex:1; display:flex; flex-direction:column;">
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:18px; line-height:1.28; color:#f5efe1; margin-bottom:12px;">{{ tea.name }}</div>
+              <div style="margin-top:auto; padding-top:14px; border-top:1px solid rgba(240,233,218,0.1); display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+                <span style="font-size:11.5px; color:#8a8175;">{{ tea.spec }}</span>
+                <span style="font-size:10px; letter-spacing:.14em; color:#8a8175;">{{ tea.unit }}</span>
               </div>
             </div>
           </div>
         </sc-for>
       </div>
-      <p style="display:{{ errorDisplay }}; color:#c9c0b3; font-size:14px; text-align:center; padding:40px 0;">Каталог временно недоступен.</p>
+
+      <p style="display:{{ errorDisplay }}; color:#8a8175; font-size:14px; padding:40px 0; margin:0;">Каталог временно недоступен.</p>
+
+      <div style="margin-top:60px; padding-top:34px; border-top:1px solid rgba(240,233,218,0.12); display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+        <span style="font-size:13.5px; color:#8a8175;">Нужна цена или объём партии?</span>
+        <a href="https://t.me/ssermakovss" class="hover-accent-text" style="display:inline-flex; align-items:center; gap:13px; font-family:'Cormorant Garamond',serif; font-weight:500; font-size:21px; color:#f2ebdb; text-decoration:none;">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0;"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"/></svg>
+          <span style="text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; text-decoration-color:rgba(240,233,218,0.32);">Написать</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <footer style="position:relative; padding:60px 40px 34px; border-top:1px solid rgba(240,233,218,0.1); text-align:center;">
-    <a href="../" style="color:#c7bfaf; text-decoration:none; font-size:12.5px;">← Вернуться на главную</a>
+  <!-- ═══ ФУТЕР ══════════════════════════════════════════════════ -->
+  <footer id="footer" class="sec-pad footer-wrap" style="position:relative; background:#0b0a09; padding:100px 40px 34px;">
+    <div class="footer-grid" style="max-width:1240px; margin:0 auto 70px; display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:60px;">
+      <div>
+        <a href="../" style="display:inline-block; margin-bottom:22px;"><img src="../images/logo-cream.png" alt="野馬茶 · Чай дикой лошади" style="height:34px; width:auto; display:block;"></a>
+        <div style="display:flex; flex-direction:column; gap:10px; max-width:300px; font-size:12.5px; line-height:1.6; color:#8a8175;">
+          <span>Официальный представитель Ба Фан Ча Юань в России</span>
+          <span>Прямые поставки</span>
+          <span>B2B и B2C</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:24px;">КОНТАКТЫ</div>
+        <div style="display:flex; flex-direction:column; margin:-10px 0;">
+          <a href="mailto:hello@wildhorsetea.ru" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0;">hello@wildhorsetea.ru</a>
+          <a href="https://t.me/wildhorsetea" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0;">Telegram</a>
+          <span style="color:#c7bfaf; font-size:12.5px; padding:10px 0;">Москва · 55.75°N 37.6°E</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:24px;">ДОКУМЕНТЫ</div>
+        <div style="display:flex; flex-direction:column; margin:-10px 0;">
+          <a href="../oferta.html" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0;">Публичная оферта</a>
+          <a href="../privacy.html" class="hover-accent-text" style="color:#c7bfaf; text-decoration:none; font-size:12.5px; padding:10px 0;">Политика конфиденциальности</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1240px; margin:0 auto; padding-top:26px; border-top:1px solid rgba(240,233,218,0.08); display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+      <span style="font-size:10px; letter-spacing:.06em; color:#8a8175;">© 2026 ЧАЙ ДИКОЙ ЛОШАДИ. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</span>
+      <span style="font-family:'Noto Serif SC',serif; font-size:12px; letter-spacing:.3em; color:#5f5952;">野馬茶</span>
+    </div>
   </footer>
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;: {&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8a3b42&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;: {&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8a3b42&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#8a3b42&quot;,&quot;#6b2b35&quot;,&quot;#2f5c4a&quot;,&quot;#4a5568&quot;]}, &quot;motion&quot;: {&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Полная анимация&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;Полная анимация&quot;,&quot;Сдержанная&quot;],&quot;section&quot;:&quot;Поведение&quot;}}">
 class Component extends DCLogic {
-  state = { items: [], error: false };
+  state = { items: [], error: false, scrolled: false, progress: 0, visible: {} };
 
   categorySlug = 'mandarin-shu';
+
+  // прозрачный 1×1: подставляем вместо пустого src, чтобы не было битого запроса
+  blankImg = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
   componentDidMount() {
     fetch('../catalog.json')
@@ -102,22 +220,87 @@ class Component extends DCLogic {
       .then((data) => {
         const items = (data[this.categorySlug] || []).map((it) => ({
           ...it,
-          img: it.img ? `../${it.img}` : null,
+          img: it.img ? `../${it.img}` : this.blankImg,
           imgDisplay: it.img ? 'block' : 'none',
         }));
         this.setState({ items });
       })
       .catch(() => this.setState({ error: true }));
+
+    const root = document.getElementById('wht-root');
+    if (root) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const id = e.target.getAttribute('data-reveal-id');
+            this.setState((s) => ({ visible: { ...s.visible, [id]: true } }));
+            this._io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      root.querySelectorAll('[data-reveal-id]').forEach((el) => this._io.observe(el));
+    }
+
+    this._ticking = false;
+    this.onScroll = () => {
+      const y = window.scrollY || 0;
+      if ((y > 40) !== this.state.scrolled) this.setState({ scrolled: y > 40 });
+      if (!this._ticking) {
+        this._ticking = true;
+        requestAnimationFrame(() => {
+          const doc = document.documentElement;
+          const max = (doc ? doc.scrollHeight : 0) - window.innerHeight;
+          const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+          this.setState({ progress });
+          this._ticking = false;
+        });
+      }
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+  }
+
+  revealStyle(id, delay) {
+    const reduced = (this.props.motion === 'Сдержанная');
+    const v = reduced ? true : !!this.state.visible[id];
+    const d = delay || 0;
+    return `opacity:${v ? 1 : 0}; transform:translateY(${v ? 0 : 26}px); transition:opacity .55s cubic-bezier(.16,.8,.24,1) ${d}s, transform .55s cubic-bezier(.16,.8,.24,1) ${d}s;`;
   }
 
   renderVals() {
     const accent = this.props.accent || '#8a3b42';
+    const scrolled = this.state.scrolled;
+    const n = this.state.items.length;
+
     return {
       accent,
+      accentSoft: `color-mix(in srgb, ${accent} 55%, #f5efe1 45%)`,
+      navStyle: `position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:${scrolled ? '16px 40px' : '30px 40px'}; background:${scrolled ? 'rgba(11,10,9,0.9)' : 'transparent'}; backdrop-filter:${scrolled ? 'blur(16px)' : 'none'}; border-bottom:1px solid ${scrolled ? 'rgba(240,233,218,0.08)' : 'transparent'}; transition:all .45s cubic-bezier(.16,.8,.24,1);`,
+      navLogoH: scrolled ? '32px' : '42px',
+      progressWidth: `${(this.state.progress * 100).toFixed(2)}%`,
       items: this.state.items,
+      countLabel: n ? `${n} ${this.plural(n)}` : '',
       error: this.state.error,
       errorDisplay: this.state.error ? 'block' : 'none',
+      aboutRevealStyle: this.revealStyle('about', 0),
+      catalogRevealStyle: this.revealStyle('catalog', 0),
     };
+  }
+
+  plural(n) {
+    const t = n % 100;
+    if (t >= 11 && t <= 14) return 'позиций';
+    switch (n % 10) {
+      case 1: return 'позиция';
+      case 2:
+      case 3:
+      case 4: return 'позиции';
+      default: return 'позиций';
+    }
   }
 }
 
