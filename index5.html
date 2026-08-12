@@ -27,7 +27,7 @@
   @media (prefers-reduced-motion: reduce){
     [data-reveal-id]{ transition:none !important; transform:none !important; opacity:1 !important; }
     #wht-root [style*="transform:translateY"]{ transform:none !important; }
-    .hover-btn-accent:hover, .cat-tile-img, .scroll-cue-line{ transition:none !important; transform:none !important; animation:none !important; }
+    .hover-btn-accent:hover, .cat-tile-img{ transition:none !important; transform:none !important; animation:none !important; }
   }
 
   .hover-underline{ transition:color .3s ease, border-color .3s ease; }
@@ -49,16 +49,11 @@
   .cat-tile:hover .cat-tile-link{ border-color:#8a3b42; color:#f5efe1; letter-spacing:.16em; }
   .cat-grid > .cat-tile:nth-child(even){ margin-top:92px; }
 
-  /* Шаги полного цикла */
-  .step-row{ transition:background .4s ease, padding-left .4s cubic-bezier(.16,.8,.24,1); }
-  .step-row:hover{ background:rgba(240,233,218,0.03); padding-left:14px; }
-
-  .scroll-cue-line{ animation:cueDrop 2.4s cubic-bezier(.16,.8,.24,1) infinite; transform-origin:top center; }
-  @keyframes cueDrop{ 0%{ transform:scaleY(0); opacity:0; } 35%{ transform:scaleY(1); opacity:1; } 75%{ transform:scaleY(1); opacity:1; } 100%{ transform:scaleY(0); opacity:0; } }
+  /* Блок основателя: фото + лаконичная колонка с цитатой и контактами */
+  .founder-lean{ display:grid; grid-template-columns:minmax(240px,0.62fr) 1fr; gap:70px; align-items:center; }
 
   @media (max-width:980px){
-    .origin-grid{ grid-template-columns:1fr !important; gap:48px !important; }
-    .origin-media{ min-height:420px !important; position:static !important; }
+    .founder-lean{ grid-template-columns:1fr !important; gap:40px !important; }
     .stat-grid{ grid-template-columns:1fr !important; gap:0 !important; }
     .stat-cell{ border-left:none !important; border-top:1px solid rgba(240,233,218,0.12); padding:38px 0 !important; }
     .stat-grid > .stat-cell:first-child{ border-top:none; padding-top:0 !important; }
@@ -66,15 +61,11 @@
   }
   @media (max-width:760px){
     .nav-links{ display:none !important; }
-    .hero-meta{ flex-direction:column !important; align-items:flex-start !important; gap:14px !important; }
     .footer-grid{ grid-template-columns:1fr !important; gap:36px !important; }
-    .founder-grid{ grid-template-columns:1fr !important; gap:28px !important; }
-    .founder-grid img{ max-height:280px !important; }
     .brand-grid{ grid-template-columns:1fr !important; gap:36px !important; }
     .cat-grid{ grid-template-columns:1fr !important; gap:56px !important; }
     .cat-grid > .cat-tile:nth-child(even){ margin-top:0 !important; }
     .legal-checks{ grid-template-columns:1fr !important; }
-    .recognition-row{ flex-direction:column !important; align-items:flex-start !important; gap:26px !important; }
     .sec-pad{ padding-left:24px !important; padding-right:24px !important; }
   }
 </style>
@@ -92,15 +83,14 @@
     </a>
     <div class="nav-links" style="display:flex; align-items:center; gap:34px;">
       <a href="#heritage" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">01 · БРЕНД</a>
-      <a href="#origin" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">02 · ПРОИСХОЖДЕНИЕ</a>
-      <a href="#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">03 · СОРТА</a>
-      <a href="#legal" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">04 · ГАРАНТИИ</a>
+      <a href="#varieties" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">02 · СОРТА</a>
+      <a href="#legal" class="hover-underline" style="color:#c7bfaf; text-decoration:none; font-size:11px; letter-spacing:.14em; border-bottom:1px solid transparent; padding-bottom:4px;">03 · ГАРАНТИИ</a>
     </div>
     <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.28); color:#f0e9da; text-decoration:none; font-size:10.5px; letter-spacing:.16em; padding:12px 26px;">СВЯЗАТЬСЯ →</a>
   </nav>
 
   <!-- ═══ 01 · ГЛАВНАЯ ═══════════════════════════════════════════ -->
-  <section id="top" data-screen-label="01 — Главная" style="position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:150px 40px 44px; overflow:hidden;">
+  <section id="top" data-screen-label="01 — Главная" style="position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:150px 40px 120px; overflow:hidden;">
 
     <div style="position:absolute; inset:0; z-index:0; overflow:hidden; background:#0b0a09; transform:{{ heroImgParallax }};">
       <video autoplay muted loop playsinline poster="./images/hero-poster.jpg" aria-label="Горы Юньнани в тумане" style="width:100%; height:100%; object-fit:cover;">
@@ -110,7 +100,7 @@
     </div>
 
     <div style="position:relative; z-index:1; width:100%; max-width:1320px; margin:0 auto; transform:{{ heroParallax }};">
-      <div style="text-align:center; margin-bottom:70px;">
+      <div style="text-align:center;">
         <div style="font-family:'Noto Serif SC',serif; font-size:12px; letter-spacing:.62em; color:{{ accentSoft }}; margin-bottom:34px; padding-left:.6em;">野馬茶</div>
         <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(52px,8.6vw,132px); line-height:.96; margin:0 0 34px; color:#f5efe1; letter-spacing:.02em;">
           ЧАЙ ДИКОЙ<br/>ЛОШАДИ
@@ -118,25 +108,12 @@
         <p style="font-size:13px; letter-spacing:.05em; color:#b6ac9c; max-width:540px; margin:0 auto 44px; line-height:2;">
           Официальный представитель бренда 八方茶园 (Ба Фан Ча Юань) в России
         </p>
-        <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:11.5px; letter-spacing:.18em; padding:17px 38px; display:inline-block;">СМОТРЕТЬ СОРТА →</a>
-      </div>
-
-      <!-- Мета-рейка: выходные данные вместо голого центрирования -->
-      <div class="hero-meta" style="display:flex; align-items:flex-end; justify-content:space-between; gap:30px; padding-top:26px; border-top:1px solid rgba(240,233,218,0.14);">
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span class="scroll-cue-line" style="display:block; width:1px; height:34px; background:linear-gradient(180deg, {{ accent }}, transparent);"></span>
-          <span style="font-size:9.5px; letter-spacing:.24em; color:#8a8175;">ПРОКРУТИТЕ</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:34px; flex-wrap:wrap; justify-content:flex-end;">
-          <span style="font-size:9.5px; letter-spacing:.22em; color:#8a8175;">ОФИЦИАЛЬНОЕ ПРЕДСТАВИТЕЛЬСТВО</span>
-          <span style="font-size:9.5px; letter-spacing:.22em; color:#8a8175;">八方茶园 · 40+ ЛЕТ</span>
-          <span style="font-size:9.5px; letter-spacing:.22em; color:#8a8175;">МОСКВА</span>
-        </div>
+        <a href="#varieties" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:11.5px; letter-spacing:.18em; padding:17px 38px; display:inline-block;">МАГАЗИН →</a>
       </div>
     </div>
   </section>
 
-  <!-- ═══ 02 · БРЕНД + ПОЗИЦИЯ ═══════════════════════════════════ -->
+  <!-- ═══ 02 · БРЕНД ═════════════════════════════════════════════ -->
   <section id="heritage" data-screen-label="02 — Бренд" data-reveal-id="heritage" class="sec-pad" style="position:relative; padding:140px 40px 150px; overflow:hidden; {{ heritageRevealStyle }}">
     <div style="position:absolute; inset:0; z-index:0;">
       <img src="./images/ritual.jpg" alt="" loading="lazy" style="width:100%; height:100%; object-fit:cover; filter:brightness(.38) saturate(.8) contrast(1.06);"/>
@@ -152,29 +129,16 @@
 
       <div class="brand-grid" style="display:grid; grid-template-columns:0.8fr 1.2fr; gap:76px; align-items:start;">
         <div>
-          <img src="./images/bafangchayuan-logo.png" alt="八方茶园 · Ба Фан Ча Юань" loading="lazy" style="width:250px; max-width:100%; height:auto; display:block; margin-bottom:28px;">
-          <div style="font-family:'Noto Serif SC',serif; font-size:15px; letter-spacing:.14em; color:#c8c0b2;">八方茶园</div>
-          <div style="font-size:10.5px; letter-spacing:.2em; color:#8a8175; margin-top:8px;">БА ФАН ЧА ЮАНЬ</div>
+          <img src="./images/bafangchayuan-logo.png" alt="八方茶园 · Ба Фан Ча Юань" loading="lazy" style="width:250px; max-width:100%; height:auto; display:block;">
         </div>
         <div>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(30px,3.6vw,50px); line-height:1.16; color:#f5efe1; margin:0 0 34px;">Зрелый игрок китайского рынка, а не молодая нишевая марка</h2>
+          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(30px,3.6vw,50px); line-height:1.16; color:#f5efe1; margin:0 0 34px;">Бренд с проверяемой историей и понятной репутацией на родине</h2>
           <p style="font-size:15px; line-height:1.9; color:#c8c0b2; margin:0 0 22px;">八方茶园 (Ба Фан Ча Юань) — это не молодой нишевый бренд, а один из зрелых игроков китайского чайного рынка с более чем 40-летней историей.</p>
           <p style="font-size:15px; line-height:1.9; color:#c8c0b2; margin:0 0 22px;">Компания выстроена по модели полного производственного цикла: собственные плантации в Юньнани, Фуцзяни и Гуандуне, отдел производства, переработка — от листа до готовой упаковки. Такой контроль всей цепочки определяет стабильность качества и терруарную чистоту. Именно за это бренд отмечают в отраслевых рейтингах Китая.</p>
           <p style="font-size:15px; line-height:1.9; color:#c8c0b2; margin:0;">Статус подтверждается и репутационными коллаборациями — совместные лимитированные выпуски пуэра с Disney, амбассадор бренда — олимпийская чемпионка Го Дань.</p>
         </div>
       </div>
 
-      <!-- Позиция — вывод из фактов выше, на том же экране -->
-      <div data-reveal-id="manifesto" style="margin-top:104px; padding-top:76px; border-top:1px solid rgba(240,233,218,0.16); text-align:center; {{ manifestoRevealStyle }}">
-        <div style="display:inline-flex; align-items:center; gap:16px; margin-bottom:40px;">
-          <span style="display:block; width:34px; height:1px; background:rgba(240,233,218,0.28);"></span>
-          <span style="font-size:9.5px; letter-spacing:.26em; color:{{ accentSoft }};">ПОЗИЦИЯ</span>
-          <span style="display:block; width:34px; height:1px; background:rgba(240,233,218,0.28);"></span>
-        </div>
-        <p style="font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(27px,3.9vw,52px); line-height:1.3; color:#f5efe1; margin:0 auto; max-width:1020px; letter-spacing:.005em;">
-          Мы предлагаем не безымянный товар с рынка, а <span style="font-style:italic; color:{{ accentSoft }};">бренд</span> с проверяемой историей и понятной репутацией на родине.
-        </p>
-      </div>
     </div>
   </section>
 
@@ -192,74 +156,17 @@
         </sc-for>
       </div>
 
-      <!-- Репутационные подтверждения вынесены отдельной строкой, а не спрятаны в абзаце -->
-      <div class="recognition-row" data-reveal-id="recognition" style="display:flex; align-items:center; justify-content:space-between; gap:40px; margin-top:46px; flex-wrap:wrap; {{ recognitionRevealStyle }}">
-        <span style="font-size:9.5px; letter-spacing:.26em; color:#8a8175;">ПРИЗНАНИЕ</span>
-        <div style="display:flex; align-items:center; gap:44px; flex-wrap:wrap;">
-          <span style="font-family:'Cormorant Garamond',serif; font-size:19px; color:#c8c0b2;">Лимитированный пуэр × <span style="font-style:italic; color:#f5efe1;">Disney</span></span>
-          <span style="width:1px; height:20px; background:rgba(240,233,218,0.2);"></span>
-          <span style="font-family:'Cormorant Garamond',serif; font-size:19px; color:#c8c0b2;">Амбассадор — <span style="font-style:italic; color:#f5efe1;">Го Дань</span>, олимпийская чемпионка</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ 05 · ПРОИСХОЖДЕНИЕ ═════════════════════════════════════ -->
-  <section id="origin" data-screen-label="04 — Происхождение" data-reveal-id="origin" class="sec-pad" style="position:relative; background:#0e0c0b; padding:130px 40px; {{ originRevealStyle }}">
-    <div style="max-width:1240px; margin:0 auto;">
-
-      <div style="display:flex; align-items:center; gap:18px; margin-bottom:64px;">
-        <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">02</span>
-        <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
-        <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">ПРОИСХОЖДЕНИЕ</span>
-      </div>
-
-      <div class="origin-grid" style="display:grid; grid-template-columns:0.92fr 1.08fr; gap:80px; align-items:start;">
-
-        <div class="origin-media" style="position:sticky; top:120px;">
-          <div style="position:relative; overflow:hidden; min-height:560px; height:calc(100vh - 240px); max-height:640px;">
-            <img src="./images/plantation.jpg" alt="Чайная плантация в Юньнани" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.68) saturate(.92) contrast(1.05);"/>
-            <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.15) 0%, rgba(11,10,9,.2) 55%, rgba(11,10,9,.82) 100%);"></div>
-            <div style="position:absolute; left:0; bottom:0; padding:34px 34px 30px;">
-              <div style="font-family:'Noto Serif SC',serif; font-size:22px; color:{{ accentSoft }}; margin-bottom:10px; line-height:1;">云南 · 福建 · 广东</div>
-              <div style="font-size:10.5px; letter-spacing:.2em; color:#c7bfaf;">ЮНЬНАНЬ · ФУЦЗЯНЬ · ГУАНДУН</div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(30px,3.6vw,50px); line-height:1.16; color:#f5efe1; margin:0 0 26px;">Полный цикл — от собственного листа до склада в Москве</h2>
-          <p style="font-size:15px; line-height:1.9; color:#c8c0b2; margin:0 0 56px; max-width:560px;">Ни один этап не отдан посреднику. Это то, что отличает бренд с производством от перекупщика с мешком чая неизвестного происхождения.</p>
-
-          <div style="border-top:1px solid rgba(240,233,218,0.12);">
-            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="5">
-              <div class="step-row" style="display:flex; gap:30px; align-items:flex-start; padding:32px 0; border-bottom:1px solid rgba(240,233,218,0.12); {{ st.style }}">
-                <div style="flex-shrink:0; width:52px;">
-                  <div style="font-size:10.5px; letter-spacing:.18em; color:{{ accentSoft }}; margin-bottom:8px;">{{ st.n }}</div>
-                  <div aria-hidden="true" style="font-family:'Noto Serif SC',serif; font-size:17px; color:rgba(240,233,218,0.32); line-height:1;">{{ st.cn }}</div>
-                </div>
-                <div>
-                  <h3 style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:23px; line-height:1.2; color:#f5efe1; margin:0 0 10px;">{{ st.title }}</h3>
-                  <p style="font-size:13.5px; line-height:1.8; color:#8f8779; margin:0; max-width:440px;">{{ st.text }}</p>
-                </div>
-              </div>
-            </sc-for>
-          </div>
-        </div>
-
-      </div>
     </div>
   </section>
 
   <!-- ═══ 06 · СОРТА ═════════════════════════════════════════════ -->
-  <section id="varieties" data-screen-label="05 — Сорта" class="sec-pad" style="position:relative; background:#0b0a09; padding:130px 40px 150px;">
+  <section id="varieties" data-screen-label="04 — Сорта" class="sec-pad" style="position:relative; background:#0b0a09; padding:130px 40px 150px;">
     <div style="max-width:1240px; margin:0 auto;">
 
       <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:40px; margin-bottom:76px; flex-wrap:wrap;">
         <div>
           <div style="display:flex; align-items:center; gap:18px; margin-bottom:26px;">
-            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">03</span>
+            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">02</span>
             <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
             <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">СОРТА</span>
           </div>
@@ -293,12 +200,12 @@
   </section>
 
   <!-- ═══ 07 · ГАРАНТИИ / ЛЕГАЛЬНОСТЬ ════════════════════════════ -->
-  <section id="legal" data-screen-label="06 — Гарантии" data-reveal-id="legal" class="sec-pad" style="position:relative; background:#0e0c0b; padding:130px 40px; overflow:hidden; {{ legalRevealStyle }}">
+  <section id="legal" data-screen-label="05 — Гарантии" data-reveal-id="legal" class="sec-pad" style="position:relative; background:#0e0c0b; padding:130px 40px; overflow:hidden; {{ legalRevealStyle }}">
     <div aria-hidden="true" style="position:absolute; top:-40px; right:-30px; font-family:'Noto Serif SC',serif; font-weight:300; font-size:clamp(150px,22vw,320px); line-height:1; color:rgba(240,233,218,0.026); pointer-events:none; user-select:none;">报关</div>
 
     <div style="position:relative; z-index:1; max-width:1240px; margin:0 auto;">
       <div style="display:flex; align-items:center; gap:18px; margin-bottom:64px;">
-        <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">04</span>
+        <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">03</span>
         <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
         <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">ГАРАНТИИ</span>
       </div>
@@ -306,7 +213,7 @@
       <div class="legal-grid" style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:80px; align-items:start;">
         <div>
           <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(32px,4.2vw,60px); line-height:1.1; color:#f5efe1; margin:0 0 30px;">Чай, с которым можно работать <span style="font-style:italic; color:{{ accentSoft }};">без рисков</span></h2>
-          <p style="font-size:15.5px; line-height:1.9; color:#c8c0b2; margin:0 0 40px; max-width:520px;">Каждая партия проходит таможенное оформление, декларирование и сертификацию в РФ. Это не маркетинговая формулировка, а условие, на котором построена дистрибуция.</p>
+          <p style="font-size:15.5px; line-height:1.9; color:#c8c0b2; margin:0 0 40px; max-width:560px;">Каждая партия чая проходит таможенное оформление, декларирование и сертификацию в РФ. Это принципиальная позиция — мы строим бизнес так, чтобы с нами можно было безопасно работать, будь вы дистрибьютор, чайный магазин или конечный покупатель.</p>
           <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; font-size:13.5px; color:#8f8779;">
             <span>Дистрибьюторам</span>
             <span style="color:{{ accentSoft }};">·</span>
@@ -332,23 +239,36 @@
   </section>
 
   <!-- ═══ 08 · ОСНОВАТЕЛЬ + ФУТЕР ════════════════════════════════ -->
-  <footer data-screen-label="07 — Футер" id="footer" data-reveal-id="footer" class="sec-pad" style="position:relative; background:#0b0a09; padding:0 40px 34px; overflow:hidden;">
+  <footer data-screen-label="06 — Футер" id="footer" data-reveal-id="footer" class="sec-pad" style="position:relative; background:#0b0a09; padding:0 40px 34px; overflow:hidden;">
 
-    <div class="founder-grid" style="margin:0 -40px 100px; width:calc(100% + 80px); display:grid; grid-template-columns:minmax(220px,22%) 1fr; gap:0; align-items:end; border-top:1px solid rgba(240,233,218,0.1); padding-top:0;">
-      <div style="align-self:end; line-height:0;">
-        <img src="./images/founder-sergey-cutout.png" alt="Сергей Ермаков, основатель 野馬茶" loading="lazy" style="width:100%; height:auto; max-height:480px; object-fit:contain; object-position:bottom; display:block; filter:grayscale(.35) sepia(.12) brightness(.92) contrast(1.08);"/>
-      </div>
-      <div style="padding:100px 40px 20px; align-self:end;">
-        <div style="display:flex; align-items:center; gap:18px; margin-bottom:22px;">
-          <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">05</span>
-          <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
-          <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">ОСНОВАТЕЛЬ</span>
+    <div style="max-width:1240px; margin:0 auto 110px; padding-top:110px; border-top:1px solid rgba(240,233,218,0.1);">
+      <div class="founder-lean">
+        <div style="line-height:0;">
+          <img src="./images/founder-sergey-cutout.png" alt="Сергей Ермаков, основатель 野馬茶" loading="lazy" style="width:100%; height:auto; max-height:400px; object-fit:contain; object-position:bottom left; display:block; filter:grayscale(.35) sepia(.12) brightness(.92) contrast(1.08);"/>
         </div>
-        <h2 style="font-family:'PT Sans',sans-serif; font-weight:700; font-size:clamp(22px,2.4vw,28px); color:#f5efe1; margin:0 0 26px;">Сергей Ермаков</h2>
-        <blockquote style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:clamp(22px,2.8vw,34px); line-height:1.42; color:#c9c0b3; margin:0 0 34px; padding-left:28px; border-left:2px solid {{ accent }}; max-width:920px;">Каждая партия чая проходит таможенное оформление, декларирование и сертификацию в РФ. Это принципиальная позиция — мы строим бизнес так, чтобы с нами можно было работать без рисков, будь вы дистрибьютор, чайный магазин или конечный покупатель.</blockquote>
-        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-          <a href="https://t.me/wildhorsetea" class="hover-btn-accent" style="background:{{ accent }}; color:#f5efe1; text-decoration:none; font-size:11.5px; letter-spacing:.16em; padding:16px 32px; display:inline-block;">ТГ-КАНАЛ →</a>
-          <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.3); color:#f0e9da; text-decoration:none; font-size:11.5px; letter-spacing:.16em; padding:16px 32px; display:inline-block;">НАПИСАТЬ МНЕ →</a>
+        <div>
+          <div style="display:flex; align-items:center; gap:18px; margin-bottom:30px;">
+            <span style="font-size:10px; letter-spacing:.24em; color:{{ accentSoft }};">04</span>
+            <span style="display:block; width:44px; height:1px; background:rgba(240,233,218,0.26);"></span>
+            <span style="font-size:10px; letter-spacing:.24em; color:#8a8175;">ОСНОВАТЕЛЬ</span>
+          </div>
+
+          <blockquote style="font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(26px,3.2vw,42px); line-height:1.3; color:#f5efe1; margin:0 0 40px; max-width:720px;">Работаю только с тем чаем, который <span style="font-style:italic; color:{{ accentSoft }};">пью сам</span>. А я что попало не пью.</blockquote>
+
+          <div style="display:flex; gap:56px; flex-wrap:wrap;">
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:#8a8175; margin-bottom:7px;">Основатель</div>
+              <div style="font-size:13.5px; color:#f2ebdb;">Сергей Ермаков</div>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:#8a8175; margin-bottom:7px;">Канал</div>
+              <a href="https://t.me/wildhorsetea" class="hover-accent-text" style="font-size:13.5px; color:#f2ebdb; text-decoration:none;">@wildhorsetea</a>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:#8a8175; margin-bottom:7px;">Написать лично</div>
+              <a href="https://t.me/ssermakovss" class="hover-accent-text" style="font-size:13.5px; color:#f2ebdb; text-decoration:none;">@ssermakovss</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -403,14 +323,6 @@ class Component extends DCLogic {
     { id: 'stat-years', num: '40+', label: 'ЛЕТ ИСТОРИИ', note: 'Зрелый игрок китайского чайного рынка, а не новая марка' },
     { id: 'stat-regions', num: '3', label: 'ЧАЙНЫХ РЕГИОНА', note: 'Собственные плантации: Юньнань, Фуцзянь, Гуандун' },
     { id: 'stat-legal', num: '100%', label: 'ЛЕГАЛЬНЫЙ ИМПОРТ', note: 'Таможенное оформление и сертификация на каждую партию' },
-  ];
-
-  steps = [
-    { id: 'step-1', n: '01', cn: '茶园', title: 'Собственные плантации', text: 'Юньнань, Фуцзянь и Гуандун. Терруар контролируется с первого листа, а не покупается на бирже.' },
-    { id: 'step-2', n: '02', cn: '加工', title: 'Переработка и ферментация', text: 'Собственный отдел производства: ферментация, сушка, сортировка — без промежуточных фабрик.' },
-    { id: 'step-3', n: '03', cn: '包装', title: 'Упаковка на фабрике', text: 'Партия уходит уже в готовой упаковке бренда и не переупаковывается по дороге.' },
-    { id: 'step-4', n: '04', cn: '报关', title: 'Таможня и сертификация', text: 'Таможенное оформление, декларирование и сертификация в РФ на каждую партию.' },
-    { id: 'step-5', n: '05', cn: '交付', title: 'Поставка в России', text: 'Прямые поставки ограниченными партиями — дистрибьюторам, магазинам и частным клиентам.' },
   ];
 
   guarantees = [
@@ -498,11 +410,6 @@ class Component extends DCLogic {
       style: this.revealStyle('stats', i * 0.1),
     }));
 
-    const stepsStyled = this.steps.map((st, i) => ({
-      ...st,
-      style: this.revealStyle('origin', i * 0.07),
-    }));
-
     return {
       accent,
       accentSoft,
@@ -513,13 +420,9 @@ class Component extends DCLogic {
       heroImgParallax,
       varieties: varietiesStyled,
       stats: statsStyled,
-      steps: stepsStyled,
       guarantees: this.guarantees,
-      manifestoRevealStyle: this.revealStyle('manifesto', 0),
       heritageRevealStyle: this.revealStyle('heritage', 0),
       statsRevealStyle: this.revealStyle('stats', 0),
-      recognitionRevealStyle: this.revealStyle('recognition', 0.1),
-      originRevealStyle: this.revealStyle('origin', 0),
       legalRevealStyle: this.revealStyle('legal', 0),
     };
   }
