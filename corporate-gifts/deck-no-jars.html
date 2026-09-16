@@ -41,7 +41,7 @@
   .top .brand{ display:flex; align-items:center; gap:22px; }
   .top .brand .cn{ font-size:22px; letter-spacing:.3em; color:var(--gold); }
   .top .brand .ru{ font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted-2); }
-  .bottom{ position:absolute; bottom:52px; left:120px; right:120px; z-index:2; display:flex; justify-content:space-between; align-items:center; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  .bottom{ display:none !important; position:absolute; bottom:52px; left:120px; right:120px; z-index:2;  justify-content:space-between; align-items:center; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
   .num{ font-family:'Cormorant Garamond',serif; font-size:22px; letter-spacing:.1em; color:var(--muted); }
 
   .grid{ display:grid; gap:80px; }
@@ -80,7 +80,7 @@
   </div>
 
   <div class="fg" style="margin-top:84px;">
-    <h2 style="font-size:80px;">Премиальный китайский чай<br><em>и упаковка с вашим дизайном</em></h2>
+    <h2 style="font-size:80px;">Премиальный китайский чай<br><em>для корпоративных подарков</em></h2>
     <p class="lead" style="max-width:1240px; margin-top:32px; font-size:21px;">Мы профессионально разбираемся в китайском чае и каждую партию проверяем лично, прежде чем она попадёт к вам. Проект делаем под ключ — от подбора сорта до готовой упаковки с вашим дизайном; от вас нужно только согласовать. Подберём чай под любую задачу: на каждый день или коллекционный — редкий и по-настоящему дорогой.</p>
 
     <div class="grid" style="margin-top:56px; grid-template-columns:1fr 620px; gap:80px; align-items:stretch;">
@@ -94,7 +94,7 @@
       <div style="background:var(--kraft); color:#2a2320; padding:44px 52px 40px;">
         <div style="font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Наша рекомендация</div>
         <div class="serif" style="font-size:52px; line-height:1; color:#1c1715; margin-bottom:22px;">Красный чай</div>
-        <p style="font-size:18px; line-height:1.65; color:#3a322d;">Большинство адресатов не готовы к незнакомым вкусам — подарок должен быть понятен с первого глотка. Красный чай по китайской классификации — это тот самый чёрный чай, знакомый каждому в европейской традиции.</p>
+        <p style="font-size:18px; line-height:1.65; color:#3a322d;">Большинство адресатов не готовы к незнакомым вкусам — подарок должен быть понятен с первого глотка. Красный чай по китайской классификации — это тот самый чёрный чай, знакомый каждому в европейской традиции. Только очень вкусный.</p>
         <p style="font-size:18px; line-height:1.65; color:#3a322d; margin-top:14px;">Мы берём его из Фэнцина — одного из лучших чайных регионов Юньнани.</p>
       </div>
     </div>
@@ -159,30 +159,29 @@
   <div class="bottom"><span>Корпоративные подарки</span><span class="num">04 / 05</span></div>
 </section>
 
-<!-- ============ 5 · КОНТАКТЫ ============ -->
-<section class="slide">
+<!-- ============ 5 · КОНТАКТЫ (как блок «Основатель» на сайте) ============ -->
+<section class="slide" style="padding:0;">
   <div class="bg deep"><img src="images/bg-hero.jpg" alt="" style="object-position:center 70%;"><div class="veil"></div></div>
   <div class="top">
     <div class="brand"><span class="cn">野馬茶</span><span class="ru">Чай дикой лошади</span></div>
     <span class="label"><b>04</b> &nbsp;·&nbsp; Контакты</span>
   </div>
 
-  <div class="fg" style="position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; gap:120px; padding:0 120px; align-items:center;">
-    <div style="display:flex; align-items:center; gap:44px;">
-      <img src="images/founder-sergey.png" alt="Сергей Ермаков" style="width:220px; height:220px; object-fit:cover; border-radius:50%; display:block; flex:none; filter:saturate(.85);">
-      <div>
-        <p class="serif" style="font-size:38px; line-height:1.2; color:var(--cream); font-style:italic; font-weight:300;">«Работаю только с тем чаем, который пью сам. А я что попало не пью».</p>
-        <p class="note" style="margin-top:18px; font-size:17px;">Сергей Ермаков · владелец, официальный представитель Ба Фан Ча Юань в России</p>
-      </div>
+  <div class="fg" style="position:absolute; inset:0; display:grid; grid-template-columns:720px 1fr; padding:0 120px; gap:100px;">
+    <div style="position:relative;">
+      <img src="images/founder-sergey-cutout.png" alt="Сергей Ермаков" style="position:absolute; left:0; bottom:0; width:720px; height:auto; display:block; filter:saturate(.85);">
+      <div style="position:absolute; left:0; right:0; bottom:0; height:220px; background:linear-gradient(180deg, rgba(11,10,9,0) 0%, rgba(11,10,9,.9) 100%);"></div>
     </div>
-    <div style="text-align:right;">
-      <div class="eyebrow" style="margin-bottom:22px;">Контакты</div>
-      <p class="serif" style="font-size:80px; line-height:1.05; color:var(--cream);">+7 968 666-16-88</p>
-      <p style="font-size:28px; color:var(--cream); margin-top:22px;">s.s.ermakov@gmail.com</p>
+    <div style="display:flex; flex-direction:column; justify-content:center; padding-bottom:40px;">
+      <div class="label" style="margin-bottom:34px;"><b>Владелец</b></div>
+      <p class="serif" style="font-size:60px; line-height:1.12; color:var(--cream); font-weight:400;">Работаю только с тем чаем, который <em style="font-style:italic; font-weight:300; color:var(--accent-soft);">пью сам</em>. А я что попало не пью.</p>
+      <p style="font-size:20px; color:var(--muted-2); margin-top:28px;">Сергей Ермаков</p>
+      <p class="note" style="font-size:16px; margin-top:6px;">Официальный представитель Ба Фан Ча Юань в России</p>
+      <div class="rule" style="margin:56px 0 44px;"></div>
+      <p class="serif" style="font-size:88px; line-height:1; color:var(--cream);">+7 968 666-16-88</p>
+      <p style="font-size:28px; color:var(--cream); margin-top:22px; letter-spacing:.02em;">s.s.ermakov@gmail.com</p>
     </div>
   </div>
-
-  <div class="bottom"><span>© 2026 Чай дикой лошади</span><span class="num">05 / 05</span></div>
 </section>
 
 </body>
