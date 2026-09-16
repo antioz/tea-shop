@@ -16,101 +16,86 @@
   html,body{ margin:0; background:var(--bg); color:var(--text); font-family:'PT Sans',sans-serif; -webkit-font-smoothing:antialiased; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .slide{ position:relative; width:1920px; height:1080px; overflow:hidden; background:var(--bg); page-break-after:always; break-after:page; padding:96px 120px; }
   .slide:last-child{ page-break-after:auto; break-after:auto; }
-  /* Плёночное зерно — тот же приём, что на сайте */
-  .slide::after{
-    display:none; content:''; position:absolute; inset:0; pointer-events:none; opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
 
-  .serif{ font-family:'Cormorant Garamond',serif; }
+  /* Фотоподложка на весь слайд — тот же градиент и тёплая цветокоррекция, что у hero на сайте */
+  .bg{ position:absolute; inset:0; z-index:0; overflow:hidden; background:var(--bg); }
+  .bg img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .bg .veil{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.72) 0%, rgba(32,17,14,.26) 26%, rgba(24,14,12,.5) 58%, rgba(11,10,9,.94) 88%, #0b0a09 100%); }
+  .bg.deep .veil{ background:linear-gradient(180deg, rgba(11,10,9,.86) 0%, rgba(24,14,12,.8) 45%, rgba(11,10,9,.94) 100%); }
+  .fg{ position:relative; z-index:1; }
+
+  .serif{ font-family:'Cormorant Garamond','Noto Serif SC',serif; }
   .cn{ font-family:'Noto Serif SC',serif; }
   .label{ font-size:15px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); }
   .label b{ font-weight:400; color:var(--accent-soft); }
   .eyebrow{ font-size:16px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2); }
   h1,h2{ font-family:'Cormorant Garamond','Noto Serif SC',serif; font-weight:400; color:var(--cream); margin:0; }
-  h2{ font-size:104px; line-height:.94; letter-spacing:-.01em; }
+  h2{ font-size:96px; line-height:.96; letter-spacing:-.01em; }
   h2 em{ font-style:italic; font-weight:300; color:var(--accent-soft); }
   p{ margin:0; }
-  .lead{ font-size:24px; line-height:1.75; color:var(--text); }
+  .lead{ font-size:22px; line-height:1.75; color:var(--text); }
   .note{ font-size:19px; line-height:1.7; color:var(--muted); }
   .rule{ height:1px; background:var(--line); }
 
-  /* Шапка и подвал слайда */
-  .top{ position:absolute; top:56px; left:120px; right:120px; display:flex; justify-content:space-between; align-items:center; }
+  .top{ position:absolute; top:56px; left:120px; right:120px; z-index:2; display:flex; justify-content:space-between; align-items:center; }
   .top .brand{ display:flex; align-items:center; gap:22px; }
   .top .brand .cn{ font-size:22px; letter-spacing:.3em; color:var(--gold); }
   .top .brand .ru{ font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted-2); }
-  .bottom{ position:absolute; bottom:52px; left:120px; right:120px; display:flex; justify-content:space-between; align-items:center; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+  .bottom{ position:absolute; bottom:52px; left:120px; right:120px; z-index:2; display:flex; justify-content:space-between; align-items:center; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
   .num{ font-family:'Cormorant Garamond',serif; font-size:22px; letter-spacing:.1em; color:var(--muted); }
 
-  /* Сетки */
   .grid{ display:grid; gap:80px; }
   .cols-2{ grid-template-columns:1fr 1fr; }
   .cols-3{ grid-template-columns:repeat(3,1fr); }
   .cols-4{ grid-template-columns:repeat(4,1fr); }
-  .cell{ border-left:1px solid var(--line); padding-left:34px; }
-  .cell .n{ font-size:14px; letter-spacing:.24em; color:var(--accent-soft); margin-bottom:22px; }
-  .cell .t{ font-family:'Cormorant Garamond','Noto Serif SC',serif; font-size:44px; line-height:1.05; color:var(--cream); margin-bottom:18px; }
-  .cell .d{ font-size:19px; line-height:1.7; color:var(--muted-2); }
+  .cell{ border-left:1px solid var(--line); padding-left:28px; }
+  .cell .n{ font-size:14px; letter-spacing:.24em; color:var(--accent-soft); margin-bottom:16px; }
+  .cell .t{ font-family:'Cormorant Garamond','Noto Serif SC',serif; font-size:38px; line-height:1.05; color:var(--cream); margin-bottom:12px; }
+  .cell .d{ font-size:17px; line-height:1.65; color:var(--muted-2); }
   .stat .v{ font-family:'Cormorant Garamond',serif; font-size:118px; line-height:.9; color:var(--cream); margin-bottom:18px; }
   .stat .l{ font-size:13px; letter-spacing:.24em; color:var(--accent-soft); margin-bottom:12px; }
   .stat .d{ font-size:17px; line-height:1.65; color:var(--muted); }
-
-  .img{ display:block; object-fit:cover; }
   .accent-bar{ width:64px; height:2px; background:var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- ============ 1 · ОБЛОЖКА ============ -->
+<!-- ============ 1 · ОБЛОЖКА (как hero сайта) ============ -->
 <section class="slide" style="padding:0;">
-  <img class="img" src="images/hero-poster.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; filter:brightness(.42) saturate(.85) contrast(1.05);">
-  <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,.35) 0%, rgba(11,10,9,.55) 55%, rgba(11,10,9,.92) 100%);"></div>
-  <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 200px;">
-    <img src="images/logo-cream.png" alt="野馬茶" style="width:300px; height:auto; display:block; margin-bottom:48px;">
-    <h1 class="serif" style="font-weight:500; font-size:132px; line-height:.96; letter-spacing:.02em; margin-bottom:36px;">ЧАЙ ДИКОЙ<br>ЛОШАДИ</h1>
-    <p style="font-size:21px; letter-spacing:.05em; color:#b6ac9c; line-height:1.9; max-width:900px;">Официальный представитель бренда 八方茶园 (Ба Фан Ча Юань) в России</p>
-    <div style="margin-top:64px; font-size:14px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent-soft);">Корпоративные подарки</div>
+  <div class="bg"><img src="images/bg-hero.jpg" alt=""><div class="veil"></div></div>
+  <div class="fg" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 200px;">
+    <div class="cn" style="font-size:24px; letter-spacing:.62em; padding-left:.62em; color:var(--gold); margin-bottom:48px;">野馬茶</div>
+    <h1 class="serif" style="font-weight:500; font-size:168px; line-height:.96; letter-spacing:.02em; margin-bottom:44px;">ЧАЙ ДИКОЙ<br>ЛОШАДИ</h1>
+    <p style="font-size:21px; letter-spacing:.05em; color:#b6ac9c; line-height:2; max-width:900px;">Официальный представитель бренда 八方茶园 (Ба Фан Ча Юань) в России</p>
+    <div style="margin-top:56px; font-size:14px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent-soft);">Корпоративные подарки</div>
   </div>
 </section>
 
-<!-- ============ 2 · ПРЕДЛОЖЕНИЕ ============ -->
+<!-- ============ 2 · ПРЕДЛОЖЕНИЕ + СОРТА + РЕКОМЕНДАЦИЯ ============ -->
 <section class="slide">
+  <div class="bg deep"><img src="images/bg-ritual.jpg" alt="" style="object-position:center 30%;"><div class="veil"></div></div>
   <div class="top">
     <div class="brand"><span class="cn">野馬茶</span><span class="ru">Чай дикой лошади</span></div>
     <span class="label"><b>01</b> &nbsp;·&nbsp; Предложение</span>
   </div>
 
-  <div class="grid" style="margin-top:92px; grid-template-columns:1fr 600px; gap:96px; align-items:stretch;">
-    <div style="display:flex; flex-direction:column; justify-content:space-between;">
-      <div>
-        <h2>Чай — наш.<br><em>Упаковка — ваша.</em></h2>
-        <p class="lead" style="max-width:860px; margin-top:40px; font-size:22px;">Подарок партнёру или ключевому клиенту редко бывает предметом, который действительно используют. Чай — исключение: его открывают, заваривают, ставят на стол в кабинете. И каждый раз видят, от кого он.</p>
+  <div class="fg" style="margin-top:84px;">
+    <h2 style="font-size:80px;">Премиальный китайский чай<br><em>и упаковка с вашим дизайном</em></h2>
+    <p class="lead" style="max-width:1240px; margin-top:32px; font-size:21px;">Мы профессионально разбираемся в китайском чае и каждую партию проверяем лично, прежде чем она попадёт к вам. Проект делаем под ключ — от подбора сорта до готовой упаковки с вашим дизайном; от вас нужно только согласовать. Подберём чай под любую задачу: на каждый день или коллекционный — редкий и по-настоящему дорогой.</p>
+
+    <div class="grid" style="margin-top:56px; grid-template-columns:1fr 620px; gap:80px; align-items:stretch;">
+      <div class="grid cols-2" style="gap:28px 48px; align-content:start;">
+        <div class="cell"><div class="cn" style="font-size:13px; letter-spacing:.3em; color:var(--gold); margin-bottom:10px;">白茶</div><div class="t" style="font-size:36px;">Белый</div><div class="d">Минимум обработки. Цветы, мёд, лёгкая сладость</div></div>
+        <div class="cell"><div class="cn" style="font-size:13px; letter-spacing:.3em; color:var(--gold); margin-bottom:10px;">红茶</div><div class="t" style="font-size:36px;">Красный</div><div class="d">Плотный, чуть сладковатый, с нотами мёда и сухофруктов</div></div>
+        <div class="cell"><div class="cn" style="font-size:13px; letter-spacing:.3em; color:var(--gold); margin-bottom:10px;">熟普洱</div><div class="t" style="font-size:36px;">Шу пуэр</div><div class="d">Тёмный, ферментированный. Земля, финик и спокойная глубина</div></div>
+        <div class="cell"><div class="cn" style="font-size:13px; letter-spacing:.3em; color:var(--gold); margin-bottom:10px;">生普洱</div><div class="t" style="font-size:36px;">Шэн пуэр</div><div class="d">Живой чай, который меняется годами</div></div>
       </div>
-      <div class="grid cols-3" style="gap:44px; margin-top:56px;">
-        <div class="cell" style="padding-left:26px;">
-          <div class="n" style="margin-bottom:14px;">ЧАЙ</div>
-          <div class="t" style="font-size:34px; margin-bottom:12px;">С плантаций<br>八方茶园</div>
-          <div class="d" style="font-size:17px;">Сорта, которые производитель выращивает сам в Юньнани, Фуцзяни и Гуандуне. Партию отбираем под ваш заказ.</div>
-        </div>
-        <div class="cell" style="padding-left:26px;">
-          <div class="n" style="margin-bottom:14px;">УПАКОВКА</div>
-          <div class="t" style="font-size:34px; margin-bottom:12px;">В вашем<br>фирменном стиле</div>
-          <div class="d" style="font-size:17px;">Банка с логотипом, цветом и графикой вашей компании. Макет утверждается с вами до производства.</div>
-        </div>
-        <div class="cell" style="padding-left:26px;">
-          <div class="n" style="margin-bottom:14px;">ИСПОЛНЕНИЕ</div>
-          <div class="t" style="font-size:34px; margin-bottom:12px;">Под ваш<br>список адресатов</div>
-          <div class="d" style="font-size:17px;">Тираж — от подарков команде до ограниченной серии для первых лиц. Сроки и доставка оговариваются заранее.</div>
-        </div>
-      </div>
-    </div>
-    <div style="position:relative; height:800px;">
-      <img class="img" src="images/ritual.jpg" alt="" style="width:100%; height:100%; filter:brightness(.82) saturate(.9) contrast(1.05);">
-      <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 55%, rgba(11,10,9,.85) 100%);"></div>
-      <div style="position:absolute; left:40px; bottom:36px; right:40px;">
-        <div class="cn" style="font-size:14px; letter-spacing:.4em; color:var(--gold); margin-bottom:10px;">功夫茶</div>
-        <div style="font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2);">Чай, который заваривают, а не убирают в стол</div>
+      <!-- Крафтовая вставка — как на сайте -->
+      <div style="background:var(--kraft); color:#2a2320; padding:44px 52px 40px;">
+        <div style="font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;">Наша рекомендация</div>
+        <div class="serif" style="font-size:52px; line-height:1; color:#1c1715; margin-bottom:22px;">Красный чай</div>
+        <p style="font-size:18px; line-height:1.65; color:#3a322d;">Большинство адресатов не готовы к незнакомым вкусам — подарок должен быть понятен с первого глотка. Красный чай по китайской классификации — это тот самый чёрный чай, знакомый каждому в европейской традиции.</p>
+        <p style="font-size:18px; line-height:1.65; color:#3a322d; margin-top:14px;">Мы берём его из Фэнцина — одного из лучших чайных регионов Юньнани.</p>
       </div>
     </div>
   </div>
@@ -120,21 +105,17 @@
 
 <!-- ============ 3 · ПРОИСХОЖДЕНИЕ И ГАРАНТИИ ============ -->
 <section class="slide">
+  <div class="bg deep"><img src="images/bg-plantation.jpg" alt=""><div class="veil"></div></div>
   <div class="top">
     <div class="brand"><span class="cn">野馬茶</span><span class="ru">Чай дикой лошади</span></div>
     <span class="label"><b>02</b> &nbsp;·&nbsp; Происхождение</span>
   </div>
 
-  <div class="grid cols-2" style="margin-top:92px; gap:110px; align-items:start;">
+  <div class="fg grid cols-2" style="margin-top:92px; gap:110px; align-items:start;">
     <div>
       <h2 style="font-size:84px;">Бренд с проверяемой<br>историей</h2>
       <p class="lead" style="margin-top:32px; font-size:20px;">八方茶园 (Ба Фан Ча Юань) — один из зрелых игроков китайского чайного рынка. Полный производственный цикл: собственные плантации, переработка, упаковка. За это бренд отмечают в отраслевых рейтингах Китая; среди коллабораций — лимитированные выпуски пуэра с Disney, амбассадор бренда — олимпийская чемпионка Го Дань.</p>
-      <div style="position:relative; margin-top:40px; height:360px;">
-        <img class="img" src="images/plantation.jpg" alt="" style="width:100%; height:100%; filter:brightness(.8) saturate(.85);">
-        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 50%, rgba(11,10,9,.8) 100%);"></div>
-        <img src="images/bafangchayuan-logo.png" alt="八方茶园" style="position:absolute; left:32px; bottom:28px; width:170px; height:auto;">
-        <div style="position:absolute; right:32px; bottom:32px; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2);">Плантации 八方茶园 · Юньнань</div>
-      </div>
+      <img src="images/bafangchayuan-logo.png" alt="八方茶园" style="width:220px; height:auto; display:block; margin-top:48px;">
     </div>
     <div>
       <div class="grid cols-3" style="gap:40px;">
@@ -145,10 +126,10 @@
       <div class="rule" style="margin:64px 0 48px;"></div>
       <div class="eyebrow" style="margin-bottom:28px;">Гарантии</div>
       <div class="grid cols-2" style="gap:28px 56px;">
-        <div><div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">01</div><div style="font-size:22px; color:var(--cream);">Таможенное оформление</div><div class="note" style="font-size:16px;">Каждая партия проходит официальную процедуру ввоза</div></div></div>
-        <div><div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">02</div><div style="font-size:22px; color:var(--cream);">Декларирование</div><div class="note" style="font-size:16px;">Документы на товар оформлены и доступны для проверки</div></div></div>
-        <div><div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">03</div><div style="font-size:22px; color:var(--cream);">Сертификация в РФ</div><div class="note" style="font-size:16px;">Соответствие требованиям российского регулирования</div></div></div>
-        <div><div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">04</div><div style="font-size:22px; color:var(--cream);">Прямые поставки</div><div class="note" style="font-size:16px;">От производителя, без цепочки перекупщиков</div></div></div>
+        <div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">01</div><div style="font-size:22px; color:var(--cream);">Таможенное оформление</div><div class="note" style="font-size:16px;">Каждая партия проходит официальную процедуру ввоза</div></div>
+        <div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">02</div><div style="font-size:22px; color:var(--cream);">Декларирование</div><div class="note" style="font-size:16px;">Документы на товар оформлены и доступны для проверки</div></div>
+        <div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">03</div><div style="font-size:22px; color:var(--cream);">Сертификация в РФ</div><div class="note" style="font-size:16px;">Соответствие требованиям российского регулирования</div></div>
+        <div class="cell" style="padding-left:24px;"><div class="n" style="margin-bottom:8px;">04</div><div style="font-size:22px; color:var(--cream);">Прямые поставки</div><div class="note" style="font-size:16px;">От производителя, без цепочки перекупщиков</div></div>
       </div>
     </div>
   </div>
@@ -156,102 +137,48 @@
   <div class="bottom"><span>Официальный представитель 八方茶园 в России</span><span class="num">03 / 05</span></div>
 </section>
 
-<!-- ============ 4a · ПРИМЕР (версия с банками) ============ -->
-<!-- ============ 4b · СОРТА (версия без банок) ============ -->
+<!-- ============ 4a · ПРИМЕР ДИЗАЙНА (версия с банками) ============ -->
+<!-- ============ 4b · КАК ЭТО ПРОИСХОДИТ (версия без банок) ============ -->
 <section class="slide" data-variant="nojars">
+  <div class="bg deep"><img src="images/bg-red.jpg" alt=""><div class="veil"></div></div>
   <div class="top">
     <div class="brand"><span class="cn">野馬茶</span><span class="ru">Чай дикой лошади</span></div>
-    <span class="label"><b>03</b> &nbsp;·&nbsp; Сорта</span>
+    <span class="label"><b>03</b> &nbsp;·&nbsp; Как это происходит</span>
   </div>
 
-  <div class="grid cols-2" style="margin-top:96px; gap:120px; align-items:end;">
-    <h2>Шесть сортов,<br><em>80+ видов</em></h2>
-    <p class="lead" style="font-size:21px;">Под подарок мы предлагаем два-три варианта, исходя из адресатов и повода. Каждый сорт — с собственных плантаций производителя.</p>
+  <div class="fg" style="margin-top:92px;">
+    <h2 style="font-size:84px;">Под ключ —<br><em>от вас только согласование</em></h2>
+    <div class="grid cols-4" style="margin-top:80px; gap:56px;">
+      <div class="cell"><div class="n">01</div><div class="t">Задача</div><div class="d">Повод, адресаты, количество и сроки.</div></div>
+      <div class="cell"><div class="n">02</div><div class="t">Чай</div><div class="d">Предлагаем два-три сорта под задачу и бюджет. Партию проверяем лично.</div></div>
+      <div class="cell"><div class="n">03</div><div class="t">Упаковка</div><div class="d">Банка в фирменном стиле вашей компании. Макет утверждается с вами.</div></div>
+      <div class="cell"><div class="n">04</div><div class="t">Готовый подарок</div><div class="d">Производство тиража и передача в оговоренные сроки.</div></div>
+    </div>
   </div>
 
-  <div class="grid cols-3" style="margin-top:88px; gap:48px 80px;">
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">熟普洱</div><div class="t" style="font-size:40px;">Шу пуэр</div><div class="d">Тёмный чай ускоренной ферментации. Земля, финик и спокойная глубина.</div></div>
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">生普洱</div><div class="t" style="font-size:40px;">Шэн пуэр</div><div class="d">Живой чай, который меняется годами. Терпкость молодости или мягкость выдержки.</div></div>
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">白茶</div><div class="t" style="font-size:40px;">Белый чай</div><div class="d">Минимум обработки, максимум тишины. Цветы, мёд, лёгкая сладость.</div></div>
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">红茶</div><div class="t" style="font-size:40px;">Красный чай</div><div class="d">Плотный, чуть сладковатый вкус с нотами мёда и сухофруктов.</div></div>
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">小青柑</div><div class="t" style="font-size:40px;">Шу в мандаринах</div><div class="d">Шу пуэр внутри целого мандарина — цитрус пропитывает чай изнутри.</div></div>
-    <div class="cell"><div class="cn" style="font-size:15px; letter-spacing:.3em; color:var(--gold); margin-bottom:16px;">陈皮</div><div class="t" style="font-size:40px;">Мандариновая кожура</div><div class="d">Сушёная корка, которая с возрастом становится лучше. Пьют саму или с пуэром.</div></div>
-  </div>
-
-  <div class="bottom"><span>Сорта с плантаций 八方茶园</span><span class="num">04 / 05</span></div>
+  <div class="bottom"><span>Корпоративные подарки</span><span class="num">04 / 05</span></div>
 </section>
 
-<!-- ============ 5 · ОФФЕР И КОНТАКТЫ ============ -->
+<!-- ============ 5 · КОНТАКТЫ ============ -->
 <section class="slide">
+  <div class="bg deep"><img src="images/bg-hero.jpg" alt="" style="object-position:center 70%;"><div class="veil"></div></div>
   <div class="top">
     <div class="brand"><span class="cn">野馬茶</span><span class="ru">Чай дикой лошади</span></div>
-    <span class="label"><b>04</b> &nbsp;·&nbsp; Экспертиза</span>
+    <span class="label"><b>04</b> &nbsp;·&nbsp; Контакты</span>
   </div>
 
-  <div class="grid" style="margin-top:84px; grid-template-columns:1.2fr 1fr; gap:80px; align-items:stretch;">
-    <div>
-      <h2 style="font-size:72px;">Поможем <em>с выбором</em></h2>
-      <p class="lead" style="margin-top:24px; font-size:19px; max-width:900px;">Мы можем сделать подарок на любом чае из ассортимента 八方茶园 — это вопрос только вашего выбора. Но если вы не хотите разбираться в китайском чае, у нас есть проверенное решение.</p>
-      <div class="grid cols-4" style="margin-top:32px; gap:16px;">
-        <div style="position:relative; height:250px;">
-          <img class="img" src="images/variety-white.jpg" alt="" style="width:100%; height:100%; filter:brightness(.62) saturate(.9);">
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 30%, rgba(11,10,9,.9) 100%);"></div>
-          <div style="position:absolute; left:22px; right:22px; bottom:20px;">
-            <div class="cn" style="font-size:12px; letter-spacing:.3em; color:var(--gold); margin-bottom:6px;">白茶</div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:32px; line-height:1; color:var(--cream); margin-bottom:8px;">Белый</div>
-            <div style="font-size:14px; line-height:1.5; color:var(--muted-2);">Цветы, мёд, лёгкая сладость</div>
-          </div>
-        </div>
-        <div style="position:relative; height:250px;">
-          <img class="img" src="images/variety-red.jpg" alt="" style="width:100%; height:100%; filter:brightness(.62) saturate(.9);">
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 30%, rgba(11,10,9,.9) 100%);"></div>
-          <div style="position:absolute; left:22px; right:22px; bottom:20px;">
-            <div class="cn" style="font-size:12px; letter-spacing:.3em; color:var(--gold); margin-bottom:6px;">红茶</div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:32px; line-height:1; color:var(--cream); margin-bottom:8px;">Красный</div>
-            <div style="font-size:14px; line-height:1.5; color:var(--muted-2);">Мёд и сухофрукты, плотный вкус</div>
-          </div>
-        </div>
-        <div style="position:relative; height:250px;">
-          <img class="img" src="images/variety-shu-puer.jpg" alt="" style="width:100%; height:100%; filter:brightness(.62) saturate(.9);">
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 30%, rgba(11,10,9,.9) 100%);"></div>
-          <div style="position:absolute; left:22px; right:22px; bottom:20px;">
-            <div class="cn" style="font-size:12px; letter-spacing:.3em; color:var(--gold); margin-bottom:6px;">熟普洱</div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:32px; line-height:1; color:var(--cream); margin-bottom:8px;">Шу пуэр</div>
-            <div style="font-size:14px; line-height:1.5; color:var(--muted-2);">Земля, финик, спокойная глубина</div>
-          </div>
-        </div>
-        <div style="position:relative; height:250px;">
-          <img class="img" src="images/variety-sheng-puer.jpg" alt="" style="width:100%; height:100%; filter:brightness(.62) saturate(.9);">
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,10,9,0) 30%, rgba(11,10,9,.9) 100%);"></div>
-          <div style="position:absolute; left:22px; right:22px; bottom:20px;">
-            <div class="cn" style="font-size:12px; letter-spacing:.3em; color:var(--gold); margin-bottom:6px;">生普洱</div>
-            <div style="font-family:'Cormorant Garamond',serif; font-size:32px; line-height:1; color:var(--cream); margin-bottom:8px;">Шэн пуэр</div>
-            <div style="font-size:14px; line-height:1.5; color:var(--muted-2);">Живой чай, меняется годами</div>
-          </div>
-        </div>
+  <div class="fg" style="position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; gap:120px; padding:0 120px; align-items:center;">
+    <div style="display:flex; align-items:center; gap:44px;">
+      <img src="images/founder-sergey.png" alt="Сергей Ермаков" style="width:220px; height:220px; object-fit:cover; border-radius:50%; display:block; flex:none; filter:saturate(.85);">
+      <div>
+        <p class="serif" style="font-size:38px; line-height:1.2; color:var(--cream); font-style:italic; font-weight:300;">«Работаю только с тем чаем, который пью сам. А я что попало не пью».</p>
+        <p class="note" style="margin-top:18px; font-size:17px;">Сергей Ермаков · владелец, официальный представитель Ба Фан Ча Юань в России</p>
       </div>
     </div>
-    <!-- Крафтовая вставка — как на сайте для истории/философии -->
-    <div style="background:var(--kraft); color:#2a2320; padding:48px 56px 44px; display:flex; flex-direction:column; justify-content:center;">
-      <div style="font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">Наша рекомендация</div>
-      <div style="font-family:'Cormorant Garamond',serif; font-size:56px; line-height:1; color:#1c1715; margin-bottom:26px;">Красный чай</div>
-      <p style="font-size:19px; line-height:1.7; color:#3a322d;">Большинство адресатов не готовы к незнакомым вкусам — подарок должен быть понятен с первого глотка. Красный чай по китайской классификации — это тот самый чёрный чай, знакомый каждому в европейской традиции.</p>
-      <p style="font-size:19px; line-height:1.7; color:#3a322d; margin-top:18px;">Мы берём его из Фэнцина — одного из лучших чайных регионов Юньнани.</p>
-    </div>
-  </div>
-
-  <div class="rule" style="margin:44px 0 0;"></div>
-
-  <div class="grid" style="grid-template-columns:110px 1fr 1fr 1fr; gap:36px; align-items:center; margin-top:30px;">
-    <img src="images/founder-sergey.png" alt="Сергей Ермаков" style="width:110px; height:110px; object-fit:cover; border-radius:50%; display:block; filter:saturate(.85);">
-    <div>
-      <p class="serif" style="font-size:26px; line-height:1.25; color:var(--cream); font-style:italic; font-weight:300;">«Работаю только с тем чаем, который пью сам. А я что попало не пью».</p>
-      <p class="note" style="margin-top:8px; font-size:15px;">Сергей Ермаков · владелец, официальный представитель Ба Фан Ча Юань в России</p>
-    </div>
-    <div style="grid-column:span 2; justify-self:end; text-align:right;">
-      <div class="eyebrow" style="margin-bottom:10px; font-size:13px;">Контакты</div>
-      <p class="serif" style="font-size:44px; color:var(--cream); line-height:1.1;">+7 968 666-16-88</p>
-      <p style="font-size:22px; color:var(--cream); margin-top:8px;">s.s.ermakov@gmail.com</p>
+    <div style="text-align:right;">
+      <div class="eyebrow" style="margin-bottom:22px;">Контакты</div>
+      <p class="serif" style="font-size:80px; line-height:1.05; color:var(--cream);">+7 968 666-16-88</p>
+      <p style="font-size:28px; color:var(--cream); margin-top:22px;">s.s.ermakov@gmail.com</p>
     </div>
   </div>
 
