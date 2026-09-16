@@ -7,3 +7,8 @@
 Накладная рубли RU.xlsx
 moysklad-import/photos/
 moysklad-import/import_products.py
+
+# corporate-gifts: материалы реального заказчика — не публиковать
+corporate-gifts/images/jar-*.jpg
+corporate-gifts/deck-with-jars.html
+corporate-gifts/*with-jars.pdf
