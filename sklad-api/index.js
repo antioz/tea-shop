@@ -63,29 +63,30 @@ async function products() {
   return all;
 }
 
-// цена в копейках → рубли; 0/отсутствует → null (на сайте «цена появится позже»)
-function price(p) {
-  const v = p.salePrices && p.salePrices[0] && Number(p.salePrices[0].value);
-  return v > 0 ? Math.round(v) / 100 : null;
+function toItem(p) {
+  const num = parseInt(String(p.code).replace(/\D/g, ''), 10); // TEA-007 → 7
+  const cat = BASE_MAP[p.pathName || ''];
+  if (!cat || HIDDEN.has(cat)) return null;
+  const spec = SPEC[String(num)] || {};
+  const price = (v => (v > 0 ? Math.round(v) / 100 : null))(p.salePrices && p.salePrices[0] && Number(p.salePrices[0].value));
+  return {
+    num,
+    name: p.name,
+    price_rub: price,
+    spec: spec.spec || null,
+    unit: spec.unit || null,
+    desc: p.description || null,
+    qty: Number.isFinite(p.quantity) ? p.quantity : null,
+    category: cat,
+    img: (p.images && p.images.meta && p.images.meta.size > 0) ? `img&num=${num}` : null,
+  };
 }
 
 function catalog() {
   const byCat = Object.fromEntries(SITE_CATEGORIES.map(s => [s, []]));
   for (const p of productsSync()) {
-    const num = parseInt(String(p.code).replace(/\D/g, ''), 10); // TEA-007 → 7
-    const cat = BASE_MAP[p.pathName || ''];
-    if (!cat || HIDDEN.has(cat)) continue;
-    const spec = SPEC[String(num)] || {};
-    byCat[cat].push({
-      num,
-      name: p.name,
-      price_rub: price(p),
-      spec: spec.spec || null,
-      unit: spec.unit || null,
-      desc: p.description || null,
-      qty: Number.isFinite(p.quantity) ? p.quantity : null,
-      img: `img&num=${num}`,
-    });
+    const it = toItem(p);
+    if (it) byCat[it.category].push(it);
   }
   for (const s of SITE_CATEGORIES) byCat[s].sort((a, b) => a.num - b.num);
   return { categories: byCat, now: new Date().toISOString(), source: 'moysklad' };
@@ -127,6 +128,13 @@ module.exports.handler = async function (event) {
         const list = await products();
         productsSync = () => list;
         return json(200, catalog(), cors(origin));
+      }
+      case 'product': {
+        const list = await products();
+        productsSync = () => list;
+        const it = toItem(list.find(x => parseInt(String(x.code).replace(/\D/g, ''), 10) === parseInt(String(q.num || '').replace(/\D/g, '') || '0', 10)) || {});
+        if (!it || !it.num) return json(404, { error: 'no_product' }, cors(origin));
+        return json(200, { product: it, now: new Date().toISOString() }, cors(origin));
       }
       case 'img': {
         const im = await img(q.num);

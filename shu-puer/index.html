@@ -36,7 +36,7 @@
   .hover-accent-text{ transition:color .3s ease; }
   .hover-accent-text:hover{ color:#a0545d; }
 
-  .cat-card{ transition:border-color .35s ease, transform .35s cubic-bezier(.16,.8,.24,1); }
+  .cat-card{ transition:border-color .35s ease, transform .35s cubic-bezier(.16,.8,.24,1); flex:1; }
   .cat-card:hover{ border-color:rgba(240,233,218,0.2); transform:translateY(-3px); }
 
   .copy-grid{ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
@@ -138,6 +138,7 @@
 
       <div class="card-grid">
         <sc-for list="{{ items }}" as="tea" hint-placeholder-count="6">
+          <a href="../product/?tea={{ tea.num }}" style="text-decoration:none; color:inherit; display:flex;">
           <div class="cat-card" style="background:#131110; border:1px solid rgba(240,233,218,0.09); border-top:2px solid {{ accent }}; overflow:hidden; display:flex; flex-direction:column;">
             <!-- Без фото остаётся иероглиф сорта, а не пустой прямоугольник -->
             <div style="position:relative; aspect-ratio:1/1; overflow:hidden; background:#0f0d0c; display:flex; align-items:center; justify-content:center;">
@@ -153,6 +154,7 @@
               </div>
             </div>
           </div>
+          </a>
         </sc-for>
       </div>
 
