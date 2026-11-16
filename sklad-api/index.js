@@ -13,8 +13,7 @@ const BASE_MAP = {
   'Красный чай': 'red',
 };
 // позиции, переопределяющие категорию (как в старом catalog.json)
-const OVERRIDES = { 3: 'chenpi', 10: 'chenpi', 26: 'mandarin-shu', 27: 'mandarin-shu' };
-// на сайте не публикуем
+// на сайте не публикуем (сейчас пусто — в складе только 4 категории)
 const HIDDEN = new Set(['chenpi', 'mandarin-shu']);
 const SITE_CATEGORIES = ['shu-puer', 'sheng-puer', 'white', 'red'];
 
@@ -73,8 +72,8 @@ function price(p) {
 function catalog() {
   const byCat = Object.fromEntries(SITE_CATEGORIES.map(s => [s, []]));
   for (const p of productsSync()) {
-    const num = parseInt(p.code, 10);
-    const cat = OVERRIDES[num] || BASE_MAP[p.pathName || ''];
+    const num = parseInt(String(p.code).replace(/\D/g, ''), 10); // TEA-007 → 7
+    const cat = BASE_MAP[p.pathName || ''];
     if (!cat || HIDDEN.has(cat)) continue;
     const spec = SPEC[String(num)] || {};
     byCat[cat].push({
@@ -83,6 +82,7 @@ function catalog() {
       price_rub: price(p),
       spec: spec.spec || null,
       unit: spec.unit || null,
+      desc: p.description || null,
       qty: Number.isFinite(p.quantity) ? p.quantity : null,
       img: `img&num=${num}`,
     });

@@ -214,6 +214,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     const SKLAD_API = 'https://functions.yandexcloud.net/d4e6o6v2n3b9h8etfghd';
+    const LOCAL_PHOTOS = {"26": "26.jpeg", "27": "27.jpeg", "1": "1.jpeg", "11": "11.jpeg", "20": "20.jpeg", "16": "16.jpeg", "7": "7.jpeg", "17": "17.jpeg", "21": "21.jpeg", "8": "8.jpeg", "22": "22.jpeg", "18": "18.jpeg", "4": "4.jpeg", "14": "14.jpeg", "15": "15.jpeg", "5": "5.jpeg", "19": "19.jpeg", "23": "23.jpeg", "25": "25.png", "9": "9.jpeg", "12": "12.jpeg", "24": "24.jpeg", "13": "13.jpeg", "3": "3.jpeg"};
     // живой склад: сначала API МойСклада через прокси, при сбое — локальный снапшот catalog.json
     fetch(`${SKLAD_API}?a=catalog`)
       .then((r) => {
@@ -231,7 +232,8 @@ class Component extends DCLogic {
           price: it.price_rub != null
             ? `${Number(it.price_rub).toLocaleString('ru-RU', { maximumFractionDigits: 2 })} ₽`
             : 'цена появится позже',
-          img: it.img ? (it.img.indexOf('img&') === 0 ? `${SKLAD_API}?a=${it.img}` : `../${it.img}`) : this.blankImg,
+          img: it.img ? (it.img.indexOf('img&') === 0 ? `${SKLAD_API}?a=${it.img}` : `../${it.img}`)
+            : (LOCAL_PHOTOS[it.num] ? `../catalog-photos/${LOCAL_PHOTOS[it.num]}` : this.blankImg),
           imgDisplay: it.img ? 'block' : 'none',
         }));
         this.setState({ items });
