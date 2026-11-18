@@ -97,7 +97,8 @@ let productsSync = () => { throw new Error('products not loaded'); };
 
 async function img(num) {
   const list = await products();
-  const p = list.find(x => String(x.code) === String(num));
+  const wanted = parseInt(String(num).replace(/\D/g, '') || '0', 10);
+  const p = list.find(x => parseInt(String(x.code).replace(/\D/g, ''), 10) === wanted);
   if (!p) return null;
   const d = await ms(p.meta.href + '/images');
   const row = d.rows && d.rows[0];

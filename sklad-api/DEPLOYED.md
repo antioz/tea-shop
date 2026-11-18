@@ -9,3 +9,9 @@
 ## Старый прод (не трогаем до переключения DNS)
 - sklad-api: https://functions.yandexcloud.net/d4e6o6v2n3b9h8etfghd
 - Фронт: https://antioz.github.io/tea-shop/
+
+## 2026-11-19
+- Фото 10 SKU из 产品图片 загружены в МойСклад (base64 JSON, одним массивом на товар — POST images заменяет набор).
+- Фикс sklad-api: маршрут img искал товар по точному коду «TEA-001»==«1» → 404; теперь парсинг номера.
+- Задеплоено: прод (d4e6o6v2n3b9h8etfghd, профиль default) + новый контур (d4etr4bluil1qvel94jf).
+- Ключи СДЭК (боевые) — в ~/.yc-keys/cdek.json, ждут shop-api.
