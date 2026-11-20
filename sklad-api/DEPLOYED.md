@@ -1,10 +1,13 @@
 # Деплой-идентификаторы (НЕ секреты)
 
 ## Каталог tea-shop (новый контур, b1g7i9m9r6ibld09cess)
-- sklad-api (копия): https://functions.yandexcloud.net/d4etr4bluil1qvel94jf
+- sklad-api (копия): https://functions.yandexcloud.net/d4etr4bluil1qvel94jf (публичная с 20.11)
 - Фронт-бакет: tea-shop-site-946173 → https://tea-shop-site-946173.website.yandexcloud.net/
+- YDB заказов: `tea-shop-orders` = `etn59ff8v2f6cvl02e5u`, таблица `orders` (создана 20.11, живой тест пройден)
+- Document API endpoint: `https://docapi.serverless.yandexcloud.net/ru-central1/b1g474kvre57nm4js7h1/etn59ff8v2f6cvl02e5u`
 - Сервисный аккаунт: deploy = aje2o8hffl4sibdu44i1
-- Статический S3-ключ id: YCAJE_7yD_luzz4t4QmtGIgeU (секрет — в ~/.yc-keys; новый: `yc iam access-key create --service-account-id aje2o8hffl4sibdu44i1`)
+- Статический ключ (Document API/S3): id `YCAJEJV8cYYZwewCnUC9kyh5o` (секрет — в ~/.yc-keys/tea-shop-s3.json; пересоздан 20.11, старый YCAJE_7yD_... был утерян/битый файл)
+- ADMIN_TOKEN магазина: в `shop-api/.deploy.env` (сгенерирован 20.11; показан автору, больше не печатать)
 
 ## Старый прод (не трогаем до переключения DNS)
 - sklad-api: https://functions.yandexcloud.net/d4e6o6v2n3b9h8etfghd

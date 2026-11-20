@@ -94,9 +94,9 @@ curl -s https://<NAME>.website.yandexcloud.net/ | grep -o "<title>[^<]*"  # Expe
 
 ### Task 4: YDB для заказов
 
-- [ ] **Step 1: Создать serverless YDB `tea-shop-orders` в каталоге**
-- [ ] **Step 2: Таблица `orders`: order_id (string, pk), created_at (utf8), status (utf8), customer JSON, items JSON, delivery JSON, payment JSON, total (double). Document API endpoint — в env shop-api.
-- [ ] **Step 3: Проверка: запись/чтение тестовой строки, удалить тестовую строку.
+- [x] **Step 1: Создать serverless YDB `tea-shop-orders` в каталоге** (создана 20.11: `etn59ff8v2f6cvl02e5u`)
+- [x] **Step 2: Таблица `orders`: order_id (string, pk), created_at (utf8), status (utf8), customer JSON, items JSON, delivery JSON, payment JSON, total (double). Document API endpoint — в env shop-api.** (ACTIVE 20.11, endpoint в `shop-api/.deploy.env`)
+- [x] **Step 3: Проверка: запись/чтение тестовой строки, удалить тестовую строку.** (пройдено 20.11: запись/чтение/удаление OK)
 
 ### Task 5: shop-api — новая функция заказов
 
