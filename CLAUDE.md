@@ -34,11 +34,10 @@ DNS НЕ переключён. Когда автор назовёт домен �
 - [x] 19.11: боевые ключи СДЭК получены и лежат в `~/.yc-keys/cdek.json`
 - [x] 20.11: статический ключ Document API пересоздан (`~/.yc-keys/tea-shop-s3.json`, id в DEPLOYED.md) — старый файл был битый
 - [x] 20.11: `shop-api/.deploy.env` подготовлен (YDB endpoint, ключи, MOYSKLAD_TOKEN, ADMIN_TOKEN, CDEK_ENV=test, PAYMENT_PROVIDER=offline)
-- [x] T5 shop-api задеплоена (`d4e8bepo2movs1ekku79`): order_create/order_get, admin_orders/admin_metrics/admin_order_status/admin_price, cdek_calc, payment_webhook — все роуты проверены в бою через IAM-вызов; тестовый заказ удалён. **Ждёт: публичный вызов (тумблер в консоли YC от владельца облака — SA deploy прав не имеет)**
+- [x] T5 shop-api задеплоена (`d4e8bepo2movs1ekku79`): order_create/order_get, admin_orders/admin_metrics/admin_order_status/admin_price, cdek_calc, payment_webhook — проверены публично 20.11. Публичный вызов включён. Защита: order_get по паре «номер + телефон», rate limit 1 заказ/2 мин с IP (YDB ratelimit) + бурст-лимит 20/мин
 
 **Впереди:**
-- [ ] Публичный вызов shop-api (тумблер в консоли) → повторить curl-проверку роутов
-- [ ] T6 Страница покупки (кнопка «Купить», форма, подтверждение)
+- [x] T6 Страница покупки (кнопка «Купить», форма, подтверждение) — на бакете 20.11, проверена headless Chrome (рендер + форма)
 - [ ] T6 Страница покупки (кнопка «Купить», форма, подтверждение)
 - [ ] T7 СДЭК (тестовый контур первым, боевые ключи уже есть)
 - [ ] T8 Админка (`/admin/` в бакете)
