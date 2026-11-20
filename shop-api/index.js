@@ -118,6 +118,18 @@ async function cdek(path, method = 'GET', payload) {
   return r.json();
 }
 
+// калькулятор тарифов СДЭК: POST с телом, тарифы посылки до ~3 кг
+async function cdekCalc(q) {
+  return cdek('/calculator/tarifflist', 'POST', {
+    type: 1,
+    currency: 1,
+    lang: 'rus',
+    from_location: { code: 44 }, // Москва — склад
+    to_location: { code: Number(q.city_to) || 270 },
+    packages: [{ weight: Math.min(Math.max(Number(q.weight) || 1000, 100), 30000), length: 20, width: 15, height: 10 }],
+  });
+}
+
 // ─── Админ-доступ: Authorization: Bearer <ADMIN_TOKEN> или ?token= ───
 function isAdmin(event, q) {
   const h = Object.keys(event.headers || {}).reduce((acc, k) => (k.toLowerCase() === 'authorization' ? event.headers[k] : acc), '') || '';
@@ -286,7 +298,7 @@ module.exports.handler = async function (event) {
       case 'order_get':
         return await getOrder(q, origin);
       case 'cdek_calc':
-        return json(200, await cdek(`/calculator/tarifflist?from_location_id=44&to_location_id=${encodeURIComponent(q.city_to || '')}&packages[0][weight]=${encodeURIComponent(q.weight || 1000)}`), origin);
+        return json(200, await cdekCalc(q), origin);
       case 'cdek_create': {
         // админ: создать накладную СДЭК по заказу (test-контур, пока не включили бой)
         if (!isAdmin(event, q) || method !== 'POST') return json(403, { error: 'forbidden' }, origin);
