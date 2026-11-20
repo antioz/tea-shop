@@ -27,13 +27,13 @@
 - Create: `~/.yc-keys/tea-shop-key.json` (копия из temp Telegram)
 - Modify: `~/yandex-cloud/` профиль `tea-shop`
 
-- [ ] **Step 1: Переложить ключ из temp (temp чистится системой)**
+- [x] **Step 1: Переложить ключ из temp (temp чистится системой)**
 ```bash
 mkdir -p ~/.yc-keys
 cp "/var/folders/f0/kt74dwtn4pb__yv7_qfbytjh0000gn/T/ru.keepcoder.Telegram/authorized_key.json" ~/.yc-keys/tea-shop-key.json
 chmod 600 ~/.yc-keys/tea-shop-key.json
 ```
-- [ ] **Step 2: Профиль tea-shop**
+- [x] **Step 2: Профиль tea-shop**
 ```bash
 YC=~/yandex-cloud/bin/yc
 $YC config profile create tea-shop
@@ -41,7 +41,7 @@ $YC config set service-account-key ~/.yc-keys/tea-shop-key.json
 $YC config set cloud-id b1g474kvre57nm4js7h1
 $YC config set folder-id b1g7i9m9r6ibld09cess
 ```
-- [ ] **Step 3: Проверка живого доступа**
+- [x] **Step 3: Проверка живого доступа**
 ```bash
 $YC resource-manager folder get b1g7i9m9r6ibld09cess --format json | python3 -c 'import json,sys;print(json.load(sys.stdin)["name"])'
 # Expected: tea-shop
@@ -56,37 +56,37 @@ $YC resource-manager folder get b1g7i9m9r6ibld09cess --format json | python3 -c 
 **Interfaces:**
 - Produces: новый `SKLAD_API_URL` (https://functions.yandexcloud.net/<new_id>) — константа для фронта и shop-api, записать в `sklad-api/DEPLOYED.md`.
 
-- [ ] **Step 1: Создать функцию и задеплоить тот же zip**
+- [x] **Step 1: Создать функцию и задеплоить тот же zip**
 ```bash
 cd sklad-api
 YC=~/yandex-cloud/bin/yc
 $YC serverless function create --name sklad-api
 ./deploy.sh   # переиспользует .deploy.env; SA_ID уже там
 ```
-- [ ] **Step 2: Проверка в бою**
+- [x] **Step 2: Проверка в бою**
 ```bash
 curl -s "$SKLAD_API_URL?a=health"   # Expected: {"ok":true,...}
 curl -s "$SKLAD_API_URL?a=catalog" | head -c 200  # Expected: {"categories":{...}}
 ```
-- [ ] **Step 3: Записать URL, коммит DEPLOYED.md**
+- [x] **Step 3: Записать URL, коммит DEPLOYED.md**
 
 ### Task 3: Бакет под фронт + заливка копии сайта
 
 **Files:**
 - Create: бакет `tea-shop-site-<суффикс>` (имя глобально уникально, см. шаг)
 
-- [ ] **Step 1: Создать бакет со статик-хостингом**
+- [x] **Step 1: Создать бакет со статик-хостингом**
 ```bash
 $YC storage bucket create --name tea-shop-site-$(date +%s | tail -c 7)
 $YC storage bucket update --name <NAME> --public-read
 $YC storage bucket website --name <NAME> --index index.html --error index.html
 ```
-- [ ] **Step 2: Залить копию фронта (как есть, ничего не меняя)**
+- [x] **Step 2: Залить копию фронта (как есть, ничего не меняя)**
 ```bash
 # только то, что сейчас на GitHub Pages: корневые html + категории + product + images + catalog.json
 yc-s3 или aws cli: sync index.html oferta.html privacy.html consent.html catalog.json product/ sheng-puer/ shu-puer/ white/ red/ images/ → s3://<NAME>/
 ```
-- [ ] **Step 3: Проверка в бою**
+- [x] **Step 3: Проверка в бою**
 ```bash
 curl -s https://<NAME>.website.yandexcloud.net/ | grep -o "<title>[^<]*"  # Expected: title главной
 ```
