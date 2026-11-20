@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="../images/favicon.ico">
+<title>Админка · 野馬茶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b0a09; --panel:#141210; --line:rgba(240,233,218,0.14); --txt:#f0e9da; --mut:#8a8175; --accent:#8a3b42; --ok:#9ec49a; --err:#c88a8a; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--txt); font-family:'PT Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  input,button,select{ font-family:inherit; font-size:14px; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:40px 24px 80px; }
+  .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  input[type=text],input[type=password],input[type=number],select{ background:transparent; border:1px solid var(--line); color:var(--txt); padding:11px 14px; outline:none; }
+  input:focus,select:focus{ border-color:var(--accent); }
+  button{ cursor:pointer; background:transparent; border:1px solid var(--line); color:var(--txt); padding:11px 22px; letter-spacing:.08em; font-size:12.5px; }
+  button:hover{ border-color:var(--accent); background:var(--accent); }
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:28px 0 36px; }
+  .card{ border:1px solid var(--line); border-top:2px solid var(--accent); padding:20px; background:var(--panel); }
+  .card .n{ font-size:30px; margin-bottom:6px; }
+  .card .l{ font-size:11px; letter-spacing:.14em; color:var(--mut); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  th,td{ text-align:left; padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ font-size:10.5px; letter-spacing:.14em; color:var(--mut); font-weight:400; }
+  .tag{ display:inline-block; border:1px solid var(--line); padding:3px 10px; font-size:11px; letter-spacing:.06em; }
+  .tag.new{ color:#e3cf9a; } .tag.confirmed{ color:var(--ok); } .tag.shipping{ color:#9ab3c4; }
+  .muted{ color:var(--mut); } .small{ font-size:12px; }
+  .msg-ok{ color:var(--ok); } .msg-err{ color:var(--err); }
+  .hidden{ display:none !important; }
+  a{ color:#c7bfaf; }
+  .price-in{ width:90px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- вход по токену -->
+  <div id="login">
+    <div style="font-size:11px; letter-spacing:.2em; color:var(--mut); margin-bottom:14px;">野馬茶 · АДМИНИСТРИРОВАНИЕ</div>
+    <div class="row">
+      <input type="password" id="token" placeholder="ADMIN_TOKEN" style="min-width:280px;">
+      <button id="login-btn">ВОЙТИ →</button>
+    </div>
+    <div id="login-msg" class="small" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- панель -->
+  <div id="panel" class="hidden">
+    <div class="row" style="justify-content:space-between;">
+      <div style="font-size:11px; letter-spacing:.2em; color:var(--mut);">野馬茶 · ЗАКАЗЫ</div>
+      <div class="row">
+        <select id="f-status">
+          <option value="">все статусы</option><option>new</option><option>confirmed</option><option>shipping</option><option>done</option><option>cancelled</option>
+        </select>
+        <button id="reload">ОБНОВИТЬ ↻</button>
+        <button id="logout">ВЫЙТИ</button>
+      </div>
+    </div>
+
+    <div class="cards" id="metrics">
+      <div class="card"><div class="n" id="m-today">—</div><div class="l">ЗАКАЗОВ СЕГОДНЯ</div></div>
+      <div class="card"><div class="n" id="m-week">—</div><div class="l">ЗА НЕДЕЛЮ</div></div>
+      <div class="card"><div class="n" id="m-rtoday">—</div><div class="l">ВЫРУЧКА СЕГОДНЯ, ₽</div></div>
+      <div class="card"><div class="n" id="m-rweek">—</div><div class="l">ВЫРУЧКА ЗА НЕДЕЛЮ, ₽</div></div>
+      <div class="card"><div class="n" id="m-avg">—</div><div class="l">СРЕДНИЙ ЧЕК, ₽</div></div>
+    </div>
+
+    <div id="orders-msg" class="small" style="margin-bottom:10px;"></div>
+    <table>
+      <thead><tr>
+        <th>НОМЕР</th><th>ДАТА</th><th>КЛИЕНТ</th><th>ТОВАРЫ</th><th>ДОСТАВКА</th><th>СУММА</th><th>СТАТУС</th><th></th>
+      </tr></thead>
+      <tbody id="orders"></tbody>
+    </table>
+
+    <div style="margin:46px 0 14px; font-size:11px; letter-spacing:.2em; color:var(--mut);">ТОВАРЫ · ЦЕНЫ ИЗ МОЙСКЛАДА</div>
+    <div id="price-msg" class="small" style="margin-bottom:10px;"></div>
+    <table>
+      <thead><tr><th>КОД</th><th>НАЗВАНИЕ</th><th>КАТЕГОРИЯ</th><th>ЦЕНА, ₽</th><th></th></tr></thead>
+      <tbody id="products"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SHOP_API = 'https://functions.yandexcloud.net/d4e8bepo2movs1ekku79';
+const SKLAD_API = 'https://functions.yandexcloud.net/d4etr4bluil1qvel94jf';
+const $ = (id) => document.getElementById(id);
+let TOKEN = localStorage.getItem('tea_admin_token') || '';
+
+function api(action, params = {}) {
+  const qs = new URLSearchParams({ a: action, token: TOKEN, ...params });
+  return fetch(`${SHOP_API}?${qs}`).then(async (r) => {
+    const d = await r.json().catch(() => ({}));
+    if (r.status === 403) { logout('Токен не принят — войди заново.'); throw new Error('forbidden'); }
+    if (!r.ok) throw new Error(d.detail || d.error || ('http ' + r.status));
+    return d;
+  });
+}
+
+function post(action, body) {
+  return fetch(`${SHOP_API}?a=${action}&token=${TOKEN}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+  }).then(async (r) => {
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.detail || d.error || ('http ' + r.status));
+    return d;
+  });
+}
+
+function logout(msg) {
+  localStorage.removeItem('tea_admin_token');
+  TOKEN = '';
+  $('panel').classList.add('hidden');
+  $('login').classList.remove('hidden');
+  if (msg) $('login-msg').textContent = msg;
+}
+
+function fmtDate(s) { try { return new Date(s).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch { return s; } }
+
+async function loadMetrics() {
+  const m = await api('admin_metrics');
+  $('m-today').textContent = m.today_count;
+  $('m-week').textContent = m.week_count;
+  $('m-rtoday').textContent = Number(m.revenue_today).toLocaleString('ru-RU');
+  $('m-rweek').textContent = Number(m.revenue_week).toLocaleString('ru-RU');
+  $('m-avg').textContent = Number(m.avg_check).toLocaleString('ru-RU');
+}
+
+async function loadOrders() {
+  const mEl = $('orders-msg');
+  mEl.textContent = 'Загружаю…';
+  try {
+    const status = $('f-status').value;
+    const d = await api('admin_orders', status ? { status } : {});
+    mEl.textContent = d.count ? `Заказов: ${d.count}` : 'Заказов нет.';
+    $('orders').innerHTML = d.orders.map((o) => `
+      <tr>
+        <td>${o.order_id}<div class="small muted">${o.cdek && o.cdek.barcode ? 'СДЭК: ' + o.cdek.barcode : ''}</div></td>
+        <td class="small">${fmtDate(o.created_at)}</td>
+        <td class="small">${esc(o.customer && o.customer.name)}<br><span class="muted">${esc(o.customer && o.customer.phone)}</span></td>
+        <td class="small">${(o.items || []).map((i) => `${esc(i.name)} × ${i.qty}`).join('<br>')}</td>
+        <td class="small">${o.delivery && o.delivery.type === 'pvz' ? 'ПВЗ ' + esc(o.delivery.pvz || '') : 'Курьер'}<br><span class="muted">${esc((o.delivery && (o.delivery.city || o.delivery.address)) || '')}</span></td>
+        <td>${Number(o.total).toLocaleString('ru-RU')} ₽</td>
+        <td><span class="tag ${esc(o.status)}">${esc(o.status)}</span></td>
+        <td class="small" style="white-space:nowrap;">
+          <select data-set-status="${esc(o.order_id)}" style="padding:6px 8px; font-size:12px;">
+            ${['new', 'confirmed', 'shipping', 'done', 'cancelled'].map((s) => `<option ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}
+          </select>
+          <button data-cdek="${esc(o.order_id)}" title="Создать накладную СДЭК" style="padding:6px 10px; font-size:12px; margin-top:6px;">СДЭК →</button>
+        </td>
+      </tr>`).join('');
+  } catch (e) { mEl.textContent = 'Ошибка: ' + e.message; mEl.className = 'small msg-err'; }
+}
+
+async function loadProducts() {
+  const mEl = $('price-msg');
+  try {
+    const d = await fetch(`${SKLAD_API}?a=catalog`).then((r) => r.json());
+    const rows = [];
+    for (const [cat, list] of Object.entries(d.categories || {})) {
+      for (const it of list) {
+        rows.push(`<tr>
+          <td class="small">TEA-${String(it.num).padStart(3, '0')}</td>
+          <td>${esc(it.name)}</td>
+          <td class="small muted">${esc(cat)}</td>
+          <td><input class="price-in" type="number" min="1" step="0.01" value="${it.price_rub != null ? it.price_rub : ''}" placeholder="—" data-num="${it.num}"></td>
+          <td><button data-save-price="${it.num}" style="padding:6px 12px; font-size:12px;">СОХРАНИТЬ</button></td>
+        </tr>`);
+      }
+    }
+    $('products').innerHTML = rows.join('');
+    mEl.textContent = '';
+  } catch (e) { mEl.textContent = 'Ошибка загрузки каталога: ' + e.message; mEl.className = 'small msg-err'; }
+}
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+async function enter() {
+  $('login').classList.add('hidden');
+  $('panel').classList.remove('hidden');
+  await Promise.all([loadMetrics(), loadOrders(), loadProducts()]);
+}
+
+$('login-btn').onclick = async () => {
+  const t = $('token').value.trim();
+  if (!t) return;
+  TOKEN = t;
+  try {
+    await api('admin_metrics');
+    localStorage.setItem('tea_admin_token', TOKEN);
+    $('login-msg').textContent = '';
+    await enter();
+  } catch (e) { /* logout уже отработал */ }
+};
+$('token').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('login-btn').click(); });
+$('logout').onclick = () => logout();
+$('reload').onclick = () => Promise.all([loadMetrics(), loadOrders()]);
+$('f-status').onchange = loadOrders;
+
+document.body.addEventListener('change', async (e) => {
+  const sel = e.target.closest('[data-set-status]');
+  if (!sel) return;
+  try {
+    await post('admin_order_status', { order_id: sel.dataset.setStatus, status: sel.value });
+    sel.style.borderColor = 'var(--ok)';
+    await loadMetrics();
+  } catch (err) { sel.style.borderColor = 'var(--err)'; alert('Не сохранилось: ' + err.message); }
+});
+
+document.body.addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-save-price]');
+  if (btn) return;
+  const cdekBtn = e.target.closest('[data-cdek]');
+  if (!cdekBtn) return;
+  cdekBtn.disabled = true;
+  try {
+    const r = await post('cdek_create', { order_id: cdekBtn.dataset.cdek });
+    alert('Накладная создана: ' + (r.barcode || r.cdek_uuid));
+    await loadOrders();
+  } catch (err) { alert('СДЭК: ' + err.message); }
+  cdekBtn.disabled = false;
+});
+
+document.body.addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-save-price]');
+  if (!btn) return;
+  const num = btn.dataset.savePrice;
+  const input = document.querySelector(`input[data-num="${num}"]`);
+  const price = parseFloat(input && input.value);
+  if (!price || price <= 0) return alert('Введите цену больше нуля');
+  btn.disabled = true;
+  try {
+    await post('admin_price', { num: parseInt(num, 10), price_rub: price });
+    btn.textContent = '✓';
+  } catch (err) { alert('Не сохранилось: ' + err.message); }
+  btn.disabled = false;
+});
+
+if (TOKEN) { $('token').value = TOKEN; enter(); }
+</script>
+</body>
+</html>
