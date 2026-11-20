@@ -14,6 +14,36 @@ const SKLAD_URL = process.env.SKLAD_URL || 'https://functions.yandexcloud.net/d4
 const MS_BASE = 'https://api.moysklad.ru/api/remap/1.2';
 const ORDERS_TABLE = 'orders';
 
+// ─── Антиспам: rate limit ───
+// Per-IP — надёжно, в YDB (таблица ratelimit): не чаще 1 заказа в 2 минуты с одного IP.
+// Глобальный бурст-лимит — in-memory на инстансе (дубли инстансов возможны, это подстраховка).
+const RATE_LIMIT_TABLE = 'ratelimit';
+const IP_COOLDOWN_MS = 120 * 1000;
+const GLOBAL_LIMIT = 20;
+const GLOBAL_WINDOW_MS = 60 * 1000;
+let globalHits = []; // timestamps заказов за последнюю минуту (этот инстанс)
+
+function clientIp(event) {
+  return (event.requestContext && event.requestContext.identity && event.requestContext.identity.sourceIp)
+    || (String(event.headers && (event.headers['X-Forwarded-For'] || event.headers['x-forwarded-for'] || '')).split(',')[0]).trim()
+    || 'unknown';
+}
+
+async function tooMany(event) {
+  const ip = clientIp(event);
+  const now = Date.now();
+  // глобальный бурст-лимит (инстансный)
+  globalHits = globalHits.filter((t) => now - t < GLOBAL_WINDOW_MS);
+  if (globalHits.length >= GLOBAL_LIMIT) return 'global';
+  // per-IP через YDB — единая правда для всех инстансов
+  const key = `ip:${ip}`;
+  const got = await YDB.send(new GetCommand({ TableName: RATE_LIMIT_TABLE, Key: { key } }));
+  if (got.Item && Number(got.Item.expires_at) > now) return 'ip';
+  await YDB.send(new PutCommand({ TableName: RATE_LIMIT_TABLE, Item: { key, expires_at: now + IP_COOLDOWN_MS } }));
+  globalHits.push(now);
+  return null;
+}
+
 // ─── CORS (как в sklad-api: разделитель пробел; запятые тоже проглатываем) ───
 const SITE_ORIGINS = (process.env.SITE_ORIGINS || '').split(/[\s,]+/).map(s => s.trim()).filter(Boolean);
 function cors(origin) {
@@ -231,6 +261,7 @@ module.exports.handler = async function (event) {
     switch (String(q.a || '')) {
       case 'order_create':
         if (method !== 'POST') return json(405, { error: 'post_only' }, origin);
+        { const rl = await tooMany(event); if (rl) return json(429, { error: 'rate_limited', level: rl, retry_after_sec: 120 }, origin); }
         return await createOrder(body(event), origin);
       case 'order_get':
         return await getOrder(q, origin);
