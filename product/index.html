@@ -112,7 +112,10 @@
                 <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#c8c0b2; cursor:pointer;"><input type="radio" name="dtype" value="courier" style="accent-color:#8a3b42;"> Курьер</label>
               </div>
               <input id="f-city" type="text" placeholder="Город *" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
-              <input id="f-point" type="text" placeholder="Адрес или код ПВЗ *" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <div style="position:relative;">
+                <input id="f-point" type="text" placeholder="Улица / адрес — подскажем пункты СДЭК *" autocomplete="off" style="width:100%; box-sizing:border-box; background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+                <div id="pvz-dd" style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:60; background:#161412; border:1px solid rgba(240,233,218,0.25); max-height:280px; overflow:auto;"></div>
+              </div>
             </div>
             <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;">
               <button id="order-submit" type="button" class="hover-outline-fill" style="cursor:pointer; background:transparent; border:1px solid rgba(240,233,218,0.28); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:10.5px; letter-spacing:.16em; padding:15px 32px;">ОФОРМИТЬ ЗАКАЗ →</button>
@@ -283,6 +286,48 @@ class Component extends DCLogic {
       el.style.color = ok ? '#9ec49a' : '#c88a8a';
       el.textContent = text;
     };
+    // ─── Автоподсказка ПВЗ СДЭК: печатаешь адрес → список пунктов на выбор ───
+    const pointInput = document.getElementById('f-point');
+    const cityInput = document.getElementById('f-city');
+    const dd = document.getElementById('pvz-dd');
+    if (pointInput && dd) {
+      let pvzTimer = null;
+      const hideDd = () => { dd.style.display = 'none'; dd.innerHTML = ''; };
+      pointInput.addEventListener('input', () => {
+        delete pointInput.dataset.code;
+        const q = pointInput.value.trim();
+        const city = cityInput ? cityInput.value.trim() : '';
+        const dtypeEl0 = document.querySelector('input[name="dtype"]:checked');
+        clearTimeout(pvzTimer);
+        if (q.length < 3 || !city || (dtypeEl0 && dtypeEl0.value !== 'pvz')) return hideDd();
+        pvzTimer = setTimeout(() => {
+          fetch(`${SHOP_API}?a=cdek_points&city=${encodeURIComponent(city)}&q=${encodeURIComponent(q)}`)
+            .then((r) => (r.ok ? r.json() : { points: [] }))
+            .then((d) => {
+              const pts = (d && d.points) || [];
+              if (!pts.length) return hideDd();
+              dd.innerHTML = '';
+              pts.forEach((p) => {
+                const row = document.createElement('div');
+                row.style.cssText = 'padding:11px 14px; cursor:pointer; border-bottom:1px solid rgba(240,233,218,0.08);';
+                row.innerHTML = `<div style="font-size:13px; color:#f0e9da;">${p.code} — ${p.address}</div>` +
+                  (p.workTime ? `<div style="font-size:11.5px; color:#8a8175; margin-top:2px;">${p.workTime}</div>` : '');
+                row.addEventListener('mousedown', (ev) => {
+                  ev.preventDefault();
+                  pointInput.value = `${p.code} — ${p.address}`;
+                  pointInput.dataset.code = p.code;
+                  hideDd();
+                });
+                dd.appendChild(row);
+              });
+              dd.style.display = 'block';
+            })
+            .catch(hideDd);
+        }, 350);
+      });
+      pointInput.addEventListener('blur', () => setTimeout(hideDd, 150));
+    }
+
     root.addEventListener('click', (e) => {
       if (e.target.closest('#buy-btn')) {
         e.preventDefault();
@@ -298,14 +343,16 @@ class Component extends DCLogic {
         const city = v('f-city');
         const point = v('f-point');
         const dtypeEl = document.querySelector('input[name="dtype"]:checked');
+        const pointEl = document.getElementById('f-point');
         const delivery = { type: (dtypeEl && dtypeEl.value) || 'pvz', city, pvz: null, address: null };
-        if (delivery.type === 'pvz') delivery.pvz = point; else delivery.address = point;
+        if (delivery.type === 'pvz') delivery.pvz = (pointEl && pointEl.dataset.code) || point; else delivery.address = point;
         const mEl = document.getElementById('order-msg');
         if (mEl) mEl.style.display = 'none';
         if (!name) return msg(mEl, 'Укажите имя и фамилию.', false);
         if (!phone.match(/^7\d{10}$/)) return msg(mEl, 'Телефон в формате 7XXXXXXXXXX (11 цифр).', false);
         if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return msg(mEl, 'Email обязателен — на него придёт чек после оплаты.', false);
         if (!city || !point) return msg(mEl, 'Укажите город и адрес (или код ПВЗ).', false);
+        if (delivery.type === 'pvz' && !pointEl.dataset.code) return msg(mEl, 'Выберите пункт СДЭК из подсказки (клик по адресу в списке).', false);
         if (this.state.sending) return;
         this.setState({ sending: true });
         const num = this.state.item && this.state.item.num;

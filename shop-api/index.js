@@ -118,6 +118,44 @@ async function cdek(path, method = 'GET', payload) {
   return r.json();
 }
 
+// автоподсказка ПВЗ: город + фрагмент адреса → список пунктов выдачи
+async function cdekPoints(q) {
+  const cityQ = String(q.city || '').trim();
+  const textQ = String(q.q || '').trim();
+  if (!cityQ && !textQ) return { points: [] };
+
+  // 1) уточняем город (подсказка СДЭК по названию) → code города
+  let cityCode = 0;
+  if (cityQ) {
+    const cities = await cdek(`/location/cities?size=1&country_codes=RU&city=${encodeURIComponent(cityQ)}`);
+    const rows = Array.isArray(cities) ? cities : [];
+    if (rows.length && rows[0].code) cityCode = rows[0].code;
+  }
+
+  // 2) список пунктов в городе (выдача; /v2/offices устарел — фильтр игнорирует)
+  const offices = await cdek(`/deliverypoints?city_code=${cityCode}&type=ALL&is_handout=true&size=500`);
+  const rows = Array.isArray(offices) ? offices : [];
+
+  // 3) фильтр по словам запроса (адрес/название/код), до 8 штук
+  const words = (textQ || cityQ).toLowerCase().split(/[^a-zа-яё0-9]+/i).filter(w => w.length >= 3);
+  const norm = (s) => String(s || '').toLowerCase().replace(/ё/g, 'е');
+  const points = [];
+  for (const o of rows) {
+    if (o.status && o.status !== 'ACTIVE') continue;
+    const hay = norm([o.code, o.name, o.location && o.location.address, o.location && o.location.address_full].filter(Boolean).join(' '));
+    if (words.every(w => hay.includes(norm(w)))) {
+      points.push({
+        code: o.code,
+        name: o.name || o.code,
+        address: (o.location && o.location.address) || '',
+        workTime: o.work_time || '',
+      });
+    }
+    if (points.length >= 8) break;
+  }
+  return { points };
+}
+
 // калькулятор тарифов СДЭК: POST с телом, тарифы посылки до ~3 кг
 async function cdekCalc(q) {
   return cdek('/calculator/tarifflist', 'POST', {
@@ -299,6 +337,8 @@ module.exports.handler = async function (event) {
         return await getOrder(q, origin);
       case 'cdek_calc':
         return json(200, await cdekCalc(q), origin);
+      case 'cdek_points':
+        return json(200, await cdekPoints(q), origin);
       case 'cdek_create': {
         // админ: создать накладную СДЭК по заказу (test-контур, пока не включили бой)
         if (!isAdmin(event, q) || method !== 'POST') return json(403, { error: 'forbidden' }, origin);
