@@ -2,6 +2,7 @@
 
 ## Каталог tea-shop (новый контур, b1g7i9m9r6ibld09cess)
 - sklad-api (копия): https://functions.yandexcloud.net/d4etr4bluil1qvel94jf (публичная с 20.11)
+- shop-api (заказы): https://functions.yandexcloud.net/d4e8bepo2movs1ekku79 (задеплоена 20.11; **публичный вызов не включён — нужен тумблер в консоли от владельца облака**, SA deploy не имеет прав на access bindings)
 - Фронт-бакет: tea-shop-site-946173 → https://tea-shop-site-946173.website.yandexcloud.net/
 - YDB заказов: `tea-shop-orders` = `etn59ff8v2f6cvl02e5u`, таблица `orders` (создана 20.11, живой тест пройден)
 - Document API endpoint: `https://docapi.serverless.yandexcloud.net/ru-central1/b1g474kvre57nm4js7h1/etn59ff8v2f6cvl02e5u`

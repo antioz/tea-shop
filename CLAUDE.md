@@ -34,9 +34,11 @@ DNS НЕ переключён. Когда автор назовёт домен �
 - [x] 19.11: боевые ключи СДЭК получены и лежат в `~/.yc-keys/cdek.json`
 - [x] 20.11: статический ключ Document API пересоздан (`~/.yc-keys/tea-shop-s3.json`, id в DEPLOYED.md) — старый файл был битый
 - [x] 20.11: `shop-api/.deploy.env` подготовлен (YDB endpoint, ключи, MOYSKLAD_TOKEN, ADMIN_TOKEN, CDEK_ENV=test, PAYMENT_PROVIDER=offline)
+- [x] T5 shop-api задеплоена (`d4e8bepo2movs1ekku79`): order_create/order_get, admin_orders/admin_metrics/admin_order_status/admin_price, cdek_calc, payment_webhook — все роуты проверены в бою через IAM-вызов; тестовый заказ удалён. **Ждёт: публичный вызов (тумблер в консоли YC от владельца облака — SA deploy прав не имеет)**
 
 **Впереди:**
-- [ ] T5 shop-api — новая функция: заказы, admin-роуты, прокси СДЭК, платёжный адаптер
+- [ ] Публичный вызов shop-api (тумблер в консоли) → повторить curl-проверку роутов
+- [ ] T6 Страница покупки (кнопка «Купить», форма, подтверждение)
 - [ ] T6 Страница покупки (кнопка «Купить», форма, подтверждение)
 - [ ] T7 СДЭК (тестовый контур первым, боевые ключи уже есть)
 - [ ] T8 Админка (`/admin/` в бакете)

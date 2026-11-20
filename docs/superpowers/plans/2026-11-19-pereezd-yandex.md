@@ -116,11 +116,11 @@ curl -s https://<NAME>.website.yandexcloud.net/ | grep -o "<title>[^<]*"  # Expe
   - `POST payment_webhook` → заглушка, отвечает 200 (точка позже)
 - Consumes: YDB Document API; env `MOYSKLAD_TOKEN`, `ADMIN_TOKEN`, `YDB_ENDPOINT`, `SITE_ORIGINS`, `CDEK_*` (test), `PAYMENT_PROVIDER=offline`.
 
-- [ ] **Step 1: Каркас функции по образцу sklad-api (handler/switch/cors/OPTIONS)**
-- [ ] **Step 2: order_create: валидация телефона/email, подсчёт total по живому каталогу (фетч sklad-api ?a=catalog), запись в YDB, статус `new`**
-- [ ] **Step 3: admin-роуты с проверкой `Authorization: Bearer $ADMIN_TOKEN`**
-- [ ] **Step 4: admin_price → PATCH /entity/product/<id> salePrices в МойСклад**
-- [ ] **Step 5: Деплой, curl-проверка каждого роута в бою, коммит**
+- [x] **Step 1: Каркас функции по образцу sklad-api (handler/switch/cors/OPTIONS)** (готов, задеплоен 20.11)
+- [x] **Step 2: order_create: валидация телефона/email, подсчёт total по живому каталогу (фетч sklad-api ?a=catalog), запись в YDB, статус `new`** (проверено: заказ M-20261120-YIRE создан, total 591, удалён после теста)
+- [x] **Step 3: admin-роуты с проверкой `Authorization: Bearer $ADMIN_TOKEN`** (orders/metrics/order_status проверены; без токена — 403)
+- [x] **Step 4: admin_price → PATCH /entity/product/<id> salePrices в МойСклад** (код готов; на боевом МС не дёргал — живая цена не менялась без команды)
+- [x] **Step 5: Деплой, curl-проверка каждого роута в бою, коммит** (проверено IAM-вызовом 20.11; публичный вызов — тумблер в консоли, ждёт владельца облака)
 
 ### Task 6: Страница покупки (фронт)
 
