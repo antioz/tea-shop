@@ -3,6 +3,7 @@
 // Все секреты — только в env. Код и комментарии — на русском (правила проекта).
 const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient, PutCommand, GetCommand, ScanCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
+const payments = require('./payments');
 
 const YDB = DynamoDBDocumentClient.from(new DynamoDBClient({
   endpoint: process.env.YDB_ENDPOINT,
@@ -174,8 +175,23 @@ async function createOrder(data, origin) {
     payment: { provider: process.env.PAYMENT_PROVIDER || 'offline', status: 'pending', instruction: 'Оплата после подтверждения' },
     total,
   };
+
+  // Онлайн-оплата (Точка Банк): сразу создаём платёжную ссылку с чеком 54-ФЗ
+  if ((process.env.PAYMENT_PROVIDER || 'offline') === 'tochka') {
+    if (!order.customer.email) return json(400, { error: 'email_required_for_payment' }, origin);
+    order.redirectUrl = data.redirectUrl || null;
+    order.failRedirectUrl = data.failRedirectUrl || null;
+    try {
+      const pay = await payments.createPaymentLink(order);
+      order.payment = { provider: 'tochka', status: 'wait', link: pay.url, operationId: pay.operationId || null };
+    } catch (e) {
+      console.error('tochka create payment failed:', e.message);
+      return json(502, { error: 'payment_create_failed', detail: String(e.message).slice(0, 200) }, origin);
+    }
+  }
+
   await YDB.send(new PutCommand({ TableName: ORDERS_TABLE, Item: order }));
-  return json(200, { order_id: order.order_id, total, status: order.status }, origin);
+  return json(200, { order_id: order.order_id, total, status: order.status, payment: order.payment }, origin);
 }
 
 async function getOrder(q, origin) {
@@ -297,9 +313,25 @@ module.exports.handler = async function (event) {
         }));
         return json(200, { ok: true, order_id, cdek_uuid: np.uuid, barcode: np.cdek_number }, origin);
       }
-      case 'payment_webhook':
-        // заглушка: провайдер появится позже, сейчас просто 200
-        return json(200, { ok: true, received: true }, origin);
+      case 'payment_webhook': {
+        // Точка шлёт «голый» JWT (text/plain); проверяем подпись, ставим заказу оплату
+        const payload = await payments.verifyWebhook(event.body);
+        // 200 на любой запрос: Точка при проверке доступности шлёт служебное тело и ждёт 200.
+        // Статус заказа меняем ТОЛЬКО при валидной подписи и нужном событии.
+        if (!payload) return json(200, { ok: true, ignored: 'bad_signature' }, origin);
+        if (payload.webhookType !== 'acquiringInternetPayment') return json(200, { ok: true, ignored: payload.webhookType }, origin);
+        const orderId = String(payload.paymentLinkId || '');
+        if (!/^M-/.test(orderId)) return json(200, { ok: true, ignored: 'foreign_order' }, origin);
+        if (payload.status === 'APPROVED' || payload.status === 'AUTHORIZED') {
+          await YDB.send(new UpdateCommand({
+            TableName: ORDERS_TABLE, Key: { order_id: orderId },
+            UpdateExpression: 'SET #p = :p',
+            ExpressionAttributeNames: { '#p': 'payment' },
+            ExpressionAttributeValues: { ':p': { provider: 'tochka', status: payload.status === 'APPROVED' ? 'paid' : 'authorized' } },
+          }));
+        }
+        return json(200, { ok: true, order: orderId, status: payload.status }, origin);
+      }
       case 'admin_orders':
         if (!isAdmin(event, q)) return json(403, { error: 'forbidden' }, origin);
         return await adminOrders(q, origin);

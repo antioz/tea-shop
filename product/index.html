@@ -106,7 +106,7 @@
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
               <input id="f-name" type="text" placeholder="Имя и фамилия *" autocomplete="name" style="grid-column:1/-1; background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
               <input id="f-phone" type="tel" placeholder="Телефон 7XXXXXXXXXX *" autocomplete="tel" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
-              <input id="f-email" type="email" placeholder="Email" autocomplete="email" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <input id="f-email" type="email" placeholder="Email (для чека) *" autocomplete="email" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
               <div style="grid-column:1/-1; display:flex; gap:26px; align-items:center; padding-top:4px;">
                 <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#c8c0b2; cursor:pointer;"><input type="radio" name="dtype" value="pvz" checked style="accent-color:#8a3b42;"> Пункт выдачи СДЭК</label>
                 <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#c8c0b2; cursor:pointer;"><input type="radio" name="dtype" value="courier" style="accent-color:#8a3b42;"> Курьер</label>
@@ -116,7 +116,7 @@
             </div>
             <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;">
               <button id="order-submit" type="button" class="hover-outline-fill" style="cursor:pointer; background:transparent; border:1px solid rgba(240,233,218,0.28); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:10.5px; letter-spacing:.16em; padding:15px 32px;">ОФОРМИТЬ ЗАКАЗ →</button>
-              <span style="font-size:12.5px; color:#8a8175;">Итого: {{ price }} · оплата после подтверждения заказа</span>
+              <span style="font-size:12.5px; color:#8a8175;">Итого: {{ price }} · оплата картой или СБП, чек на email</span>
             </div>
             <div id="order-msg" style="display:none; margin-top:18px; font-size:13.5px; line-height:1.7;"></div>
           </div>
@@ -125,7 +125,10 @@
           <div id="order-done" style="display:{{ doneDisplay }}; margin-top:44px; padding:34px; border:1px solid rgba(240,233,218,0.14); border-top:2px solid {{ accent }}; background:rgba(240,233,218,0.025);">
             <div style="font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:18px;">ЗАКАЗ ПРИНЯТ</div>
             <div style="font-family:'Cormorant Garamond',serif; font-size:30px; color:#f5efe1; margin-bottom:12px;">Номер заказа: <span style="color:#e3cf9a;">{{ orderId }}</span></div>
-            <div style="font-size:13.5px; line-height:1.8; color:#c8c0b2;">Сумма: {{ price }}. Мы свяжемся с вами для подтверждения.<br>Оплата — после подтверждения заказа (резерв товара на складе).</div>
+            <div style="font-size:13.5px; line-height:1.8; color:#c8c0b2;">
+              Сумма: {{ price }}. Мы свяжемся с вами для подтверждения.<br>
+              Оплата: {{ payStatusText }}
+            </div>
           </div>
         </div>
       </div>
@@ -250,6 +253,28 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
 
+    // ─── Возврат с оплаты: ?paid=1&… — показываем статус заказа ───
+    const qs = new URLSearchParams(location.search);
+    if (qs.get('paid') === '1') {
+      const orderId = qs.get('order') || localStorage.getItem('tea_last_order') || '';
+      const phone = localStorage.getItem('tea_last_phone') || '';
+      if (orderId) {
+        this.setState({ done: true, formOpen: false, orderId, payStatus: 'wait' });
+        const poll = () => {
+          fetch(`${SHOP_API}?a=order_get&num=${encodeURIComponent(orderId)}&phone=${encodeURIComponent(phone)}`)
+            .then((r) => r.json())
+            .then((d) => {
+              const st = d.order && d.order.payment && d.order.payment.status;
+              this.setState({ payStatus: st === 'paid' ? 'paid' : 'wait' });
+            })
+            .catch(() => {});
+        };
+        poll();
+        this._payTimer = setInterval(poll, 5000);
+        setTimeout(() => clearInterval(this._payTimer), 10 * 60 * 1000);
+      }
+    }
+
     // ─── Форма заказа: открытие, отправка в shop-api, подтверждение ───
     // root уже объявлен выше (IntersectionObserver) — переиспользуем
     const msg = (el, text, ok) => {
@@ -279,20 +304,24 @@ class Component extends DCLogic {
         if (mEl) mEl.style.display = 'none';
         if (!name) return msg(mEl, 'Укажите имя и фамилию.', false);
         if (!phone.match(/^7\d{10}$/)) return msg(mEl, 'Телефон в формате 7XXXXXXXXXX (11 цифр).', false);
-        if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return msg(mEl, 'Проверьте email.', false);
+        if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return msg(mEl, 'Email обязателен — на него придёт чек после оплаты.', false);
         if (!city || !point) return msg(mEl, 'Укажите город и адрес (или код ПВЗ).', false);
         if (this.state.sending) return;
         this.setState({ sending: true });
         const num = this.state.item && this.state.item.num;
+        const redirBase = `${location.origin}${location.pathname}?tea=${num}`;
         fetch(`${SHOP_API}?a=order_create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ num, qty: 1 }], customer: { name, phone, email }, delivery }),
+          body: JSON.stringify({ items: [{ num, qty: 1 }], customer: { name, phone, email }, delivery, redirectUrl: `${redirBase}&paid=1`, failRedirectUrl: `${redirBase}&paid=0` }),
         })
           .then(async (r) => {
             const d = await r.json().catch(() => ({}));
             if (!r.ok) throw new Error(d.error || ('http ' + r.status));
-            this.setState({ sending: false, done: true, formOpen: false, orderId: d.order_id || '' });
+            try { localStorage.setItem('tea_last_phone', phone); localStorage.setItem('tea_last_order', d.order_id || ''); } catch (e) {}
+            // онлайн-оплата: уходим на платёжную страницу Точки; возврат — по redirectUrl
+            if (d.payment && d.payment.link) { location.href = d.payment.link; return; }
+            this.setState({ sending: false, done: true, formOpen: false, orderId: d.order_id || '', payStatus: 'offline' });
           })
           .catch((err) => {
             this.setState({ sending: false });
@@ -305,6 +334,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     if (this._io) this._io.disconnect();
     if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+    if (this._payTimer) clearInterval(this._payTimer);
   }
 
   revealStyle(id, delay) {
@@ -337,6 +367,9 @@ class Component extends DCLogic {
       formDisplay: (this.state.formOpen && !this.state.done) ? 'block' : 'none',
       doneDisplay: this.state.done ? 'block' : 'none',
       orderId: this.state.orderId || '',
+      payStatusText: this.state.payStatus === 'paid' ? 'оплачено ✓ (чек отправлен на email)'
+        : this.state.payStatus === 'wait' ? 'подтверждение оплаты — обновление автоматически…'
+        : 'после подтверждения заказа (резерв товара на складе)',
       productRevealStyle: this.revealStyle('product', 0),
       navStyle: `position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:${this.state.scrolled ? '16px 40px' : '30px 40px'}; background:${this.state.scrolled ? 'rgba(11,10,9,0.9)' : 'transparent'}; backdrop-filter:${this.state.scrolled ? 'blur(16px)' : 'none'}; border-bottom:1px solid ${this.state.scrolled ? 'rgba(240,233,218,0.08)' : 'transparent'}; transition:all .45s cubic-bezier(.16,.8,.24,1);`,
       navLogoH: this.state.scrolled ? '32px' : '42px',

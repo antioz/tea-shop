@@ -7,7 +7,7 @@ YC=~/yandex-cloud/bin/yc
 PROFILE=tea-shop
 npm ci --omit=dev --no-audit --no-fund
 rm -f shop-api.zip
-zip -qr shop-api.zip index.js package.json node_modules
+zip -qr shop-api.zip index.js payments.js package.json node_modules russian-trusted-root.pem
 while IFS= read -r line || [[ -n "$line" ]]; do
   if [[ "$line" =~ ^[A-Z][A-Z0-9_]*= ]] && [[ "$line" == *,* || "$line" == *'"'* ]]; then
     echo 'env value contains , or " — not supported by yc --environment' >&2

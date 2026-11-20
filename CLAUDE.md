@@ -18,7 +18,8 @@
 | Сервисный аккаунт | `deploy` = `aje2o8hffl4sibdu44i1`, роль editor | |
 | Профиль CLI | `~/yandex-cloud/bin/yc`, профиль `tea-shop` | ключ `~/.yc-keys/tea-shop-key.json` (авторизованный, НЕ статический) |
 | Ключи СДЭК (боевые) | `~/.yc-keys/cdek.json` — **авторизация отвергнута обоими контурами 20.11 (invalid_client), ждут проверки/перевыпуска в lk.cdek.ru** | |
-| Ключи Точка Банк (эквайринг) | `~/.yc-keys/tochka.json` (api_key + jwt) — для T9, получены 20.11 | |
+| Ключи Точка Банк | `~/.yc-keys/tochka.json` (jwt рабочий); customerCode=305911214, merchantId=200000000048617, точка «CHAY DIKOY LOSHADI», card+sbp, 2.8% | |
+| Корень Минцифры (TLS Точки/СДЭК) | `~/.yc-keys/ca/russian-trusted-root.pem`; копия в shop-api для NODE_EXTRA_CA_CERTS | |
 | Склад | МойСклад, токен в `moysklad-import/.token` и env `MOYSKLAD_TOKEN` | |
 | Идентификаторы деплоя | `sklad-api/DEPLOYED.md` | |
 
@@ -41,7 +42,7 @@ DNS НЕ переключён. Когда автор назовёт домен �
 - [x] T6 Страница покупки (кнопка «Купить», форма, подтверждение) — на бакете 20.11, проверена headless Chrome (рендер + форма)
 - [ ] T7 СДЭК — **блокер: ключи из `~/.yc-keys/cdek.json` не проходят OAuth — invalid_client на api.cdek.ru и api.edu.cdek.ru, проверено 20.11 тремя способами (query, form-body, Basic; и с перестановкой id/secret)**. Нужно: в lk.cdek.ru проверить «Интеграция → Учётные данные» (статус активен) или прислать свежую пару. Также нужен публичный ключ для виджета ПВЗ. Без этого cdek_calc/cdek_create/виджет не проверить
 - [x] T8 Админка — на бакете 20.11: https://tea-shop-site-946173.website.yandexcloud.net/admin/ (вход по ADMIN_TOKEN, метрики, заказы+статусы, цены, кнопка СДЭК ждёт ключи)
-- [ ] T9 Платёжный адаптер — **провайдер: Точка Банк** (ключи в `~/.yc-keys/tochka.json`: api_key + jwt); API Точки изучить перед интеграцией
+- [x] T9 Эквайринг — **Точка Банк, работает 20.11**: платёжные ссылки с чеком 54-ФЗ (payments_with_receipt), webhook acquiringInternetPayment создан и проверяет подпись RS256. Ждёт подтверждения: система налогообложения (env TOCHKA_TAX_SYSTEM=osn) и ставка НДС (TOCHKA_VAT=vat22 — ставка 2026 г.)
 - [ ] T10 Переключение DNS [ждёт домен]
 
 ## Правила
