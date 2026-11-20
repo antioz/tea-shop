@@ -96,8 +96,36 @@
           <p style="font-size:15.5px; line-height:1.95; color:#c8c0b2; margin:0 0 40px; white-space:pre-line;">{{ desc }}</p>
 
           <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
-            <a href="https://t.me/ssermakovss" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.28); color:#f0e9da; text-decoration:none; font-size:10.5px; letter-spacing:.16em; padding:15px 32px;">ЗАКАЗАТЬ →</a>
+            <a href="#" id="buy-btn" class="hover-outline-fill" style="border:1px solid rgba(240,233,218,0.28); color:#f0e9da; text-decoration:none; font-size:10.5px; letter-spacing:.16em; padding:15px 32px;">КУПИТЬ →</a>
             <a href="{{ categoryHref }}" class="hover-accent-text" style="font-size:11px; letter-spacing:.18em; color:#8a8175; text-decoration:none; border-bottom:1px solid rgba(240,233,218,0.2); padding-bottom:3px;">ДРУГИЕ ЧАИ ЭТОГО СОРТА</a>
+          </div>
+
+          <!-- ═══ ФОРМА ЗАКАЗА (shop-api order_create) ═══ -->
+          <div id="order-form" style="display:{{ formDisplay }}; margin-top:44px; padding:34px 34px 30px; border:1px solid rgba(240,233,218,0.14); border-top:2px solid {{ accent }}; background:rgba(240,233,218,0.025);">
+            <div style="font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:26px;">ОФОРМЛЕНИЕ ЗАКАЗА · {{ name }}</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <input id="f-name" type="text" placeholder="Имя и фамилия *" autocomplete="name" style="grid-column:1/-1; background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <input id="f-phone" type="tel" placeholder="Телефон 7XXXXXXXXXX *" autocomplete="tel" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <input id="f-email" type="email" placeholder="Email" autocomplete="email" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <div style="grid-column:1/-1; display:flex; gap:26px; align-items:center; padding-top:4px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#c8c0b2; cursor:pointer;"><input type="radio" name="dtype" value="pvz" checked style="accent-color:#8a3b42;"> Пункт выдачи СДЭК</label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px; color:#c8c0b2; cursor:pointer;"><input type="radio" name="dtype" value="courier" style="accent-color:#8a3b42;"> Курьер</label>
+              </div>
+              <input id="f-city" type="text" placeholder="Город *" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+              <input id="f-point" type="text" placeholder="Адрес или код ПВЗ *" style="background:transparent; border:1px solid rgba(240,233,218,0.22); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:14px; padding:13px 16px; outline:none;">
+            </div>
+            <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:26px;">
+              <button id="order-submit" type="button" class="hover-outline-fill" style="cursor:pointer; background:transparent; border:1px solid rgba(240,233,218,0.28); color:#f0e9da; font-family:'PT Sans',sans-serif; font-size:10.5px; letter-spacing:.16em; padding:15px 32px;">ОФОРМИТЬ ЗАКАЗ →</button>
+              <span style="font-size:12.5px; color:#8a8175;">Итого: {{ price }} · оплата после подтверждения заказа</span>
+            </div>
+            <div id="order-msg" style="display:none; margin-top:18px; font-size:13.5px; line-height:1.7;"></div>
+          </div>
+
+          <!-- ═══ ПОДТВЕРЖДЕНИЕ ═══ -->
+          <div id="order-done" style="display:{{ doneDisplay }}; margin-top:44px; padding:34px; border:1px solid rgba(240,233,218,0.14); border-top:2px solid {{ accent }}; background:rgba(240,233,218,0.025);">
+            <div style="font-size:10px; letter-spacing:.2em; color:#8a8175; margin-bottom:18px;">ЗАКАЗ ПРИНЯТ</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:30px; color:#f5efe1; margin-bottom:12px;">Номер заказа: <span style="color:#e3cf9a;">{{ orderId }}</span></div>
+            <div style="font-size:13.5px; line-height:1.8; color:#c8c0b2;">Сумма: {{ price }}. Мы свяжемся с вами для подтверждения.<br>Оплата — после подтверждения заказа (резерв товара на складе).</div>
           </div>
         </div>
       </div>
@@ -145,7 +173,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;: {&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8a3b42&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#8a3b42&quot;,&quot;#6b2b35&quot;,&quot;#2f5c4a&quot;,&quot;#4a5568&quot;]}, &quot;motion&quot;: {&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Полная анимация&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;Полная анимация&quot;,&quot;Сдержанная&quot;],&quot;section&quot;:&quot;Поведение&quot;}}">
 class Component extends DCLogic {
-  state = { item: null, error: false, scrolled: false, progress: 0, visible: {} };
+  state = { item: null, error: false, scrolled: false, progress: 0, visible: {}, formOpen: false, sending: false, done: false, orderId: '', orderErr: '' };
 
   blankImg = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
@@ -153,7 +181,10 @@ class Component extends DCLogic {
   LABELS = { 'shu-puer': 'ШУ ПУЭР', 'sheng-puer': 'ШЭН ПУЭР', 'white': 'БЕЛЫЙ ЧАЙ', 'red': 'КРАСНЫЙ ЧАЙ' };
 
   componentDidMount() {
-    const SKLAD_API = 'https://functions.yandexcloud.net/d4e6o6v2n3b9h8etfghd';
+    // Рабочий контур (облако клиента): новая sklad-api + shop-api заказов.
+    // CORS обеих функций содержит и GitHub Pages (демо), и домен бакета.
+    const SKLAD_API = 'https://functions.yandexcloud.net/d4etr4bluil1qvel94jf';
+    const SHOP_API = 'https://functions.yandexcloud.net/d4e8bepo2movs1ekku79';
     const LOCAL_PHOTOS = {"26": "26.jpeg", "27": "27.jpeg", "1": "1.jpeg", "11": "11.jpeg", "20": "20.jpeg", "16": "16.jpeg", "7": "7.jpeg", "17": "17.jpeg", "21": "21.jpeg", "8": "8.jpeg", "22": "22.jpeg", "18": "18.jpeg", "4": "4.jpeg", "14": "14.jpeg", "15": "15.jpeg", "5": "5.jpeg", "19": "19.jpeg", "23": "23.jpeg", "25": "25.png", "9": "9.jpeg", "12": "12.jpeg", "24": "24.jpeg", "13": "13.jpeg", "3": "3.jpeg"};
     const num = parseInt((new URLSearchParams(location.search)).get('tea') || '', 10);
     if (!num) { this.setState({ error: true }); return; }
@@ -218,6 +249,57 @@ class Component extends DCLogic {
       }
     };
     window.addEventListener('scroll', this.onScroll, { passive: true });
+
+    // ─── Форма заказа: открытие, отправка в shop-api, подтверждение ───
+    // root уже объявлен выше (IntersectionObserver) — переиспользуем
+    const msg = (el, text, ok) => {
+      if (!el) return;
+      el.style.display = 'block';
+      el.style.color = ok ? '#9ec49a' : '#c88a8a';
+      el.textContent = text;
+    };
+    root.addEventListener('click', (e) => {
+      if (e.target.closest('#buy-btn')) {
+        e.preventDefault();
+        if (this.state.done) return;
+        this.setState({ formOpen: !this.state.formOpen });
+        setTimeout(() => { const f = document.getElementById('order-form'); if (f && f.style.display !== 'none') f.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+      }
+      if (e.target.closest('#order-submit')) {
+        const v = (id) => ((document.getElementById(id) || {}).value || '').trim();
+        const name = v('f-name');
+        const phone = v('f-phone').replace(/\D/g, '');
+        const email = v('f-email');
+        const city = v('f-city');
+        const point = v('f-point');
+        const dtypeEl = document.querySelector('input[name="dtype"]:checked');
+        const delivery = { type: (dtypeEl && dtypeEl.value) || 'pvz', city, pvz: null, address: null };
+        if (delivery.type === 'pvz') delivery.pvz = point; else delivery.address = point;
+        const mEl = document.getElementById('order-msg');
+        if (mEl) mEl.style.display = 'none';
+        if (!name) return msg(mEl, 'Укажите имя и фамилию.', false);
+        if (!phone.match(/^7\d{10}$/)) return msg(mEl, 'Телефон в формате 7XXXXXXXXXX (11 цифр).', false);
+        if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return msg(mEl, 'Проверьте email.', false);
+        if (!city || !point) return msg(mEl, 'Укажите город и адрес (или код ПВЗ).', false);
+        if (this.state.sending) return;
+        this.setState({ sending: true });
+        const num = this.state.item && this.state.item.num;
+        fetch(`${SHOP_API}?a=order_create`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ num, qty: 1 }], customer: { name, phone, email }, delivery }),
+        })
+          .then(async (r) => {
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(d.error || ('http ' + r.status));
+            this.setState({ sending: false, done: true, formOpen: false, orderId: d.order_id || '' });
+          })
+          .catch((err) => {
+            this.setState({ sending: false });
+            msg(mEl, 'Не получилось оформить заказ: ' + (err && err.message ? err.message : 'сбой сети') + '. Попробуйте ещё раз или напишите нам в Telegram.', false);
+          });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -252,6 +334,9 @@ class Component extends DCLogic {
       categoryLabel: this.LABELS[cat] || 'СОРТА',
       error: this.state.error,
       errorDisplay: this.state.error ? 'block' : 'none',
+      formDisplay: (this.state.formOpen && !this.state.done) ? 'block' : 'none',
+      doneDisplay: this.state.done ? 'block' : 'none',
+      orderId: this.state.orderId || '',
       productRevealStyle: this.revealStyle('product', 0),
       navStyle: `position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:${this.state.scrolled ? '16px 40px' : '30px 40px'}; background:${this.state.scrolled ? 'rgba(11,10,9,0.9)' : 'transparent'}; backdrop-filter:${this.state.scrolled ? 'blur(16px)' : 'none'}; border-bottom:1px solid ${this.state.scrolled ? 'rgba(240,233,218,0.08)' : 'transparent'}; transition:all .45s cubic-bezier(.16,.8,.24,1);`,
       navLogoH: this.state.scrolled ? '32px' : '42px',
