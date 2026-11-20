@@ -3,6 +3,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 YC=~/yandex-cloud/bin/yc
+PROFILE=tea-shop
 rm -f sklad-api.zip
 zip -qr sklad-api.zip index.js specs.js package.json
 while IFS= read -r line || [[ -n "$line" ]]; do
@@ -13,8 +14,8 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 done < .deploy.env
 ARGS=()
 while IFS= read -r line || [[ -n "$line" ]]; do [[ "$line" =~ ^[A-Z][A-Z0-9_]*= ]] && ARGS+=(--environment "$line"); done < .deploy.env
-$YC serverless function version create \
+$YC --profile "$PROFILE" serverless function version create \
   --function-name sklad-api --runtime nodejs18 --entrypoint index.handler \
   --memory 128m --execution-timeout 20s --service-account-id "$(grep '^SA_ID=' .deploy.env | cut -d= -f2)" \
   --source-path sklad-api.zip "${ARGS[@]}"
-echo "deployed: $($YC serverless function get sklad-api --format json | python3 -c 'import json,sys;print(json.load(sys.stdin)["http_invoke_url"])')"
+echo "deployed: $($YC --profile "$PROFILE" serverless function get sklad-api --format json | python3 -c 'import json,sys;print(json.load(sys.stdin)["http_invoke_url"])')"
