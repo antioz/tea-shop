@@ -106,9 +106,13 @@ async function cdekAuth() {
   return d.access_token;
 }
 
-async function cdek(path) {
+async function cdek(path, method = 'GET', payload) {
   const token = await cdekAuth();
-  const r = await fetch(CDEK_BASE + path, { headers: { Authorization: `Bearer ${token}` } });
+  const r = await fetch(CDEK_BASE + path, {
+    method,
+    headers: { Authorization: `Bearer ${token}`, ...(payload ? { 'Content-Type': 'application/json' } : {}) },
+    body: payload ? JSON.stringify(payload) : undefined,
+  });
   if (!r.ok) throw new Error(`cdek ${r.status}`);
   return r.json();
 }
@@ -267,6 +271,32 @@ module.exports.handler = async function (event) {
         return await getOrder(q, origin);
       case 'cdek_calc':
         return json(200, await cdek(`/calculator/tarifflist?from_location_id=44&to_location_id=${encodeURIComponent(q.city_to || '')}&packages[0][weight]=${encodeURIComponent(q.weight || 1000)}`), origin);
+      case 'cdek_create': {
+        // админ: создать накладную СДЭК по заказу (test-контур, пока не включили бой)
+        if (!isAdmin(event, q) || method !== 'POST') return json(403, { error: 'forbidden' }, origin);
+        const { order_id } = body(event);
+        if (!order_id) return json(400, { error: 'need order_id' }, origin);
+        const r = await YDB.send(new GetCommand({ TableName: ORDERS_TABLE, Key: { order_id } }));
+        const o = r.Item;
+        if (!o) return json(404, { error: 'not_found' }, origin);
+        const c = (o.customer || {});
+        const d = (o.delivery || {});
+        const tariff = d.type === 'courier' ? 137 : 136;
+        const np = await cdek('/orders', 'POST', {
+          tariff_code: tariff,
+          recipient: { name: c.name, phones: [{ number: c.phone }] },
+          delivery_point: d.type === 'pvz' ? d.pvz : undefined,
+          to_location: { city: d.city || 'Москва', address: d.address },
+          packages: [{ weight: 1000, items: (o.items || []).map((it) => ({ ware_key: String(it.num), payment: { value: 0 }, name: it.name, cost: it.price_rub, amount: it.qty, weight: 100 })) }],
+        });
+        await YDB.send(new UpdateCommand({
+          TableName: ORDERS_TABLE, Key: { order_id },
+          UpdateExpression: 'SET #s = :s, cdek = :c',
+          ExpressionAttributeNames: { '#s': 'status' },
+          ExpressionAttributeValues: { ':s': 'shipping', ':c': { uuid: np.uuid, barcode: np.cdek_number, url: np.print_url || null } },
+        }));
+        return json(200, { ok: true, order_id, cdek_uuid: np.uuid, barcode: np.cdek_number }, origin);
+      }
       case 'payment_webhook':
         // заглушка: провайдер появится позже, сейчас просто 200
         return json(200, { ok: true, received: true }, origin);
@@ -289,6 +319,9 @@ module.exports.handler = async function (event) {
     }
   } catch (e) {
     console.error(e);
-    return json(e.status && e.status >= 400 && e.status < 600 ? e.status : 500, { error: 'shop_api_error', detail: String(e.message || e).slice(0, 200) }, origin);
+    // ошибки внешних сервисов (СДЭК/МойСклад) — 502; наши валидации — как есть
+    const msg = String(e.message || e);
+    const upstream = /^(cdek|moysklad) /.test(msg);
+    return json(upstream ? 502 : (e.status && e.status >= 400 && e.status < 600 ? e.status : 500), { error: upstream ? 'upstream_error' : 'shop_api_error', detail: msg.slice(0, 200) }, origin);
   }
 };
