@@ -146,9 +146,14 @@ async function createOrder(data, origin) {
 
 async function getOrder(q, origin) {
   const num = String(q.num || '').trim();
-  if (!num) return json(400, { error: 'no_num' }, origin);
+  // защита ПД: заказ отдаём только по паре «номер + телефон», иначе перебор номеров = чужие ПД
+  const phone = String(q.phone || '').replace(/\D/g, '');
+  if (!num || !phone.match(/^7\d{10}$/)) return json(400, { error: 'need num + phone' }, origin);
   const r = await YDB.send(new GetCommand({ TableName: ORDERS_TABLE, Key: { order_id: num } }));
   if (!r.Item) return json(404, { error: 'not_found' }, origin);
+  if (String((r.Item.customer || {}).phone || '').replace(/\D/g, '') !== phone) {
+    return json(404, { error: 'not_found' }, origin);
+  }
   return json(200, { order: r.Item }, origin);
 }
 
