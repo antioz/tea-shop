@@ -12,8 +12,8 @@
 
 | Контур | Что | URL |
 |---|---|---|
-| **Старый (не трогать до переключения DNS)** | GitHub Pages + sklad-api | https://antioz.github.io/tea-shop/ · `d4e6o6v2n3b9h8etfghd` |
-| **Новый (облако клиента)** | Бакет + sklad-api-копия | https://tea-shop-site-946173.website.yandexcloud.net/ · `d4etr4bluil1qvel94jf` |
+| **Демо (GitHub Pages) — отработало, НЕ прод.** Работает до переключения DNS, код не дорабатываем | старое демо + старая sklad-api | https://antioz.github.io/tea-shop/ · `d4e6o6v2n3b9h8etfghd` |
+| **Рабочий (облако клиента)** — сюда перевозим и здесь доделываем | Бакет + sklad-api-копия + shop-api | https://tea-shop-site-946173.website.yandexcloud.net/ · `d4etr4bluil1qvel94jf` · `d4e8bepo2movs1ekku79` |
 | Каталог YC | `b1g7i9m9r6ibld09cess` (облако `b1g474kvre57nm4js7h1`) | |
 | Сервисный аккаунт | `deploy` = `aje2o8hffl4sibdu44i1`, роль editor | |
 | Профиль CLI | `~/yandex-cloud/bin/yc`, профиль `tea-shop` | ключ `~/.yc-keys/tea-shop-key.json` (авторизованный, НЕ статический) |
